@@ -300,22 +300,8 @@
     });
   });
 
-  /* ---------- Watch Live: demo chat ---------- */
-  const chatForm = document.getElementById('live-chat-form');
-  if(chatForm){
-    const box = document.getElementById('live-chat-messages');
-    chatForm.addEventListener('submit', (e)=>{
-      e.preventDefault();
-      const input = chatForm.querySelector('input');
-      if(!input.value.trim()) return;
-      const div = document.createElement('div');
-      div.className = 'chat-msg';
-      div.innerHTML = `<b>You:</b> ${input.value.replace(/</g,'&lt;')}`;
-      box.appendChild(div);
-      box.scrollTop = box.scrollHeight;
-      input.value = '';
-    });
-  }
+  /* ---------- Watch Live chat is handled entirely by watch-live.js
+     (real Socket.io implementation) — nothing to do here anymore. ---------- */
 
   /* ---------- Gallery lightbox (simple caption toast) ---------- */
   document.querySelectorAll('.gallery-item').forEach(item=>{

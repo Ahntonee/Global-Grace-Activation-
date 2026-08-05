@@ -18,16 +18,19 @@
   <div class="container">
     <div class="two-col" style="align-items:start;">
       <div class="reveal">
-        <div style="aspect-ratio:16/9; border-radius:var(--radius-lg); background:linear-gradient(155deg,#ecfdf5,#f0fdf4); position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden;">
-          <img src="/images/worship-stage.jpg" alt="Live stream" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;" loading="lazy">
-          <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,78,59,.55),transparent 60%);z-index:1;"></div>
-          <div style="width:76px;height:76px;border-radius:50%; background:rgba(255,255,255,.18); border:1.5px solid rgba(255,255,255,.45); display:flex; align-items:center; justify-content:center; color:#fff; backdrop-filter:blur(6px); position:relative; z-index:2;"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
-          <% if (isLive) { %>
+        <% if (isLive && broadcast.embedUrl) { %>
+          <div style="aspect-ratio:16/9; border-radius:var(--radius-lg); overflow:hidden; position:relative;">
+            <iframe src="<%= broadcast.embedUrl %>" style="width:100%;height:100%;border:0;" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
             <span class="live-badge" style="position:absolute; top:18px; left:18px; z-index:2;"><span class="dot"></span> LIVE</span>
-          <% } else { %>
+          </div>
+        <% } else { %>
+          <div style="aspect-ratio:16/9; border-radius:var(--radius-lg); background:linear-gradient(155deg,#ecfdf5,#f0fdf4); position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+            <img src="/images/worship-stage.jpg" alt="Live stream" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;" loading="lazy">
+            <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,78,59,.55),transparent 60%);z-index:1;"></div>
+            <div style="width:76px;height:76px;border-radius:50%; background:rgba(255,255,255,.18); border:1.5px solid rgba(255,255,255,.45); display:flex; align-items:center; justify-content:center; color:#fff; backdrop-filter:blur(6px); position:relative; z-index:2;"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
             <span class="live-badge" style="position:absolute; top:18px; left:18px; z-index:2; background:rgba(107,114,128,.85);"><span class="dot"></span> OFF AIR</span>
-          <% } %>
-        </div>
+          </div>
+        <% } %>
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:18px; flex-wrap:wrap; gap:12px;">
           <div>
             <h3 style="font-size:19px;"><%= broadcast ? broadcast.title : 'No stream scheduled yet' %></h3>
@@ -44,14 +47,13 @@
         <span class="eyebrow">Live chat</span>
         <div class="chat-window" style="margin-top:16px;">
           <div class="chat-messages" id="live-chat-messages">
-            <% if (isLive) { %>
-              <div class="chat-msg" style="color:var(--mist);">Chat is open — say hello 👋</div>
-            <% } else { %>
-              <div class="chat-msg" style="color:var(--mist);">Chat opens once we're live. Set a reminder and come back soon.</div>
-            <% } %>
+            <div class="chat-msg" style="color:var(--mist);" id="chat-placeholder">
+              <%= isLive ? 'Connecting to chat…' : "Chat opens once we're live. Set a reminder and come back soon." %>
+            </div>
           </div>
           <form class="chat-input-row" id="live-chat-form">
-            <input type="text" placeholder="Say something encouraging&hellip;" maxlength="140" <%= isLive ? '' : 'disabled' %>>
+            <input type="text" id="live-chat-name" placeholder="Your name" maxlength="40" style="max-width:110px; flex:0 0 auto;" <%= isLive ? '' : 'disabled' %>>
+            <input type="text" id="live-chat-input" placeholder="Say something encouraging&hellip;" maxlength="140" <%= isLive ? '' : 'disabled' %>>
             <button type="submit" <%= isLive ? '' : 'disabled' %>>Send</button>
           </form>
         </div>
@@ -102,3 +104,11 @@
     </div>
   </div>
 </section>
+
+<script nonce="<%= nonce %>">
+  window.__BROADCAST_ID__ = <%- JSON.stringify(broadcast ? String(broadcast._id) : null) %>;
+  window.__BROADCAST_IS_LIVE__ = <%- JSON.stringify(isLive) %>;
+  window.__CHAT_ENABLED__ = <%- JSON.stringify(!!(broadcast && broadcast.chatEnabled)) %>;
+</script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/watch-live.js"></script>

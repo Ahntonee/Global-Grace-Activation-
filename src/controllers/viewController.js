@@ -5,13 +5,7 @@ const Speaker = require("../models/Speaker");
 const Testimony = require("../models/Testimony");
 const Faq = require("../models/Faq");
 const Product = require("../models/Product");
-const Broadcast = (() => {
-  try {
-    return require("../models/Broadcast");
-  } catch {
-    return null;
-  }
-})();
+const Broadcast = require("../models/Broadcast");
 const asyncHandler = require("../utils/asyncHandler");
 
 // A published Page doc is the primary content source. If one doesn't exist
@@ -109,7 +103,13 @@ exports.speakers = asyncHandler(async (req, res) => {
 
 exports.watchLive = asyncHandler(async (req, res) => {
   const page = await getPage("watch-live", "Watch Live | Global Grace Activation");
-  const broadcast = Broadcast ? await Broadcast.findOne({ isPublished: true }).sort({ createdAt: -1 }) : null;
+
+  // Same precedence as the API's GET /api/broadcasts/current: prefer
+  // whatever's currently Live, otherwise the nearest upcoming Scheduled one.
+  let broadcast = await Broadcast.findOne({ status: "Live", isPublished: true });
+  if (!broadcast) {
+    broadcast = await Broadcast.findOne({ status: "Scheduled", isPublished: true }).sort({ scheduledStart: 1 });
+  }
 
   res.render("pages/watch-live", {
     title: page.seoTitle || page.title,

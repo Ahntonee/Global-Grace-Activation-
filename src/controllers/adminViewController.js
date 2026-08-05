@@ -147,3 +147,12 @@ exports.donationsPage = (req, res) => {
     user: req.user,
   });
 };
+
+exports.broadcastPage = (req, res) => {
+  res.render("admin/broadcast", {
+    layout: "layouts/admin",
+    title: "Broadcast Control",
+    currentModule: "broadcast",
+    user: req.user,
+  });
+};

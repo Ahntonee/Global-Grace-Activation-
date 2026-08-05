@@ -1,4 +1,5 @@
 const path = require("path");
+const crypto = require("crypto");
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const cors = require("cors");
@@ -28,6 +29,7 @@ const productRoutes = require("./routes/productRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const donationRoutes = require("./routes/donationRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
+const broadcastRoutes = require("./routes/broadcastRoutes");
 
 // Public site (server-rendered) routes
 const viewRoutes = require("./routes/viewRoutes");
@@ -42,12 +44,41 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(expressLayouts);
 app.set("layout", "layouts/main");
-app.set("layout extractScripts", true);
+// NOT using "layout extractScripts" — it was silently dropping
+// page-specific <script> blocks instead of relocating them (found via
+// browser testing, not visible from curl). Scripts render in their
+// natural position in the content body instead, which works fine since
+// everything they reference is already defined earlier in the same page.
+
+// Per-request nonce for CSP script-src — every inline <script> block that
+// passes server data to client JS (window.__X__ = ...) carries
+// nonce="<%= nonce %>" so it's individually allowlisted rather than
+// weakening script-src to 'unsafe-inline' site-wide. Must run before
+// helmet so its CSP directive function below can read res.locals.nonce.
+app.use((req, res, next) => {
+  res.locals.nonce = crypto.randomBytes(16).toString("base64");
+  next();
+});
 
 // Security / perf middleware — applies to everything, including static files
 app.use(
   helmet({
     crossOriginResourcePolicy: false,
+    contentSecurityPolicy: {
+      directives: {
+        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+        "script-src": ["'self'", (req, res) => `'nonce-${res.locals.nonce}'`],
+        // Video embeds (Broadcast.platform) need their player origins allowed to frame us.
+        "frame-src": [
+          "'self'",
+          "https://www.youtube.com",
+          "https://www.youtube-nocookie.com",
+          "https://www.facebook.com",
+          "https://zoom.us",
+          "https://*.zoom.us",
+        ],
+      },
+    },
   })
 );
 app.use(compression());
@@ -55,14 +86,7 @@ app.use(compression());
 // Static assets (images, styles.css, script.js, hero video, etc.)
 app.use(express.static(path.join(__dirname, "..", "public")));
 
-const allowedOrigins = [
-    "http://localhost:3000",
-    "http://localhost:5173",
-    "http://localhost:5000",
-];
-if (process.env.FRONTEND_URL && !allowedOrigins.includes(process.env.FRONTEND_URL)) {
-    allowedOrigins.push(process.env.FRONTEND_URL);
-}
+const allowedOrigins = require("./config/corsOrigins");
 
 app.use(cors({
     origin: allowedOrigins,
@@ -115,6 +139,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/donations", donationRoutes);
 app.use("/api/payments", paymentRoutes);
+app.use("/api/broadcasts", broadcastRoutes);
 
 app.get("/api/status", (req, res) => {
     res.status(200).json({

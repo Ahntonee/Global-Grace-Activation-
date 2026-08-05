@@ -1,0 +1,49 @@
+<div class="admin-toolbar">
+  <h2>Broadcast Control</h2>
+</div>
+
+<div class="admin-form-card" style="max-width:none; margin-bottom:28px;">
+  <h3 style="font-size:16px; margin-bottom:16px;">Create a broadcast</h3>
+  <div class="admin-auth-error" id="broadcast-error"></div>
+  <form id="broadcast-form">
+    <div class="field-row">
+      <div class="field"><label>Title</label><input type="text" name="title" required placeholder="GGA Global Conference — Night 1"></div>
+      <div class="field">
+        <label>Platform</label>
+        <select name="platform">
+          <option>YouTube</option>
+          <option>Facebook</option>
+          <option>Custom-HLS</option>
+          <option>Zoom</option>
+          <option>Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="field"><label>Embed URL</label><input type="text" name="embedUrl" required placeholder="https://www.youtube.com/embed/..."></div>
+    <div class="field"><label>Scheduled start</label><input type="datetime-local" name="scheduledStart"></div>
+    <div class="admin-checkbox-row" style="margin-bottom:16px;"><input type="checkbox" name="chatEnabled" id="bc-chat" checked><label for="bc-chat" style="margin:0;">Chat enabled</label></div>
+    <button class="btn btn-primary" type="submit">Create Broadcast</button>
+  </form>
+</div>
+
+<div class="admin-table-wrap" style="margin-bottom:28px;">
+  <table class="admin-table">
+    <thead>
+      <tr><th>Title</th><th>Platform</th><th>Status</th><th>Actions</th></tr>
+    </thead>
+    <tbody id="broadcast-list-body">
+      <tr><td colspan="4" class="admin-empty">Loading&hellip;</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="admin-form-card" style="max-width:none;">
+  <h3 style="font-size:16px; margin-bottom:16px;">Live moderation</h3>
+  <p style="color:var(--mist); font-size:13px; margin-bottom:16px;">Shows chat for whichever broadcast is currently Live. Hiding a message removes it for every connected viewer immediately.</p>
+  <div id="moderation-panel">
+    <p class="admin-empty">No broadcast is currently live.</p>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/admin-assets/broadcast.js"></script>
