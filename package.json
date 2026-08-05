@@ -1,11 +1,16 @@
 {
-  "name": "global-grace-backend",
+  "name": "global-grace-activation",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Global Grace Activation — public site, CMS admin, shop, and API in one Express app.",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=18.18.0"
+  },
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "seed:admin": "node src/scripts/seedAdmin.js",
+    "seed:content": "node src/scripts/seedContent.js"
   },
   "keywords": [],
   "author": "",
