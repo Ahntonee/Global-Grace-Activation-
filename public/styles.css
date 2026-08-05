@@ -61,7 +61,6 @@ h1,h2,h3,h4{
   margin:0;
   letter-spacing:-0.01em;
 }
-.on-dark h1,.on-dark h2,.on-dark h3,.on-dark h4{ color:var(--ink); }
 
 .eyebrow{
   font-family:'Space Mono',monospace;
@@ -80,9 +79,6 @@ h1,h2,h3,h4{
   background: var(--flame-dim);
   display:inline-block;
 }
-.on-dark .eyebrow{ color: var(--flame-dim); }
-.on-dark .eyebrow::before{ background:var(--flame-dim); }
-
 :focus-visible{
   outline: 2.5px solid var(--ember);
   outline-offset: 3px;
@@ -255,7 +251,6 @@ section{ position:relative; }
   flex:0 0 auto;
 }
 .nav-actions .btn{ padding:11px 22px; font-size:13.5px; }
-.nav-actions .btn-outline{ display:none; }
 
 .nav-burger{
   display:none;
@@ -729,13 +724,9 @@ section{ position:relative; }
 /* ============ FORMS ============ */
 .field{ margin-bottom:18px; }
 .field label{ display:block; font-size:13px; font-weight:700; margin-bottom:8px; color:var(--ink); }
-.on-dark .field label{ color:var(--ink); }
 .field input, .field textarea, .field select{
   width:100%; padding:14px 16px; border-radius:10px; border:1.5px solid var(--line);
   background:var(--white); color:var(--text); font-size:14.5px; transition:border-color .25s, box-shadow .25s;
-}
-.on-dark .field input, .on-dark .field textarea, .on-dark .field select{
-  background: var(--white); border-color:var(--line); color:var(--text);
 }
 .field input:focus, .field textarea:focus, .field select:focus{
   outline:none; border-color:var(--flame); box-shadow:0 0 0 4px rgba(16,185,129,.14);

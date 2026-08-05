@@ -1,0 +1,53 @@
+<header class="page-header">
+  <div class="container">
+    <span class="crumb">Home &rsaquo; <span>Blog</span></span>
+    <span class="eyebrow">Media hub</span>
+    <h1 style="margin-top:18px;"><%= page.heroTitle %></h1>
+    <p><%= page.heroSubtitle %></p>
+  </div>
+</header>
+
+<%
+  const categories = [...new Set(blogs.map(function(p){ return p.category; }))];
+%>
+<section class="section-pad">
+  <div class="container">
+    <% if (categories.length > 1) { %>
+    <div class="tab-bar reveal" data-tabs="#blog-grid">
+      <button class="tab-btn active" type="button" data-filter="all">All</button>
+      <% categories.forEach(function(cat) { %>
+        <button class="tab-btn" type="button" data-filter="<%= cat.toLowerCase() %>"><%= cat %></button>
+      <% }) %>
+    </div>
+    <% } %>
+    <div class="grid-3" id="blog-grid">
+      <% blogs.forEach(function(post) { %>
+        <a href="/blog/<%= post.slug %>" class="card blog-card reveal" data-cat="<%= post.category.toLowerCase() %>">
+          <div class="thumb"><img src="<%= post.featuredImage && post.featuredImage.url ? post.featuredImage.url : '/images/worship-stage.jpg' %>" alt="<%= post.title %>" loading="lazy"></div>
+          <div class="body">
+            <span class="tag"><%= post.category %></span>
+            <h4><%= post.title %></h4>
+            <p><%= post.excerpt %></p>
+            <div class="meta"><span>5 min read</span><span><%= post.publishedAt ? post.publishedAt.toLocaleDateString('en-US',{month:'short',year:'numeric'}) : '' %></span></div>
+          </div>
+        </a>
+      <% }) %>
+      <% if (!blogs.length) { %>
+        <p style="color:var(--mist);">No posts published yet — check back soon.</p>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<section class="newsletter-bar">
+  <div class="container" style="display:flex; justify-content:space-between; align-items:center; gap:30px; flex-wrap:wrap; position:relative; z-index:1;">
+    <div style="max-width:420px;">
+      <span class="eyebrow">Never miss a message</span>
+      <h2 style="color:var(--ink); font-size:1.8rem; margin-top:14px;">New posts straight to your inbox</h2>
+    </div>
+    <form class="newsletter-form" data-fake-submit data-success="You're subscribed — new posts are on the way!">
+      <input type="email" name="email" required placeholder="Enter your email address">
+      <button class="btn btn-primary" type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>

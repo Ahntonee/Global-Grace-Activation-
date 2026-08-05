@@ -1,0 +1,44 @@
+<header class="page-header">
+  <div class="container">
+    <span class="crumb">Home &rsaquo; <span>Prayer Request</span></span>
+    <span class="eyebrow">We stand with you</span>
+    <h1 style="margin-top:18px;"><%= page.heroTitle %></h1>
+    <p><%= page.heroSubtitle %></p>
+  </div>
+</header>
+
+<section class="section-pad">
+  <div class="container two-col" style="align-items:start;">
+    <div class="reveal">
+      <span class="eyebrow">How it works</span>
+      <h2 style="font-size:1.8rem; margin:16px 0 20px;">Prayed over, kept private</h2>
+      <ul style="color:var(--mist); font-size:15px; display:flex; flex-direction:column; gap:14px;">
+        <li>&#10003; Requests are reviewed by our prayer team within 24 hours</li>
+        <li>&#10003; You may submit anonymously &mdash; no name required</li>
+        <li>&#10003; You'll receive an email confirmation once it's received</li>
+        <li>&#10003; Every request is treated with confidentiality and care</li>
+      </ul>
+    </div>
+    <form data-fake-submit data-success="Received — our team is praying with you." class="reveal">
+      <div class="field-row">
+        <div class="field"><label>Full Name</label><input type="text" name="fullName" placeholder="Your name (optional)"></div>
+        <div class="field"><label>Email Address</label><input type="email" name="email" required placeholder="For confirmation only"></div>
+      </div>
+      <div class="field"><label>Category</label>
+        <select name="category">
+          <option>Healing</option>
+          <option>Family</option>
+          <option>Marriage</option>
+          <option>Financial</option>
+          <option>Salvation</option>
+          <option>Thanksgiving</option>
+          <option>Deliverance</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="field"><label>Prayer Request</label><textarea name="request" rows="6" required placeholder="Share what's on your heart&hellip;"></textarea></div>
+      <label style="display:flex; align-items:center; gap:8px; font-size:13.5px; color:var(--mist); margin-bottom:18px;"><input type="checkbox" name="isAnonymous" style="width:auto;"> Submit anonymously</label>
+      <button class="btn btn-primary btn-block" type="submit">Submit Prayer Request</button>
+    </form>
+  </div>
+</section>

@@ -1,0 +1,104 @@
+<%
+  const isLive = broadcast && broadcast.status === 'Live';
+%>
+<header class="page-header">
+  <div class="container">
+    <span class="crumb">Home &rsaquo; <span>Watch Live</span></span>
+    <% if (isLive) { %>
+      <span class="live-badge"><span class="dot"></span> LIVE NOW</span>
+    <% } else { %>
+      <span class="live-badge" style="background:var(--mist);"><span class="dot"></span> OFF AIR &mdash; CHECK BACK SOON</span>
+    <% } %>
+    <h1 style="margin-top:20px;"><%= page.heroTitle %></h1>
+    <p><%= page.heroSubtitle %></p>
+  </div>
+</header>
+
+<section class="section-pad">
+  <div class="container">
+    <div class="two-col" style="align-items:start;">
+      <div class="reveal">
+        <div style="aspect-ratio:16/9; border-radius:var(--radius-lg); background:linear-gradient(155deg,#ecfdf5,#f0fdf4); position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+          <img src="/images/worship-stage.jpg" alt="Live stream" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;" loading="lazy">
+          <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,78,59,.55),transparent 60%);z-index:1;"></div>
+          <div style="width:76px;height:76px;border-radius:50%; background:rgba(255,255,255,.18); border:1.5px solid rgba(255,255,255,.45); display:flex; align-items:center; justify-content:center; color:#fff; backdrop-filter:blur(6px); position:relative; z-index:2;"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+          <% if (isLive) { %>
+            <span class="live-badge" style="position:absolute; top:18px; left:18px; z-index:2;"><span class="dot"></span> LIVE</span>
+          <% } else { %>
+            <span class="live-badge" style="position:absolute; top:18px; left:18px; z-index:2; background:rgba(107,114,128,.85);"><span class="dot"></span> OFF AIR</span>
+          <% } %>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:18px; flex-wrap:wrap; gap:12px;">
+          <div>
+            <h3 style="font-size:19px;"><%= broadcast ? broadcast.title : 'No stream scheduled yet' %></h3>
+            <p style="color:var(--mist); font-size:14px; margin-top:4px;">Streaming from Solution Arena, Lagos</p>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <a href="/prayer" class="btn btn-sm btn-outline-dark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7.5-4.9-10-9.2C.4 8.6 2 5 5.6 5c2 0 3.4 1 4.4 2.4C11 6 12.4 5 14.4 5 18 5 19.6 8.6 22 11.8 19.5 16.1 12 21 12 21z"/></svg> Prayer Request</a>
+            <button class="btn btn-sm btn-outline-dark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.2 10.8l7.6-4.2M8.2 13.2l7.6 4.2"/></svg> Share</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-panel" style="border-radius:var(--radius-lg);">
+        <span class="eyebrow">Live chat</span>
+        <div class="chat-window" style="margin-top:16px;">
+          <div class="chat-messages" id="live-chat-messages">
+            <% if (isLive) { %>
+              <div class="chat-msg" style="color:var(--mist);">Chat is open — say hello 👋</div>
+            <% } else { %>
+              <div class="chat-msg" style="color:var(--mist);">Chat opens once we're live. Set a reminder and come back soon.</div>
+            <% } %>
+          </div>
+          <form class="chat-input-row" id="live-chat-form">
+            <input type="text" placeholder="Say something encouraging&hellip;" maxlength="140" <%= isLive ? '' : 'disabled' %>>
+            <button type="submit" <%= isLive ? '' : 'disabled' %>>Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad-sm" style="background:var(--paper-2);">
+  <div class="container">
+    <div class="center-head reveal">
+      <span class="eyebrow">While you wait</span>
+      <h2>Countdown to the next stream</h2>
+    </div>
+    <div class="hero-panel" style="max-width:520px; margin:0 auto;">
+      <div class="countdown">
+        <div class="c-cell"><div class="c-num" id="cd-days">00</div><div class="c-label">Days</div></div>
+        <div class="c-cell"><div class="c-num" id="cd-hours">00</div><div class="c-label">Hours</div></div>
+        <div class="c-cell"><div class="c-num" id="cd-mins">00</div><div class="c-label">Mins</div></div>
+        <div class="c-cell"><div class="c-num" id="cd-secs">00</div><div class="c-label">Secs</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad">
+  <div class="container">
+    <div class="center-head reveal">
+      <span class="eyebrow">Ways to join</span>
+      <h2>Stream on any platform</h2>
+    </div>
+    <div class="grid-4 reveal-stagger" style="text-align:center;">
+      <div class="card" style="padding:30px 18px;"><strong>YouTube Live</strong><p style="color:var(--mist); font-size:13.5px; margin-top:8px;">Full HD broadcast with rewind</p></div>
+      <div class="card" style="padding:30px 18px;"><strong>Facebook Live</strong><p style="color:var(--mist); font-size:13.5px; margin-top:8px;">Comment and share instantly</p></div>
+      <div class="card" style="padding:30px 18px;"><strong>Church App</strong><p style="color:var(--mist); font-size:13.5px; margin-top:8px;">Ad-free, offline replay</p></div>
+      <div class="card" style="padding:30px 18px;"><strong>Radio Simulcast</strong><p style="color:var(--mist); font-size:13.5px; margin-top:8px;">Audio-only for low data areas</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad-sm" style="background:var(--paper-2);">
+  <div class="container">
+    <div class="panel-dark reveal" style="text-align:center;">
+      <span class="eyebrow" style="justify-content:center;">Partner while you watch</span>
+      <h2 style="margin-top:16px; font-size:1.8rem;">Your giving keeps every stream free</h2>
+      <p style="color:var(--text); max-width:480px; margin:16px auto 26px;">Every broadcast, translation and prayer line is funded by partners like you.</p>
+      <a href="/give" class="btn btn-primary">Give Now</a>
+    </div>
+  </div>
+</section>

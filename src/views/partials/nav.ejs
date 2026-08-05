@@ -1,0 +1,31 @@
+<%
+  const navLinks = [
+    { href: '/', label: 'Home', key: 'home' },
+    { href: '/about', label: 'About', key: 'about' },
+    { href: '/events', label: 'Events', key: 'events' },
+    { href: '/speakers', label: 'Speakers', key: 'speakers' },
+    { href: '/watch-live', label: 'Watch Live', key: 'watch-live' },
+    { href: '/give', label: 'Give', key: 'give' },
+    { href: '/gallery', label: 'Gallery', key: 'gallery' },
+    { href: '/blog', label: 'Blog', key: 'blog' },
+    { href: '/contact', label: 'Contact', key: 'contact' },
+  ];
+%>
+<nav class="nav">
+  <div class="container">
+    <a href="/" class="nav-brand">
+      <span class="flame-mark"><img src="/images/logo.png" alt="Global Grace Activation" style="width:100%;height:100%;object-fit:contain;display:block;"></span>
+    </a>
+    <div class="nav-links">
+      <% navLinks.forEach(function(link) { %>
+        <a href="<%= link.href %>"<%= currentPage === link.key ? ' class="active"' : '' %>><%= link.label %></a>
+      <% }) %>
+      <a href="/events" class="btn btn-primary btn-block nav-mobile-cta js-register-btn">Register Now</a>
+    </div>
+    <div class="nav-actions">
+      <a href="/watch-live" class="btn btn-outline btn-sm">Watch Live</a>
+      <a href="/events" class="btn btn-primary btn-sm js-register-btn">Register Now</a>
+    </div>
+    <button class="nav-burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>

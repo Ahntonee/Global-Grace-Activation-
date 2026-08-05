@@ -1,0 +1,26 @@
+<header class="page-header">
+  <div class="container">
+    <span class="crumb">Home &rsaquo; <span>FAQs</span></span>
+    <span class="eyebrow">Good to know</span>
+    <h1 style="margin-top:18px;"><%= page.heroTitle %></h1>
+    <p><%= page.heroSubtitle %></p>
+  </div>
+</header>
+
+<section class="section-pad">
+  <div class="container">
+    <div style="max-width:760px; margin:0 auto;">
+      <% faqs.forEach(function(faq) { %>
+        <div class="accordion-item reveal">
+          <button><%= faq.question %> <span class="plus">+</span></button>
+          <div class="a-body"><p><%= faq.answer %></p></div>
+        </div>
+      <% }) %>
+    </div>
+    <div class="panel-dark reveal" style="text-align:center; margin-top:56px;">
+      <span class="eyebrow" style="justify-content:center;">Still have questions?</span>
+      <h2 style="margin-top:16px; font-size:1.6rem;">We're happy to help</h2>
+      <a href="/contact" class="btn btn-primary" style="margin-top:20px;">Contact Us</a>
+    </div>
+  </div>
+</section>

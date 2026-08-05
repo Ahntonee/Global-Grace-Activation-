@@ -1,0 +1,60 @@
+<header class="page-header">
+  <div class="container">
+    <span class="crumb">Home &rsaquo; <span>Volunteer</span></span>
+    <span class="eyebrow">Serve with us</span>
+    <h1 style="margin-top:18px;"><%= page.heroTitle %></h1>
+    <p><%= page.heroSubtitle %></p>
+  </div>
+</header>
+
+<section class="section-pad">
+  <div class="container two-col" style="align-items:start;">
+    <div class="reveal">
+      <span class="eyebrow">Departments</span>
+      <h2 style="font-size:1.8rem; margin:16px 0 22px;">Where you can serve</h2>
+      <div class="grid-2" style="gap:16px;">
+        <div class="card" style="padding:20px;"><strong>Ushering &amp; Guest Care</strong><p style="color:var(--mist); font-size:13.5px; margin-top:6px;">Welcome guests and manage seating on the ground.</p></div>
+        <div class="card" style="padding:20px;"><strong>Media &amp; Production</strong><p style="color:var(--mist); font-size:13.5px; margin-top:6px;">Cameras, streaming, sound and lighting.</p></div>
+        <div class="card" style="padding:20px;"><strong>Prayer &amp; Altar Ministry</strong><p style="color:var(--mist); font-size:13.5px; margin-top:6px;">Stand with guests at the altar and prayer room.</p></div>
+        <div class="card" style="padding:20px;"><strong>Logistics &amp; Security</strong><p style="color:var(--mist); font-size:13.5px; margin-top:6px;">Crowd flow, parking and venue coordination.</p></div>
+        <div class="card" style="padding:20px;"><strong>Registration Desk</strong><p style="color:var(--mist); font-size:13.5px; margin-top:6px;">Check guests in and issue QR tickets.</p></div>
+        <div class="card" style="padding:20px;"><strong>Hospitality</strong><p style="color:var(--mist); font-size:13.5px; margin-top:6px;">Care for speakers, ministers and VIP guests.</p></div>
+      </div>
+      <div class="pill" style="margin-top:26px;">All volunteers are added to our WhatsApp coordination group after signup</div>
+    </div>
+
+    <div class="panel-dark reveal">
+      <span class="eyebrow">Apply now</span>
+      <h3 style="margin:14px 0 22px;">Volunteer Application</h3>
+      <form data-fake-submit data-success="Application received — welcome to the team!">
+        <div class="field-row">
+          <div class="field"><label>Full Name</label><input type="text" name="fullName" required placeholder="Your name"></div>
+          <div class="field"><label>Phone Number</label><input type="tel" name="phone" required placeholder="+234&hellip;"></div>
+        </div>
+        <div class="field"><label>Email Address</label><input type="email" name="email" required placeholder="you@email.com"></div>
+        <div class="field"><label>Preferred Department</label>
+          <select name="department">
+            <option>Ushering &amp; Guest Care</option>
+            <option>Media &amp; Production</option>
+            <option>Prayer &amp; Altar Ministry</option>
+            <option>Logistics &amp; Security</option>
+            <option>Registration Desk</option>
+            <option>Hospitality</option>
+          </select>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Prior Experience</label><input type="text" name="occupation" placeholder="e.g. 2 years event ushering"></div>
+          <div class="field"><label>Availability</label>
+            <select name="availability">
+              <option>Weekdays</option>
+              <option>Weekends</option>
+              <option>Anytime</option>
+            </select>
+          </div>
+        </div>
+        <div class="field"><label>Upload Photo</label><input type="file" accept="image/*"></div>
+        <button class="btn btn-primary btn-block" type="submit">Submit Application</button>
+      </form>
+    </div>
+  </div>
+</section>

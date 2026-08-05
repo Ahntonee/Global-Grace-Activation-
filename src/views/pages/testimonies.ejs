@@ -1,0 +1,63 @@
+<%
+  const categories = [...new Set(testimonies.map(function(t){ return t.category; }))];
+%>
+<header class="page-header">
+  <div class="container">
+    <span class="crumb">Home &rsaquo; <span>Testimonies</span></span>
+    <span class="eyebrow">Real stories</span>
+    <h1 style="margin-top:18px;"><%= page.heroTitle %></h1>
+    <p><%= page.heroSubtitle %></p>
+  </div>
+</header>
+
+<section class="section-pad">
+  <div class="container">
+    <% if (categories.length > 1) { %>
+    <div class="tab-bar reveal" data-tabs="#testimony-grid">
+      <button class="tab-btn active" type="button" data-filter="all">All</button>
+      <% categories.forEach(function(cat) { %>
+        <button class="tab-btn" type="button" data-filter="<%= cat.toLowerCase() %>"><%= cat %></button>
+      <% }) %>
+    </div>
+    <% } %>
+    <div class="grid-4" id="testimony-grid">
+      <% testimonies.forEach(function(t) { %>
+        <div class="card testimony-card reveal" data-cat="<%= t.category.toLowerCase() %>" data-caption="<%= t.title %>">
+          <div class="thumb">
+            <img src="<%= t.thumbnail && t.thumbnail.url ? t.thumbnail.url : '/images/worship-stage.jpg' %>" alt="<%= t.title %>" loading="lazy">
+            <span class="cat"><%= t.category %></span>
+            <div class="play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+          </div>
+          <div class="body"><h4><%= t.title %></h4><small>Testimony<% if (t.location) { %> &middot; <%= t.location %><% } %></small></div>
+        </div>
+      <% }) %>
+      <% if (!testimonies.length) { %>
+        <p style="color:var(--mist);">No testimonies published yet.</p>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad-sm" style="background:var(--paper-2);">
+  <div class="container">
+    <div class="two-col" style="align-items:start;">
+      <div class="reveal">
+        <span class="eyebrow">Share yours</span>
+        <h2 style="font-size:1.8rem; margin:16px 0 20px;">Submit a testimony</h2>
+        <p style="color:var(--mist);">Your story could be the encouragement someone else needs today.</p>
+      </div>
+      <form data-fake-submit data-success="Thank you — your testimony has been received!" class="reveal">
+        <div class="field-row">
+          <div class="field"><label>Full Name</label><input type="text" name="fullName" placeholder="Your name (optional)"></div>
+          <div class="field"><label>Location</label><input type="text" name="location" placeholder="City, Country"></div>
+        </div>
+        <div class="field"><label>Category</label>
+          <select name="category"><option>Healing</option><option>Deliverance</option><option>Breakthrough</option><option>Salvation</option><option>Family</option><option>Restoration</option></select>
+        </div>
+        <div class="field"><label>Your Testimony</label><textarea name="body" rows="5" required placeholder="Tell us what God has done&hellip;"></textarea></div>
+        <label style="display:flex; align-items:center; gap:8px; font-size:13.5px; color:var(--mist); margin-bottom:18px;"><input type="checkbox" name="isAnonymous" style="width:auto;"> Submit anonymously</label>
+        <button class="btn btn-primary btn-block" type="submit">Submit Testimony</button>
+      </form>
+    </div>
+  </div>
+</section>

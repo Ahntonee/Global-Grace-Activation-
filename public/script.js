@@ -51,8 +51,14 @@
   }
 
   /* ---------- Countdown timer (real, live) ---------- */
-  // Target: GGA Global Conference — 4 Dec 2026, 6:00 PM WAT
-  const EVENT_DATE = new Date('2026-12-04T18:00:00+01:00').getTime();
+  // Reads the target date from the countdown element's data-event-date
+  // attribute (set server-side from the featured Event in the CMS) when
+  // present, so the countdown follows whatever event is actually
+  // configured instead of a hardcoded date.
+  const countdownEl = document.querySelector('.countdown[data-event-date]');
+  const EVENT_DATE = countdownEl
+    ? new Date(countdownEl.getAttribute('data-event-date')).getTime()
+    : new Date('2026-12-04T18:00:00+01:00').getTime();
 
   function paint(id, value){
     const el = document.getElementById(id);

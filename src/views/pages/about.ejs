@@ -1,0 +1,43 @@
+<header class="page-header">
+  <div class="container">
+    <span class="crumb">Home &rsaquo; <span>About</span></span>
+    <span class="eyebrow">Our story</span>
+    <h1 style="margin-top:18px;"><%= page.heroTitle %></h1>
+    <p><%= page.heroSubtitle %></p>
+  </div>
+</header>
+
+<%- page.content %>
+
+<section class="section-pad">
+  <div class="container">
+    <div class="center-head reveal">
+      <span class="eyebrow">Leadership</span>
+      <h2>The team behind the move</h2>
+    </div>
+    <div class="grid-4 reveal-stagger">
+      <% leadership.forEach(function(leader) { %>
+        <div class="leader-card">
+          <div class="avatar"><img src="<%= leader.photo && leader.photo.url ? leader.photo.url : '/images/speaker-avatar.jpg' %>" alt="Portrait of <%= leader.name %>" loading="lazy"></div>
+          <h4><%= leader.name %></h4>
+          <div class="role"><%= leader.role %></div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad-sm" style="background:var(--paper-2);">
+  <div class="container">
+    <div class="center-head reveal">
+      <span class="eyebrow">Global impact</span>
+      <h2>Reach at a glance</h2>
+    </div>
+    <div class="stats-row reveal-stagger">
+      <div><div class="stat-num">25+</div><div class="stat-label">Nations</div></div>
+      <div><div class="stat-num">500K+</div><div class="stat-label">Lives Impacted</div></div>
+      <div><div class="stat-num">10+</div><div class="stat-label">Years of Grace</div></div>
+      <div><div class="stat-num">1,000+</div><div class="stat-label">Testimonies</div></div>
+    </div>
+  </div>
+</section>
