@@ -12,7 +12,7 @@ exports.createFaq = asyncHandler(async (req, res) => {
 });
 
 exports.getFaqs = asyncHandler(async (req, res) => {
-  const filter = { isPublished: true };
+  const filter = req.query.all === "true" ? {} : { isPublished: true };
   if (req.query.context) filter.context = req.query.context;
 
   const faqs = await Faq.find(filter).sort({ order: 1, createdAt: 1 });

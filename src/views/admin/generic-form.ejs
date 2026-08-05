@@ -1,0 +1,58 @@
+<%
+  function getVal(obj, path) {
+    if (!obj) return undefined;
+    return path.split('.').reduce(function(acc, key) { return acc && acc[key] !== undefined ? acc[key] : undefined; }, obj);
+  }
+%>
+<div class="admin-toolbar">
+  <h2><%= record ? 'Edit' : 'New' %> <%= config.singular %></h2>
+  <a href="/admin/<%= moduleKey %>" class="btn btn-outline-dark btn-sm">&larr; Back to list</a>
+</div>
+
+<div class="admin-form-card">
+  <div class="admin-auth-error" id="form-error"></div>
+  <form id="admin-record-form">
+    <% config.fields.forEach(function(f) { %>
+      <div class="field">
+        <% if (f.type === 'checkbox') { %>
+          <div class="admin-checkbox-row">
+            <input type="checkbox" name="<%= f.name %>" id="f-<%= f.name %>"
+              <%= (record ? getVal(record, f.name) : f.default) ? 'checked' : '' %>>
+            <label for="f-<%= f.name %>" style="margin:0;"><%= f.label %></label>
+          </div>
+        <% } else if (f.type === 'textarea') { %>
+          <label><%= f.label %></label>
+          <textarea name="<%= f.name %>" rows="<%= f.rows || 4 %>" <%= f.required ? 'required' : '' %>><%= record ? (getVal(record, f.name) || '') : (f.default || '') %></textarea>
+        <% } else if (f.type === 'select') { %>
+          <label><%= f.label %></label>
+          <select name="<%= f.name %>">
+            <% f.options.forEach(function(opt) { %>
+              <option value="<%= opt %>" <%= (record ? getVal(record, f.name) : f.default) === opt ? 'selected' : '' %>><%= opt %></option>
+            <% }) %>
+          </select>
+        <% } else if (f.type === 'tags') { %>
+          <label><%= f.label %></label>
+          <input type="text" name="<%= f.name %>" data-type="tags" value="<%= record && Array.isArray(getVal(record, f.name)) ? getVal(record, f.name).join(', ') : '' %>">
+        <% } else { %>
+          <label><%= f.label %></label>
+          <input type="<%= f.type %>" name="<%= f.name %>" <%= f.required ? 'required' : '' %>
+            value="<%= record ? (getVal(record, f.name) != null ? (f.type === 'datetime-local' && getVal(record, f.name) ? new Date(getVal(record, f.name)).toISOString().slice(0,16) : getVal(record, f.name)) : '') : (f.default != null ? f.default : '') %>">
+        <% } %>
+        <% if (f.hint) { %><div class="field-hint"><%= f.hint %></div><% } %>
+      </div>
+    <% }) %>
+    <div class="admin-form-actions">
+      <button class="btn btn-primary" type="submit"><%= record ? 'Save Changes' : 'Create' %></button>
+      <% if (record) { %>
+        <button class="btn btn-outline-dark" type="button" id="admin-delete-btn">Delete</button>
+      <% } %>
+    </div>
+  </form>
+</div>
+
+<script>
+  window.__ADMIN_MODULE__ = <%- JSON.stringify(config) %>;
+  window.__ADMIN_MODULE_KEY__ = <%- JSON.stringify(moduleKey) %>;
+  window.__ADMIN_RECORD_ID__ = <%- JSON.stringify(recordId) %>;
+</script>
+<script src="/admin-assets/crud-form.js"></script>

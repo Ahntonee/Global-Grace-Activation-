@@ -1,0 +1,24 @@
+<div class="admin-toolbar">
+  <h2><%= config.label %></h2>
+  <a href="/admin/<%= moduleKey %>/new" class="btn btn-primary btn-sm">+ New <%= config.singular %></a>
+</div>
+
+<div class="admin-table-wrap">
+  <table class="admin-table" id="admin-list-table">
+    <thead>
+      <tr>
+        <% config.columns.forEach(function(col) { %><th><%= col.label %></th><% }) %>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="admin-list-body">
+      <tr><td colspan="<%= config.columns.length + 1 %>" class="admin-empty">Loading&hellip;</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  window.__ADMIN_MODULE__ = <%- JSON.stringify(config) %>;
+  window.__ADMIN_MODULE_KEY__ = <%- JSON.stringify(moduleKey) %>;
+</script>
+<script src="/admin-assets/crud-list.js"></script>

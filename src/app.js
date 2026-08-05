@@ -27,6 +27,7 @@ const faqRoutes = require("./routes/faqRoutes");
 
 // Public site (server-rendered) routes
 const viewRoutes = require("./routes/viewRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 const app = express();
 
@@ -114,6 +115,9 @@ app.get("/health", (req, res) => {
         timestamp: new Date(),
     });
 });
+
+// Server-rendered admin dashboard
+app.use("/admin", adminRoutes);
 
 // Server-rendered public site
 app.use("/", viewRoutes);

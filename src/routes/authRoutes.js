@@ -5,6 +5,7 @@ const router = express.Router();
 const {
   register,
   login,
+  logout,
   getProfile,
   dashboard,
 } = require("../controllers/authController");
@@ -19,6 +20,7 @@ const handleValidationErrors = require("../validations/handleValidationErrors");
 
 // Public Routes
 router.post("/login", loginValidation, handleValidationErrors, login);
+router.post("/logout", logout);
 
 // Admin Only Route — account creation is invite-only, not public self-registration
 router.post(
