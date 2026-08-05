@@ -11,6 +11,9 @@ const Contact = require("../models/Contact");
 const Prayer = require("../models/Prayer");
 const Volunteer = require("../models/Volunteer");
 const Newsletter = require("../models/Newsletter");
+const Product = require("../models/Product");
+const Order = require("../models/Order");
+const Donation = require("../models/Donation");
 
 const modelsByKey = {
   pages: Page,
@@ -23,6 +26,7 @@ const modelsByKey = {
   prayers: Prayer,
   volunteers: Volunteer,
   newsletter: Newsletter,
+  products: Product,
 };
 
 exports.loginPage = (req, res) => {
@@ -30,13 +34,16 @@ exports.loginPage = (req, res) => {
 };
 
 exports.dashboard = asyncHandler(async (req, res) => {
-  const [pages, blogs, events, speakers, testimonies, faqs] = await Promise.all([
+  const [pages, blogs, events, speakers, testimonies, faqs, products, pendingOrders, totalDonations] = await Promise.all([
     Page.countDocuments(),
     Blog.countDocuments(),
     Event.countDocuments(),
     Speaker.countDocuments(),
     Testimony.countDocuments(),
     Faq.countDocuments(),
+    Product.countDocuments(),
+    Order.countDocuments({ fulfillmentStatus: "Unfulfilled", paymentStatus: "Paid" }),
+    Donation.countDocuments({ status: "Successful" }),
   ]);
 
   res.render("admin/dashboard", {
@@ -44,7 +51,7 @@ exports.dashboard = asyncHandler(async (req, res) => {
     title: "Dashboard",
     currentModule: "dashboard",
     user: req.user,
-    stats: { pages, blogs, events, speakers, testimonies, faqs },
+    stats: { pages, blogs, events, speakers, testimonies, faqs, products, pendingOrders, totalDonations },
   });
 });
 
@@ -119,6 +126,24 @@ exports.mediaPage = (req, res) => {
     layout: "layouts/admin",
     title: "Media Library",
     currentModule: "media",
+    user: req.user,
+  });
+};
+
+exports.ordersPage = (req, res) => {
+  res.render("admin/orders", {
+    layout: "layouts/admin",
+    title: "Orders",
+    currentModule: "orders",
+    user: req.user,
+  });
+};
+
+exports.donationsPage = (req, res) => {
+  res.render("admin/donations", {
+    layout: "layouts/admin",
+    title: "Donations",
+    currentModule: "donations",
     user: req.user,
   });
 };

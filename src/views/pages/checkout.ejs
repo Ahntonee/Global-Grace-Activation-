@@ -1,0 +1,52 @@
+<header class="page-header">
+  <div class="container">
+    <span class="crumb">Home &rsaquo; <a href="/cart">Cart</a> &rsaquo; <span>Checkout</span></span>
+    <span class="eyebrow">Checkout</span>
+    <h1 style="margin-top:18px;">Complete your order.</h1>
+  </div>
+</header>
+
+<section class="section-pad">
+  <div class="container two-col" style="align-items:start;">
+    <form id="checkout-form" class="reveal">
+      <h3 style="margin-bottom:18px;">Your details</h3>
+      <div class="field-row">
+        <div class="field"><label>Full Name</label><input type="text" name="fullName" required placeholder="Your name"></div>
+        <div class="field"><label>Email Address</label><input type="email" name="email" required placeholder="you@email.com"></div>
+      </div>
+      <div class="field"><label>Phone Number</label><input type="tel" name="phone" placeholder="+234&hellip;"></div>
+
+      <div id="shipping-fields" style="display:none;">
+        <h3 style="margin:26px 0 18px;">Shipping address</h3>
+        <div class="field"><label>Address Line 1</label><input type="text" name="addressLine1" placeholder="Street address"></div>
+        <div class="field"><label>Address Line 2 (optional)</label><input type="text" name="addressLine2" placeholder="Apartment, suite, etc."></div>
+        <div class="field-row">
+          <div class="field"><label>City</label><input type="text" name="city" placeholder="City"></div>
+          <div class="field"><label>State</label><input type="text" name="state" placeholder="State"></div>
+        </div>
+      </div>
+
+      <h3 style="margin:26px 0 18px;">Payment method</h3>
+      <div class="give-toggle" id="payment-provider-toggle">
+        <button type="button" class="active" data-provider="paystack">Paystack</button>
+        <button type="button" data-provider="flutterwave">Flutterwave</button>
+      </div>
+      <input type="hidden" name="paymentProvider" value="paystack">
+
+      <div class="admin-auth-error" id="checkout-error" style="margin-top:18px;"></div>
+      <button class="btn btn-primary btn-block" type="submit" style="margin-top:22px;">Continue to Payment</button>
+    </form>
+
+    <div class="panel-dark reveal">
+      <h3 style="margin-bottom:18px;">Order summary</h3>
+      <div id="checkout-summary" style="display:flex; flex-direction:column; gap:10px; font-size:14px;"></div>
+      <div style="border-top:1px solid var(--line); margin-top:16px; padding-top:16px; display:flex; justify-content:space-between; font-weight:700;">
+        <span>Total</span>
+        <span id="checkout-total" style="font-family:'Space Mono',monospace; color:var(--flame-dim);">&#8358;0</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="/cart.js"></script>
+<script src="/checkout.js"></script>

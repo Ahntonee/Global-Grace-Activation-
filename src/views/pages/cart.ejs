@@ -1,0 +1,28 @@
+<header class="page-header">
+  <div class="container">
+    <span class="crumb">Home &rsaquo; <span>Cart</span></span>
+    <span class="eyebrow">Your cart</span>
+    <h1 style="margin-top:18px;">Review your order.</h1>
+  </div>
+</header>
+
+<section class="section-pad">
+  <div class="container" style="max-width:820px;">
+    <div id="cart-items" style="display:flex; flex-direction:column; gap:16px;">
+      <p class="admin-empty" style="color:var(--mist);">Loading&hellip;</p>
+    </div>
+
+    <div class="panel-dark reveal" style="margin-top:32px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+      <div>
+        <div style="font-size:13px; color:var(--mist);">Subtotal</div>
+        <div id="cart-subtotal" style="font-family:'Space Mono',monospace; font-weight:700; font-size:24px; color:var(--flame-dim);">&#8358;0</div>
+      </div>
+      <a href="/checkout" class="btn btn-primary" id="cart-checkout-btn">Proceed to Checkout</a>
+    </div>
+  </div>
+</section>
+
+<script src="/cart.js"></script>
+<script>
+  renderCartPage();
+</script>

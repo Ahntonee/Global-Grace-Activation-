@@ -4,6 +4,7 @@ const Event = require("../models/Event");
 const Speaker = require("../models/Speaker");
 const Testimony = require("../models/Testimony");
 const Faq = require("../models/Faq");
+const Product = require("../models/Product");
 const Broadcast = (() => {
   try {
     return require("../models/Broadcast");
@@ -76,6 +77,10 @@ exports.events = asyncHandler(async (req, res) => {
     Faq.find({ isPublished: true, context: "events" }).sort({ order: 1 }),
   ]);
 
+  const addons = featuredEvent
+    ? await Product.find({ relatedEvent: featuredEvent._id, type: "event-addon", isPublished: true }).populate("images")
+    : [];
+
   res.render("pages/events", {
     title: page.seoTitle || page.title,
     description: page.seoDescription,
@@ -85,6 +90,7 @@ exports.events = asyncHandler(async (req, res) => {
     upcoming,
     past,
     faqs,
+    addons,
   });
 });
 

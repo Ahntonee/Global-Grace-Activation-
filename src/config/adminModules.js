@@ -6,6 +6,37 @@
  * hand-written admin screens.
  */
 module.exports = {
+  products: {
+    label: "Products",
+    singular: "Product",
+    apiBase: "/api/products?all=true",
+    apiBaseWrite: "/api/products",
+    idField: "slug",
+    columns: [
+      { key: "name", label: "Name" },
+      { key: "type", label: "Type" },
+      { key: "price", label: "Price" },
+      { key: "stock", label: "Stock" },
+      { key: "isPublished", label: "Published", type: "boolean" },
+    ],
+    fields: [
+      { name: "name", label: "Name", type: "text", required: true },
+      { name: "slug", label: "Slug", type: "text", required: true },
+      { name: "type", label: "Type", type: "select", options: ["physical", "digital", "event-addon"] },
+      { name: "shortDescription", label: "Short description (shop grid)", type: "textarea", rows: 2 },
+      { name: "description", label: "Full description (product page)", type: "textarea", rows: 5, required: true },
+      { name: "price", label: "Price (NGN)", type: "number", required: true },
+      { name: "compareAtPrice", label: "Compare-at price (optional, shows as struck-through)", type: "number" },
+      { name: "category", label: "Category", type: "text", default: "General" },
+      { name: "tags", label: "Tags (comma-separated)", type: "tags" },
+      { name: "sku", label: "SKU", type: "text" },
+      { name: "stock", label: "Stock (physical only — ignored for digital)", type: "number", default: 0 },
+      { name: "weightGrams", label: "Weight in grams (physical only, for future shipping calc)", type: "number" },
+      { name: "featured", label: "Featured", type: "checkbox" },
+      { name: "isPublished", label: "Published", type: "checkbox" },
+    ],
+  },
+
   pages: {
     label: "Pages",
     singular: "Page",

@@ -1,0 +1,24 @@
+<header class="page-header">
+  <div class="container">
+    <span class="crumb">Home &rsaquo; <span>Thank You</span></span>
+    <span class="eyebrow">Giving status</span>
+    <h1 style="margin-top:18px;" id="confirmation-heading">Checking your gift&hellip;</h1>
+    <p id="confirmation-sub">Reference: <%= reference %></p>
+  </div>
+</header>
+
+<section class="section-pad">
+  <div class="container" style="max-width:640px;">
+    <div class="panel-dark reveal" id="confirmation-body">
+      <p style="color:var(--mist);">Loading&hellip;</p>
+    </div>
+    <div style="text-align:center; margin-top:30px;">
+      <a href="/" class="btn btn-outline-dark">Back to Home</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  window.__DONATION_REFERENCE__ = <%- JSON.stringify(reference) %>;
+</script>
+<script src="/give-confirmation.js"></script>

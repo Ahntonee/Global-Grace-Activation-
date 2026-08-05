@@ -34,9 +34,9 @@
       </div>
       <div class="admin-nav-group">
         <span class="admin-nav-label">Shop &amp; Giving</span>
-        <span class="admin-nav-soon">Products — coming soon</span>
-        <span class="admin-nav-soon">Orders — coming soon</span>
-        <span class="admin-nav-soon">Donations — coming soon</span>
+        <a href="/admin/products" class="<%= currentModule === 'products' ? 'active' : '' %>">Products</a>
+        <a href="/admin/orders" class="<%= currentModule === 'orders' ? 'active' : '' %>">Orders</a>
+        <a href="/admin/donations" class="<%= currentModule === 'donations' ? 'active' : '' %>">Donations</a>
       </div>
       <div class="admin-nav-group">
         <span class="admin-nav-label">Engagement</span>

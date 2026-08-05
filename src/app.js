@@ -24,6 +24,10 @@ const dashboardRoutes = require("./routes/dashboardRoutes");
 const speakerRoutes = require("./routes/speakerRoutes");
 const testimonyRoutes = require("./routes/testimonyRoutes");
 const faqRoutes = require("./routes/faqRoutes");
+const productRoutes = require("./routes/productRoutes");
+const orderRoutes = require("./routes/orderRoutes");
+const donationRoutes = require("./routes/donationRoutes");
+const paymentRoutes = require("./routes/paymentRoutes");
 
 // Public site (server-rendered) routes
 const viewRoutes = require("./routes/viewRoutes");
@@ -65,7 +69,15 @@ app.use(cors({
     credentials: true,
 }));
 
-app.use(express.json());
+// Stashes the raw request body buffer so payment webhook handlers can
+// verify gateway signatures (HMAC over the raw bytes) — by the time a
+// route handler runs, express.json() has already parsed it, so this is
+// the only place to capture it.
+app.use(express.json({
+    verify: (req, res, buf) => {
+        req.rawBody = buf;
+    },
+}));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(mongoSanitize());
@@ -99,6 +111,10 @@ app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/speakers", speakerRoutes);
 app.use("/api/testimonies", testimonyRoutes);
 app.use("/api/faqs", faqRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/api/donations", donationRoutes);
+app.use("/api/payments", paymentRoutes);
 
 app.get("/api/status", (req, res) => {
     res.status(200).json({

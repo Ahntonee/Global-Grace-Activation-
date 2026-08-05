@@ -46,6 +46,31 @@
 </section>
 <% } %>
 
+<% if (addons && addons.length) { %>
+<section class="section-pad">
+  <div class="container">
+    <div class="center-head reveal">
+      <span class="eyebrow">Upgrade your seat</span>
+      <h2>Event add-ons</h2>
+      <p>Optional extras for <%= featuredEvent.title %>.</p>
+    </div>
+    <div class="grid-3 reveal-stagger">
+      <% addons.forEach(function(p) { %>
+        <a href="/shop/<%= p.slug %>" class="card blog-card">
+          <div class="thumb"><img src="<%= p.images && p.images[0] && p.images[0].url ? p.images[0].url : '/images/conference-arena.jpg' %>" alt="<%= p.name %>" loading="lazy"></div>
+          <div class="body">
+            <span class="tag">Add-on</span>
+            <h4><%= p.name %></h4>
+            <p><%= p.shortDescription || p.description %></p>
+            <div class="meta"><span style="font-weight:700; color:var(--flame-dim); font-family:'Space Mono',monospace;">&#8358;<%= p.price.toLocaleString() %></span></div>
+          </div>
+        </a>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
 <section class="section-pad-sm" style="background:var(--paper-2);" id="register">
   <div class="container">
     <div class="center-head reveal">

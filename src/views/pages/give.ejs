@@ -21,12 +21,12 @@
       </div>
     </div>
 
-    <div class="panel-dark reveal">
+    <form class="panel-dark reveal" id="give-form">
       <span class="eyebrow">Give now</span>
       <h3 style="margin:14px 0 20px;">Choose an amount</h3>
-      <div class="give-toggle">
-        <button class="active" type="button">One-Time</button>
-        <button type="button">Monthly</button>
+      <div class="give-toggle" id="give-frequency-toggle">
+        <button class="active" type="button" data-frequency="One-Time">One-Time</button>
+        <button type="button" data-frequency="Monthly">Monthly</button>
       </div>
       <div class="give-amounts">
         <button class="amt-btn active" type="button" data-amt="10000">&#8358;10,000</button>
@@ -34,11 +34,15 @@
         <button class="amt-btn" type="button" data-amt="50000">&#8358;50,000</button>
         <button class="amt-btn" type="button" data-amt="100000">&#8358;100,000</button>
         <button class="amt-btn" type="button" data-amt="custom">Custom</button>
-        <input type="text" class="custom-amount amt-btn" placeholder="&#8358; Amount" style="text-align:center;">
+        <input type="text" class="custom-amount amt-btn" id="give-custom-amount" placeholder="&#8358; Amount" style="text-align:center;">
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Full Name</label><input type="text" name="fullName" required placeholder="Your name"></div>
+        <div class="field"><label>Email Address</label><input type="email" name="email" required placeholder="you@email.com"></div>
       </div>
       <div class="field">
         <label>Giving toward</label>
-        <select>
+        <select name="fund">
           <option>Offering</option>
           <option>Partnership</option>
           <option>Project Seed</option>
@@ -46,16 +50,24 @@
           <option>Conference Support</option>
         </select>
       </div>
-      <button class="btn btn-primary btn-block" data-give-cta>Give Securely Now</button>
+      <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text); margin-bottom:16px;"><input type="checkbox" name="isAnonymous" style="width:auto;"> Give anonymously</label>
+      <div class="give-toggle" id="give-provider-toggle">
+        <button class="active" type="button" data-provider="paystack">Paystack</button>
+        <button type="button" data-provider="flutterwave">Flutterwave</button>
+      </div>
+      <div class="admin-auth-error" id="give-error" style="margin-top:14px;"></div>
+      <button class="btn btn-primary btn-block" type="submit" style="margin-top:16px;">Give Securely Now</button>
       <div class="gateways">
         <span style="font-size:12.5px; color:var(--mist);">We accept</span>
         <span class="gateway-badge">Paystack</span>
         <span class="gateway-badge">Flutterwave</span>
       </div>
       <p style="font-size:12px; color:var(--mist); margin-top:16px;">All transactions are encrypted and processed securely. You'll receive an email receipt instantly.</p>
-    </div>
+    </form>
   </div>
 </section>
+
+<script src="/give.js"></script>
 
 <section class="section-pad-sm" style="background:var(--paper-2);">
   <div class="container">

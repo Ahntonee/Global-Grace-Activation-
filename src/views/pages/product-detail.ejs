@@ -1,0 +1,52 @@
+<header class="page-header">
+  <div class="container">
+    <span class="crumb">Home &rsaquo; <a href="/shop">Shop</a> &rsaquo; <span><%= product.name %></span></span>
+    <span class="eyebrow"><%= product.type === 'digital' ? 'Digital Download' : (product.type === 'event-addon' ? 'Event Add-on' : 'Merchandise') %></span>
+    <h1 style="margin-top:18px; max-width:820px;"><%= product.name %></h1>
+  </div>
+</header>
+
+<section class="section-pad">
+  <div class="container two-col" style="align-items:start;">
+    <div class="img-frame reveal">
+      <img src="<%= product.images && product.images[0] && product.images[0].url ? product.images[0].url : '/images/worship-stage.jpg' %>" alt="<%= product.name %>" loading="lazy">
+    </div>
+    <div class="reveal">
+      <p style="color:var(--mist); font-size:16px; line-height:1.7;"><%= product.description %></p>
+      <div style="font-family:'Space Mono',monospace; font-weight:700; font-size:26px; color:var(--flame-dim); margin:22px 0;">
+        &#8358;<%= product.price.toLocaleString() %>
+        <% if (product.compareAtPrice) { %>
+          <span style="font-size:16px; color:var(--mist); text-decoration:line-through; margin-left:10px;">&#8358;<%= product.compareAtPrice.toLocaleString() %></span>
+        <% } %>
+      </div>
+
+      <% if (product.type === 'event-addon' && product.relatedEvent) { %>
+        <div class="pill" style="margin-bottom:20px;">Add-on for <%= product.relatedEvent.title %></div>
+      <% } %>
+
+      <% if (product.type === 'physical' && product.stock === 0) { %>
+        <p style="color:var(--mist); font-weight:700;">Currently out of stock.</p>
+      <% } else { %>
+        <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
+          <button
+            class="btn btn-primary js-add-to-cart"
+            type="button"
+            data-product-id="<%= product._id %>"
+            data-slug="<%= product.slug %>"
+            data-name="<%= product.name %>"
+            data-price="<%= product.price %>"
+            data-type="<%= product.type %>"
+            data-image="<%= product.images && product.images[0] && product.images[0].url ? product.images[0].url : '' %>"
+          >Add to Cart</button>
+          <a href="/cart" class="btn btn-outline-dark">View Cart</a>
+        </div>
+      <% } %>
+
+      <% if (product.type === 'physical') { %>
+        <p style="font-size:13px; color:var(--mist); margin-top:18px;">Ships within Nigeria only.</p>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<script src="/cart.js"></script>

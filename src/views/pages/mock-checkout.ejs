@@ -1,0 +1,19 @@
+<div style="min-height:100vh; display:flex; align-items:center; justify-content:center; background:radial-gradient(120% 140% at 15% 0%, #ecfdf5 0%, #ffffff 62%); padding:24px;">
+  <div style="width:100%; max-width:420px; background:#fff; border:1px solid var(--line); border-radius:var(--radius-lg); box-shadow:var(--shadow-md); padding:38px 34px; text-align:center;">
+    <div class="pill" style="margin-bottom:18px;">TEST MODE</div>
+    <h1 style="font-size:22px; margin-bottom:8px;">Simulated <%= provider === 'flutterwave' ? 'Flutterwave' : 'Paystack' %> Checkout</h1>
+    <p style="color:var(--mist); font-size:14px; margin-bottom:8px;">This stands in for the real payment gateway while <code>PAYMENT_MODE=mock</code>. No money moves, and no gateway account is needed to test the full order flow.</p>
+    <p style="font-family:'Space Mono',monospace; font-size:12px; color:var(--mist); margin-bottom:26px; word-break:break-all;">Reference: <%= reference %></p>
+
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <button class="btn btn-primary btn-block" type="button" id="mock-success-btn">Simulate Successful Payment</button>
+      <button class="btn btn-outline-dark btn-block" type="button" id="mock-fail-btn">Simulate Failed Payment</button>
+    </div>
+    <div class="admin-auth-error" id="mock-error" style="margin-top:18px;"></div>
+  </div>
+</div>
+
+<script>
+  window.__MOCK_REFERENCE__ = <%- JSON.stringify(reference) %>;
+</script>
+<script src="/mock-checkout.js"></script>
