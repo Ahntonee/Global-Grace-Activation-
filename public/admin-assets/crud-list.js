@@ -22,7 +22,7 @@
     try {
       const res = await fetch(config.apiBase, { credentials: "same-origin" });
       const body = await res.json();
-      const items = body[moduleKey] || [];
+      const items = body[config.dataKey || moduleKey] || [];
 
       if (!items.length) {
         tbody.innerHTML = `<tr><td colspan="${config.columns.length + 1}" class="admin-empty">Nothing here yet — click "+ New ${config.singular}" to add one.</td></tr>`;

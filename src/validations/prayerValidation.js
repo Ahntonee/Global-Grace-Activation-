@@ -3,7 +3,9 @@ const { body } = require("express-validator");
 exports.submitPrayerValidation = [
   body("isAnonymous").optional().isBoolean().withMessage("isAnonymous must be true or false"),
   body("fullName")
-    .if(body("isAnonymous").not().equals(true))
+    // .equals(true) would do a string comparison against a JSON boolean and
+    // never match — use a plain predicate against the parsed request body.
+    .if((value, { req }) => req.body.isAnonymous !== true)
     .trim()
     .notEmpty()
     .withMessage("Full name is required unless submitting anonymously"),

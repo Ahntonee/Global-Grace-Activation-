@@ -145,4 +145,92 @@ module.exports = {
       { name: "isPublished", label: "Published", type: "checkbox", default: true },
     ],
   },
+
+  contacts: {
+    label: "Contact Messages",
+    singular: "Message",
+    apiBase: "/api/contacts",
+    idField: "_id",
+    columns: [
+      { key: "fullName", label: "From" },
+      { key: "subject", label: "Subject" },
+      { key: "category", label: "Category" },
+      { key: "status", label: "Status" },
+    ],
+    fields: [
+      { name: "fullName", label: "Full name", type: "text", required: true },
+      { name: "email", label: "Email", type: "email", required: true },
+      { name: "phone", label: "Phone", type: "text" },
+      { name: "subject", label: "Subject", type: "text", required: true },
+      { name: "category", label: "Category", type: "select", options: ["General", "Support", "Partnership", "Donation", "Complaint", "Testimony"] },
+      { name: "message", label: "Message", type: "textarea", rows: 5, required: true },
+      { name: "status", label: "Status", type: "select", options: ["New", "In Progress", "Resolved", "Closed"] },
+      { name: "adminNotes", label: "Internal notes", type: "textarea", rows: 3 },
+    ],
+  },
+
+  prayers: {
+    label: "Prayer Requests",
+    singular: "Prayer Request",
+    apiBase: "/api/prayers",
+    idField: "_id",
+    columns: [
+      { key: "fullName", label: "From" },
+      { key: "category", label: "Category" },
+      { key: "isConfidential", label: "Confidential", type: "boolean" },
+      { key: "status", label: "Status" },
+    ],
+    fields: [
+      { name: "fullName", label: "Full name", type: "text" },
+      { name: "email", label: "Email", type: "email" },
+      { name: "phone", label: "Phone", type: "text" },
+      { name: "category", label: "Category", type: "select", options: ["Healing", "Family", "Marriage", "Financial", "Salvation", "Thanksgiving", "Deliverance", "Other"] },
+      { name: "request", label: "Request", type: "textarea", rows: 5, required: true },
+      { name: "isAnonymous", label: "Anonymous", type: "checkbox" },
+      { name: "isConfidential", label: "Confidential", type: "checkbox" },
+      { name: "status", label: "Status", type: "select", options: ["Pending", "In Progress", "Prayed For", "Completed"] },
+      { name: "adminNotes", label: "Internal notes", type: "textarea", rows: 3 },
+    ],
+  },
+
+  volunteers: {
+    label: "Volunteer Applications",
+    singular: "Application",
+    apiBase: "/api/volunteers",
+    idField: "_id",
+    columns: [
+      { key: "fullName", label: "Name" },
+      { key: "department", label: "Department" },
+      { key: "availability", label: "Availability" },
+      { key: "status", label: "Status" },
+    ],
+    fields: [
+      { name: "fullName", label: "Full name", type: "text", required: true },
+      { name: "email", label: "Email", type: "email", required: true },
+      { name: "phone", label: "Phone", type: "text", required: true },
+      { name: "department", label: "Department", type: "select", options: ["Ushering & Guest Care", "Media & Production", "Prayer & Altar Ministry", "Logistics & Security", "Registration Desk", "Hospitality"] },
+      { name: "availability", label: "Availability", type: "select", options: ["Weekdays", "Weekends", "Anytime"] },
+      { name: "occupation", label: "Prior experience", type: "text" },
+      { name: "status", label: "Status", type: "select", options: ["Pending", "Approved", "Rejected"] },
+      { name: "notes", label: "Internal notes", type: "textarea", rows: 3 },
+    ],
+  },
+
+  newsletter: {
+    label: "Newsletter Subscribers",
+    singular: "Subscriber",
+    apiBase: "/api/newsletters",
+    dataKey: "subscribers",
+    idField: "_id",
+    columns: [
+      { key: "email", label: "Email" },
+      { key: "fullName", label: "Name" },
+      { key: "status", label: "Status" },
+    ],
+    fields: [
+      { name: "email", label: "Email", type: "email", required: true },
+      { name: "fullName", label: "Full name", type: "text" },
+      { name: "status", label: "Status", type: "select", options: ["Subscribed", "Unsubscribed"] },
+    ],
+  },
 };

@@ -40,10 +40,10 @@
       </div>
       <div class="admin-nav-group">
         <span class="admin-nav-label">Engagement</span>
-        <span class="admin-nav-soon">Contact Messages — coming soon</span>
-        <span class="admin-nav-soon">Prayer Requests — coming soon</span>
-        <span class="admin-nav-soon">Volunteer Applications — coming soon</span>
-        <span class="admin-nav-soon">Newsletter — coming soon</span>
+        <a href="/admin/contacts" class="<%= currentModule === 'contacts' ? 'active' : '' %>">Contact Messages</a>
+        <a href="/admin/prayers" class="<%= currentModule === 'prayers' ? 'active' : '' %>">Prayer Requests</a>
+        <a href="/admin/volunteers" class="<%= currentModule === 'volunteers' ? 'active' : '' %>">Volunteer Applications</a>
+        <a href="/admin/newsletter" class="<%= currentModule === 'newsletter' ? 'active' : '' %>">Newsletter</a>
       </div>
       <div class="admin-nav-group">
         <span class="admin-nav-label">Live</span>

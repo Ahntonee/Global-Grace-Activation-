@@ -50,6 +50,29 @@ exports.getSubscriber = asyncHandler(async (req, res) => {
   });
 });
 
+// Generic update — matches the create/list/get/update/delete convention
+// every other module follows (dedicated unsubscribe stays below for the
+// one-click admin action / public unsubscribe-link flow).
+exports.updateSubscriber = asyncHandler(async (req, res) => {
+  const subscriber = await Newsletter.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  if (!subscriber) {
+    throw new ApiError(404, "Subscriber not found");
+  }
+
+  res.json({
+    success: true,
+    subscriber,
+  });
+});
+
 // Unsubscribe
 exports.unsubscribe = asyncHandler(async (req, res) => {
   const subscriber = await Newsletter.findByIdAndUpdate(

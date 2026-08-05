@@ -46,7 +46,7 @@
         <h2 style="font-size:1.8rem; margin:16px 0 20px;">Submit a testimony</h2>
         <p style="color:var(--mist);">Your story could be the encouragement someone else needs today.</p>
       </div>
-      <form data-fake-submit data-success="Thank you — your testimony has been received!" class="reveal">
+      <form data-api-form data-endpoint="/api/testimonies/submit" data-success="Thank you — your testimony has been received!" class="reveal">
         <div class="field-row">
           <div class="field"><label>Full Name</label><input type="text" name="fullName" placeholder="Your name (optional)"></div>
           <div class="field"><label>Location</label><input type="text" name="location" placeholder="City, Country"></div>

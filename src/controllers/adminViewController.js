@@ -7,6 +7,10 @@ const Event = require("../models/Event");
 const Speaker = require("../models/Speaker");
 const Testimony = require("../models/Testimony");
 const Faq = require("../models/Faq");
+const Contact = require("../models/Contact");
+const Prayer = require("../models/Prayer");
+const Volunteer = require("../models/Volunteer");
+const Newsletter = require("../models/Newsletter");
 
 const modelsByKey = {
   pages: Page,
@@ -15,6 +19,10 @@ const modelsByKey = {
   speakers: Speaker,
   testimonies: Testimony,
   faqs: Faq,
+  contacts: Contact,
+  prayers: Prayer,
+  volunteers: Volunteer,
+  newsletter: Newsletter,
 };
 
 exports.loginPage = (req, res) => {

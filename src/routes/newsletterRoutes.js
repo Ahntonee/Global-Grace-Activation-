@@ -6,6 +6,7 @@ const {
   subscribe,
   getSubscribers,
   getSubscriber,
+  updateSubscriber,
   unsubscribe,
   deleteSubscriber,
 } = require("../controllers/newsletterController");
@@ -34,6 +35,13 @@ router.get(
   protect,
   authorize("admin"),
   getSubscriber
+);
+
+router.put(
+  "/:id",
+  protect,
+  authorize("admin"),
+  updateSubscriber
 );
 
 router.put(
