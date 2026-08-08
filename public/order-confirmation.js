@@ -18,14 +18,26 @@
 
       if (order.paymentStatus === "Paid") {
         heading.textContent = "Thank you — your order is confirmed!";
+
+        const downloadableLinks = (order.digitalDeliveryLinks || []).filter((l) => l.url);
+        const linksHtml = downloadableLinks.length
+          ? `<div style="margin-top:18px;">
+              <p style="color:var(--text); font-weight:700; margin-bottom:8px;">Your digital items:</p>
+              ${downloadableLinks
+                .map((l) => {
+                  const item = (order.items || []).find((i) => i.product === l.product || i.product === String(l.product));
+                  const name = item ? item.name : "Download";
+                  return `<a href="${l.url}" target="_blank" rel="noopener" class="btn btn-sm btn-primary" style="margin:4px 8px 4px 0;">${name} &darr;</a>`;
+                })
+                .join("")}
+              <p style="color:var(--mist); font-size:13px; margin-top:8px;">A copy of these links was also sent to your email.</p>
+            </div>`
+          : "";
+
         body.innerHTML = `
           <p style="font-family:'Space Mono',monospace; font-size:13px; color:var(--mist); margin-bottom:14px;">Order ${order.orderNumber}</p>
           <p style="color:var(--text);">Total: <strong>₦${order.total.toLocaleString()}</strong></p>
-          ${
-            order.digitalDeliveryLinks && order.digitalDeliveryLinks.length
-              ? `<p style="margin-top:14px; color:var(--text);">Your digital items are ready — check your email for download access.</p>`
-              : ""
-          }
+          ${linksHtml}
           ${
             order.requiresShipping
               ? `<p style="margin-top:14px; color:var(--text);">We'll email you shipping updates as your order is processed.</p>`

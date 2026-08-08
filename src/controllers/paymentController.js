@@ -1,8 +1,10 @@
 const Order = require("../models/Order");
 const Donation = require("../models/Donation");
+const Product = require("../models/Product");
 const asyncHandler = require("../utils/asyncHandler");
 const ApiError = require("../utils/apiError");
 const payments = require("../services/payments");
+const mail = require("../services/mail");
 const { paystackService, flutterwaveService } = payments;
 
 // References are generated as GGA-ORD-... / GGA-DON-... (see
@@ -19,25 +21,74 @@ async function findTargetByReference(reference) {
 }
 
 async function markPaid({ kind, doc }, providerTransactionId) {
+  // Payment gateways deliver webhooks at-least-once — a timeout or non-200
+  // response triggers a retry of the exact same event. Without this guard,
+  // a retried "charge.success" re-runs the whole branch below and re-sends
+  // the receipt email (and re-verifies with the provider) every time.
+  if (kind === "order" && doc.paymentStatus === "Paid") return;
+  if (kind === "donation" && doc.status === "Successful") return;
+
   if (kind === "order") {
     doc.paymentStatus = "Paid";
     doc.providerTransactionId = providerTransactionId;
 
     // Digital items are delivered as soon as payment clears — no manual
-    // fulfillment step needed for those specifically.
-    doc.items
-      .filter((i) => i.type === "digital")
-      .forEach((i) => {
-        if (!doc.digitalDeliveryLinks.some((l) => String(l.product) === String(i.product))) {
-          doc.digitalDeliveryLinks.push({ product: i.product, deliveredAt: new Date() });
-        }
+    // fulfillment step needed for those specifically. The actual asset URL
+    // comes from the product's digitalAsset (Media) — previously this only
+    // recorded *that* delivery happened, never the URL to deliver.
+    const digitalItems = doc.items.filter((i) => i.type === "digital");
+    if (digitalItems.length) {
+      const products = await Product.find({ _id: { $in: digitalItems.map((i) => i.product) } }).populate("digitalAsset");
+      const productsById = new Map(products.map((p) => [String(p._id), p]));
+
+      digitalItems.forEach((i) => {
+        if (doc.digitalDeliveryLinks.some((l) => String(l.product) === String(i.product))) return;
+        const product = productsById.get(String(i.product));
+        doc.digitalDeliveryLinks.push({
+          product: i.product,
+          url: product && product.digitalAsset ? product.digitalAsset.url : undefined,
+          deliveredAt: new Date(),
+        });
       });
+    }
 
     await doc.save();
+
+    mail.sendTemplate({
+      to: doc.customer.email,
+      subject: `Order confirmed — ${doc.orderNumber}`,
+      template: "order-receipt",
+      data: {
+        customerName: doc.customer.fullName,
+        orderNumber: doc.orderNumber,
+        items: doc.items,
+        total: doc.total,
+        requiresShipping: doc.requiresShipping,
+        digitalLinks: doc.digitalDeliveryLinks
+          .filter((l) => l.url)
+          .map((l) => {
+            const item = doc.items.find((i) => String(i.product) === String(l.product));
+            return { name: item ? item.name : "Digital item", url: l.url };
+          }),
+      },
+    });
   } else if (kind === "donation") {
     doc.status = "Successful";
     doc.providerTransactionId = providerTransactionId;
     await doc.save();
+
+    mail.sendTemplate({
+      to: doc.donor.email,
+      subject: "Thank you for giving — Global Grace Activation",
+      template: "donation-receipt",
+      data: {
+        donorName: doc.donor.isAnonymous ? null : doc.donor.fullName,
+        amount: doc.amount,
+        fund: doc.fund,
+        frequency: doc.frequency,
+        reference: doc.paymentReference,
+      },
+    });
   }
 }
 

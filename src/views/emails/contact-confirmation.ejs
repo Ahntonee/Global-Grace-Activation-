@@ -1,0 +1,15 @@
+<%- include('./partials/header', { title: 'We received your message' }) %>
+<h1 style="font-family:Georgia,serif; color:#064e3b; font-size:20px; margin:0 0 16px;">We got your message, <%= fullName %>.</h1>
+<p style="font-family:Arial,Helvetica,sans-serif; color:#374151; font-size:14.5px; line-height:1.7; margin:0 0 14px;">
+  Thanks for reaching out to Global Grace Activation. Our team will respond within 48 hours.
+</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f0fdf4; border-radius:8px; margin:0 0 14px;">
+  <tr><td style="padding:16px 18px; font-family:Arial,Helvetica,sans-serif; font-size:13.5px; color:#374151; line-height:1.7;">
+    <strong style="color:#064e3b;">Subject:</strong> <%= subject %><br>
+    <strong style="color:#064e3b;">Message:</strong> <%= message %>
+  </td></tr>
+</table>
+<p style="font-family:Arial,Helvetica,sans-serif; color:#6b7280; font-size:13px; line-height:1.7; margin:0;">
+  If this wasn't you, you can safely ignore this email.
+</p>
+<%- include('./partials/footer') %>

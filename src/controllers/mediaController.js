@@ -15,6 +15,11 @@ exports.uploadMedia = asyncHandler(async (req, res) => {
       const stream = cloudinary.uploader.upload_stream(
         {
           folder: "global-grace",
+          // Without this, Cloudinary assumes "image" and rejects non-image
+          // files (PDFs, etc.) outright — "auto" lets it detect and store
+          // images/video/raw files correctly, since the Media library needs
+          // to handle both product photos and digital-download PDFs.
+          resource_type: "auto",
         },
         (error, result) => {
           if (result) resolve(result);

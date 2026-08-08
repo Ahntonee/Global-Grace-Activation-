@@ -10,6 +10,7 @@ const Faq = require("../models/Faq");
 const Contact = require("../models/Contact");
 const Prayer = require("../models/Prayer");
 const Volunteer = require("../models/Volunteer");
+const EventRegistration = require("../models/EventRegistration");
 const Newsletter = require("../models/Newsletter");
 const Product = require("../models/Product");
 const Order = require("../models/Order");
@@ -25,6 +26,7 @@ const modelsByKey = {
   contacts: Contact,
   prayers: Prayer,
   volunteers: Volunteer,
+  eventRegistrations: EventRegistration,
   newsletter: Newsletter,
   products: Product,
 };
@@ -103,7 +105,11 @@ exports.editFormPage = asyncHandler(async (req, res) => {
   }
 
   const lookup = config.idField === "_id" ? { _id: req.params.id } : { [config.idField]: req.params.id };
-  const record = await Model.findOne(lookup).lean();
+  let query = Model.findOne(lookup);
+  (config.populateFields || []).forEach((field) => {
+    query = query.populate(field);
+  });
+  const record = await query.lean();
 
   if (!record) {
     return res.status(404).render("pages/404", { title: "Not found" });

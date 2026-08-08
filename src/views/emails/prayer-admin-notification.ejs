@@ -1,0 +1,12 @@
+<%- include('./partials/header', { title: 'New prayer request' }) %>
+<h1 style="font-family:Georgia,serif; color:#064e3b; font-size:20px; margin:0 0 16px;">New prayer request</h1>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f0fdf4; border-radius:8px; margin:0 0 14px;">
+  <tr><td style="padding:16px 18px; font-family:Arial,Helvetica,sans-serif; font-size:13.5px; color:#374151; line-height:1.9;">
+    <strong style="color:#064e3b;">From:</strong> <%= isAnonymous ? 'Anonymous' : fullName %><% if (!isAnonymous && email) { %> &lt;<%= email %>&gt;<% } %><br>
+    <strong style="color:#064e3b;">Category:</strong> <%= category %><br>
+    <% if (isConfidential) { %><strong style="color:#b91c1c;">Marked confidential</strong><br><% } %>
+    <strong style="color:#064e3b;">Request:</strong> <%= request %>
+  </td></tr>
+</table>
+<a href="<%= adminUrl %>" style="display:inline-block; background:#10b981; color:#ffffff; padding:12px 22px; border-radius:999px; text-decoration:none; font-weight:700; font-size:13.5px;">View in Admin</a>
+<%- include('./partials/footer') %>

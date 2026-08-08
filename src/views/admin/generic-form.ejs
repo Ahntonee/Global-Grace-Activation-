@@ -33,6 +33,25 @@
         <% } else if (f.type === 'tags') { %>
           <label><%= f.label %></label>
           <input type="text" name="<%= f.name %>" data-type="tags" value="<%= record && Array.isArray(getVal(record, f.name)) ? getVal(record, f.name).join(', ') : '' %>">
+        <% } else if (f.type === 'image-upload' || f.type === 'file-upload') { %>
+          <%
+            let currentAsset = null;
+            if (record) {
+              const raw = getVal(record, f.name);
+              currentAsset = Array.isArray(raw) ? raw[0] : raw;
+            }
+          %>
+          <label><%= f.label %></label>
+          <% if (currentAsset && currentAsset.url) { %>
+            <div style="margin-bottom:10px;">
+              <% if (f.type === 'image-upload') { %>
+                <img src="<%= currentAsset.url %>" alt="Current image" style="max-width:160px; border-radius:8px; display:block; margin-bottom:6px; border:1px solid var(--line);">
+              <% } else { %>
+                <a href="<%= currentAsset.url %>" target="_blank" rel="noopener">Current file: <%= currentAsset.originalName || 'view file' %></a>
+              <% } %>
+            </div>
+          <% } %>
+          <input type="file" name="<%= f.name %>" data-upload-field="<%= f.type === 'image-upload' ? 'single-array' : 'single' %>" accept="<%= f.accept || '' %>">
         <% } else { %>
           <label><%= f.label %></label>
           <input type="<%= f.type %>" name="<%= f.name %>" <%= f.required ? 'required' : '' %>
@@ -51,8 +70,8 @@
 </div>
 
 <script nonce="<%= nonce %>">
-  window.__ADMIN_MODULE__ = <%- JSON.stringify(config) %>;
-  window.__ADMIN_MODULE_KEY__ = <%- JSON.stringify(moduleKey) %>;
-  window.__ADMIN_RECORD_ID__ = <%- JSON.stringify(recordId) %>;
+  window.__ADMIN_MODULE__ = <%- jsonScript(config) %>;
+  window.__ADMIN_MODULE_KEY__ = <%- jsonScript(moduleKey) %>;
+  window.__ADMIN_RECORD_ID__ = <%- jsonScript(recordId) %>;
 </script>
 <script src="/admin-assets/crud-form.js"></script>

@@ -19,6 +19,6 @@
 </section>
 
 <script nonce="<%= nonce %>">
-  window.__DONATION_REFERENCE__ = <%- JSON.stringify(reference) %>;
+  window.__DONATION_REFERENCE__ = <%- jsonScript(reference) %>;
 </script>
 <script src="/give-confirmation.js"></script>

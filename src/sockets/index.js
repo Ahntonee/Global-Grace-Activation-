@@ -24,22 +24,30 @@ function initSocket(server, allowedOrigins) {
     socket.on("join-room", async ({ broadcastId }) => {
       if (!broadcastId) return;
 
-      // Guests can join without an account — this is a public stream.
-      const broadcast = await Broadcast.findById(broadcastId).lean();
-      if (!broadcast || !broadcast.chatEnabled) {
-        socket.emit("chat:error", { message: "Chat is not available for this broadcast." });
-        return;
+      try {
+        // Guests can join without an account — this is a public stream.
+        const broadcast = await Broadcast.findById(broadcastId).lean();
+        if (!broadcast || !broadcast.chatEnabled) {
+          socket.emit("chat:error", { message: "Chat is not available for this broadcast." });
+          return;
+        }
+
+        joinedBroadcastId = broadcastId;
+        socket.join(roomFor(broadcastId));
+
+        const history = await ChatMessage.find({ broadcast: broadcastId, isHidden: false })
+          .sort({ createdAt: -1 })
+          .limit(HISTORY_LIMIT)
+          .lean();
+
+        socket.emit("chat:history", history.reverse());
+      } catch (err) {
+        // A malformed broadcastId (e.g. not a valid ObjectId) throws a
+        // CastError here — left unguarded, that's an unhandled rejection
+        // inside a socket event handler, which crashes the whole process
+        // for every connected client, not just this one.
+        socket.emit("chat:error", { message: "Could not join this broadcast." });
       }
-
-      joinedBroadcastId = broadcastId;
-      socket.join(roomFor(broadcastId));
-
-      const history = await ChatMessage.find({ broadcast: broadcastId, isHidden: false })
-        .sort({ createdAt: -1 })
-        .limit(HISTORY_LIMIT)
-        .lean();
-
-      socket.emit("chat:history", history.reverse());
     });
 
     socket.on("chat:message", async ({ broadcastId, displayName, message }) => {

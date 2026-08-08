@@ -21,7 +21,7 @@
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.3 3-6 7-6s7 2.7 7 6"/><circle cx="18" cy="9" r="2.4"/><path d="M16 14.2c2.6.5 4.5 2.4 4.5 5.3"/></svg> Open to all &middot; free registration</li>
         </ul>
         <div style="display:flex; gap:14px; flex-wrap:wrap;">
-          <a href="#register" class="btn btn-primary js-register-btn" data-event="<%= featuredEvent.title %>">Register Now</a>
+          <a href="#register" class="btn btn-primary js-register-btn" data-event="<%= featuredEvent.title %>" data-event-id="<%= featuredEvent._id %>">Register Now</a>
           <a href="#" class="btn btn-outline-dark">Download Event Guide</a>
         </div>
       </div>
@@ -93,7 +93,7 @@
             <% if (ev.isVirtual && ev.meetingLink) { %>
               <a href="<%= ev.meetingLink %>" class="btn btn-sm btn-outline-dark">Watch Live</a>
             <% } else { %>
-              <a href="#" class="btn btn-sm btn-primary js-register-btn" data-event="<%= ev.title %>">Register</a>
+              <a href="#" class="btn btn-sm btn-primary js-register-btn" data-event="<%= ev.title %>" data-event-id="<%= ev._id %>">Register</a>
             <% } %>
           </div>
         </div>

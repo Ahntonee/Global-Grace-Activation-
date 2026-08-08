@@ -1,6 +1,7 @@
 const Contact = require("../models/Contact");
 const asyncHandler = require("../utils/asyncHandler");
 const ApiError = require("../utils/apiError");
+const mail = require("../services/mail");
 
 // Submit Contact Form
 exports.submitContact = asyncHandler(async (req, res) => {
@@ -18,6 +19,28 @@ exports.submitContact = asyncHandler(async (req, res) => {
   res.status(201).json({
     success: true,
     contact,
+  });
+
+  // Fire-and-forget — a mail failure must never affect the submission
+  // that already succeeded and was already responded to above.
+  mail.sendTemplate({
+    to: email,
+    subject: "We received your message — Global Grace Activation",
+    template: "contact-confirmation",
+    data: { fullName, subject, message },
+  });
+  mail.sendTemplate({
+    to: process.env.MAIL_ADMIN_TO,
+    subject: `New contact message: ${subject}`,
+    template: "contact-admin-notification",
+    data: {
+      fullName,
+      email,
+      category,
+      subject,
+      message,
+      adminUrl: `${process.env.FRONTEND_URL}/admin/contacts`,
+    },
   });
 });
 

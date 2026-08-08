@@ -18,7 +18,7 @@
 </div>
 
 <script nonce="<%= nonce %>">
-  window.__ADMIN_MODULE__ = <%- JSON.stringify(config) %>;
-  window.__ADMIN_MODULE_KEY__ = <%- JSON.stringify(moduleKey) %>;
+  window.__ADMIN_MODULE__ = <%- jsonScript(config) %>;
+  window.__ADMIN_MODULE_KEY__ = <%- jsonScript(moduleKey) %>;
 </script>
 <script src="/admin-assets/crud-list.js"></script>

@@ -174,18 +174,21 @@
   }
 
   /* ---------- Toast helper ---------- */
-  window.gcToast = function(msg){
+  window.gcToast = function(msg, type){
+    type = type === 'error' ? 'error' : 'success';
     let t = document.querySelector('.toast');
     if(!t){
       t = document.createElement('div');
       t.className = 'toast';
-      t.innerHTML = '<span class="dot-ok"></span><span class="msg"></span>';
+      t.innerHTML = '<span class="toast-icon"><svg viewBox="0 0 24 24"><path class="check-path" d="M4 12l6 6L20 6"/><path class="x-path" d="M6 6l12 12M18 6L6 18"/></svg></span><span class="msg"></span>';
       document.body.appendChild(t);
     }
     t.querySelector('.msg').textContent = msg;
-    t.classList.add('show');
+    t.classList.remove('show', 'success', 'error');
+    void t.offsetWidth; // restart the check-draw animation on repeat toasts
+    t.classList.add('show', type);
     clearTimeout(t._timer);
-    t._timer = setTimeout(()=>t.classList.remove('show'), 3200);
+    t._timer = setTimeout(()=>t.classList.remove('show'), 4000);
   };
 
   /* ---------- Generic form intercept (newsletter, contact, volunteer, prayer, register) ---------- */
@@ -211,9 +214,15 @@
   if(registerModal){
     const closeBtn = document.getElementById('register-modal-close');
     const titleEl = document.getElementById('register-modal-title');
+    const form = registerModal.querySelector('form');
+    const eventIdInput = form ? form.querySelector('[name="eventId"]') : null;
+    const eventTitleInput = form ? form.querySelector('[name="eventTitle"]') : null;
 
-    function openRegisterModal(eventName){
-      if(titleEl) titleEl.textContent = eventName ? ('Register for ' + eventName) : 'Register for GGA Global Conference 2026';
+    function openRegisterModal(eventName, eventId){
+      const title = eventName || 'GGA Global Conference 2026';
+      if(titleEl) titleEl.textContent = 'Register for ' + title;
+      if(eventTitleInput) eventTitleInput.value = title;
+      if(eventIdInput) eventIdInput.value = eventId || '';
       registerModal.classList.add('open');
       registerModal.setAttribute('aria-hidden','false');
       document.body.style.overflow = 'hidden';
@@ -226,7 +235,7 @@
     document.querySelectorAll('.js-register-btn').forEach(btn=>{
       btn.addEventListener('click', (e)=>{
         e.preventDefault();
-        openRegisterModal(btn.getAttribute('data-event'));
+        openRegisterModal(btn.getAttribute('data-event'), btn.getAttribute('data-event-id'));
       });
     });
     if(closeBtn) closeBtn.addEventListener('click', closeRegisterModal);

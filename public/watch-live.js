@@ -51,7 +51,7 @@
   });
 
   socket.on("chat:error", (err) => {
-    window.gcToast(err.message);
+    window.gcToast(err.message, "error");
   });
 
   if (form) {

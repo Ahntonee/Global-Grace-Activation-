@@ -1,6 +1,7 @@
 const Volunteer = require("../models/Volunteer");
 const asyncHandler = require("../utils/asyncHandler");
 const ApiError = require("../utils/apiError");
+const mail = require("../services/mail");
 
 // Apply as Volunteer — public, no account required
 exports.applyVolunteer = asyncHandler(async (req, res) => {
@@ -38,6 +39,25 @@ exports.applyVolunteer = asyncHandler(async (req, res) => {
   res.status(201).json({
     success: true,
     volunteer,
+  });
+
+  mail.sendTemplate({
+    to: email,
+    subject: "Application received — Global Grace Activation",
+    template: "volunteer-confirmation",
+    data: { fullName, department },
+  });
+  mail.sendTemplate({
+    to: process.env.MAIL_ADMIN_TO,
+    subject: `New volunteer application: ${department || "General"}`,
+    template: "volunteer-admin-notification",
+    data: {
+      fullName,
+      email,
+      phone,
+      department,
+      adminUrl: `${process.env.FRONTEND_URL}/admin/volunteers`,
+    },
   });
 });
 

@@ -1,6 +1,7 @@
 const Newsletter = require("../models/Newsletter");
 const asyncHandler = require("../utils/asyncHandler");
 const ApiError = require("../utils/apiError");
+const mail = require("../services/mail");
 
 // Subscribe
 exports.subscribe = asyncHandler(async (req, res) => {
@@ -20,6 +21,13 @@ exports.subscribe = asyncHandler(async (req, res) => {
   res.status(201).json({
     success: true,
     subscriber,
+  });
+
+  mail.sendTemplate({
+    to: email,
+    subject: "You're subscribed — Global Grace Activation",
+    template: "newsletter-welcome",
+    data: {},
   });
 });
 

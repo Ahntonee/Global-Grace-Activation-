@@ -1,6 +1,7 @@
 const Prayer = require("../models/Prayer");
 const asyncHandler = require("../utils/asyncHandler");
 const ApiError = require("../utils/apiError");
+const mail = require("../services/mail");
 
 // Submit Prayer Request
 exports.submitPrayer = asyncHandler(async (req, res) => {
@@ -27,6 +28,30 @@ exports.submitPrayer = asyncHandler(async (req, res) => {
   res.status(201).json({
     success: true,
     prayer,
+  });
+
+  // Email is optional on this form — only confirm if one was given.
+  if (email) {
+    mail.sendTemplate({
+      to: email,
+      subject: "Received — our team is praying with you",
+      template: "prayer-confirmation",
+      data: {},
+    });
+  }
+  mail.sendTemplate({
+    to: process.env.MAIL_ADMIN_TO,
+    subject: "New prayer request",
+    template: "prayer-admin-notification",
+    data: {
+      fullName,
+      email,
+      category,
+      request,
+      isAnonymous: !!isAnonymous,
+      isConfidential: !!isConfidential,
+      adminUrl: `${process.env.FRONTEND_URL}/admin/prayers`,
+    },
   });
 });
 

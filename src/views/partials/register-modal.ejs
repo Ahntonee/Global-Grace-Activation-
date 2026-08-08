@@ -3,7 +3,9 @@
     <button class="modal-close" id="register-modal-close" type="button" aria-label="Close">&times;</button>
     <span class="eyebrow">Secure your seat</span>
     <h3 id="register-modal-title">Register for GGA Global Conference 2026</h3>
-    <form data-fake-submit data-success="You&#8217;re registered &mdash; check your email for your ticket!">
+    <form data-api-form data-endpoint="/api/event-registrations" data-success="You&#8217;re registered &mdash; check your email for confirmation!">
+      <input type="hidden" name="eventId" value="">
+      <input type="hidden" name="eventTitle" value="GGA Global Conference 2026">
       <div class="field-row">
         <div class="field"><label>Full Name</label><input type="text" name="fullName" required placeholder="Your name"></div>
         <div class="field"><label>Phone Number</label><input type="tel" name="phone" required placeholder="+234&hellip;"></div>

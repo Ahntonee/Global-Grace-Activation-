@@ -41,10 +41,10 @@
           throw new Error(msg);
         }
 
-        window.gcToast(successMsg);
+        window.gcToast(successMsg, "success");
         form.reset();
       } catch (err) {
-        window.gcToast(err.message);
+        window.gcToast(err.message, "error");
       } finally {
         if (submitBtn) submitBtn.disabled = false;
       }

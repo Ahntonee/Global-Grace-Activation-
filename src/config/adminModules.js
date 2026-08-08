@@ -12,6 +12,9 @@ module.exports = {
     apiBase: "/api/products?all=true",
     apiBaseWrite: "/api/products",
     idField: "slug",
+    // Populated so the edit form can show the currently-linked image/file,
+    // not just its ObjectId.
+    populateFields: ["images", "digitalAsset"],
     columns: [
       { key: "name", label: "Name" },
       { key: "type", label: "Type" },
@@ -32,6 +35,8 @@ module.exports = {
       { name: "sku", label: "SKU", type: "text" },
       { name: "stock", label: "Stock (physical only — ignored for digital)", type: "number", default: 0 },
       { name: "weightGrams", label: "Weight in grams (physical only, for future shipping calc)", type: "number" },
+      { name: "images", label: "Product image", type: "image-upload", accept: "image/*", hint: "One photo shown on the shop grid and product page. Uploading a new one replaces the current image." },
+      { name: "digitalAsset", label: "Digital file (PDF)", type: "file-upload", accept: ".pdf,application/pdf", hint: "The file customers receive after payment — used for digital products." },
       { name: "featured", label: "Featured", type: "checkbox" },
       { name: "isPublished", label: "Published", type: "checkbox" },
     ],
@@ -244,6 +249,29 @@ module.exports = {
       { name: "occupation", label: "Prior experience", type: "text" },
       { name: "status", label: "Status", type: "select", options: ["Pending", "Approved", "Rejected"] },
       { name: "notes", label: "Internal notes", type: "textarea", rows: 3 },
+    ],
+  },
+
+  eventRegistrations: {
+    label: "Event Registrations",
+    singular: "Registration",
+    apiBase: "/api/event-registrations",
+    dataKey: "eventRegistrations",
+    idField: "_id",
+    columns: [
+      { key: "fullName", label: "Name" },
+      { key: "eventTitle", label: "Event" },
+      { key: "guests", label: "Guests" },
+      { key: "status", label: "Status" },
+    ],
+    fields: [
+      { name: "fullName", label: "Full name", type: "text", required: true },
+      { name: "email", label: "Email", type: "email", required: true },
+      { name: "phone", label: "Phone", type: "text", required: true },
+      { name: "country", label: "Country", type: "text", required: true },
+      { name: "eventTitle", label: "Event", type: "text", required: true },
+      { name: "guests", label: "Guests attending", type: "select", options: ["Just me", "2 people", "3 people", "4+ people"] },
+      { name: "status", label: "Status", type: "select", options: ["Confirmed", "Cancelled"] },
     ],
   },
 

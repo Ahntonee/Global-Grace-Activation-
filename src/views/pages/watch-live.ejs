@@ -106,9 +106,9 @@
 </section>
 
 <script nonce="<%= nonce %>">
-  window.__BROADCAST_ID__ = <%- JSON.stringify(broadcast ? String(broadcast._id) : null) %>;
-  window.__BROADCAST_IS_LIVE__ = <%- JSON.stringify(isLive) %>;
-  window.__CHAT_ENABLED__ = <%- JSON.stringify(!!(broadcast && broadcast.chatEnabled)) %>;
+  window.__BROADCAST_ID__ = <%- jsonScript(broadcast ? String(broadcast._id) : null) %>;
+  window.__BROADCAST_IS_LIVE__ = <%- jsonScript(isLive) %>;
+  window.__CHAT_ENABLED__ = <%- jsonScript(!!(broadcast && broadcast.chatEnabled)) %>;
 </script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/watch-live.js"></script>

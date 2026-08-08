@@ -17,6 +17,7 @@ const pageRoutes = require("./routes/pageRoutes");
 const mediaRoutes = require("./routes/mediaRoutes");
 const blogRoutes = require("./routes/blogRoutes");
 const eventRoutes = require("./routes/eventRoutes");
+const eventRegistrationRoutes = require("./routes/eventRegistrationRoutes");
 const volunteerRoutes = require("./routes/volunteerRoutes");
 const prayerRoutes = require("./routes/prayerRoutes");
 const contactRoutes = require("./routes/contactRoutes");
@@ -44,6 +45,14 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(expressLayouts);
 app.set("layout", "layouts/main");
+
+// Safe way to drop a server value into an inline <script> block
+// (window.__X__ = <%- jsonScript(value) %>;). Plain JSON.stringify doesn't
+// escape "<", so a value containing the literal text "</script>" closes the
+// tag early at the HTML-parser level — before the JS parser ever sees it —
+// letting anything after it render as new markup. Escaping "<" to "<"
+// keeps the string intact as a single JS string literal instead.
+app.locals.jsonScript = (value) => JSON.stringify(value).replace(/</g, "\\u003c");
 // NOT using "layout extractScripts" — it was silently dropping
 // page-specific <script> blocks instead of relocating them (found via
 // browser testing, not visible from curl). Scripts render in their
@@ -127,6 +136,7 @@ app.use("/api/pages", pageRoutes);
 app.use("/api/media", mediaRoutes);
 app.use("/api/blogs", blogRoutes);
 app.use("/api/events", eventRoutes);
+app.use("/api/event-registrations", eventRegistrationRoutes);
 app.use("/api/volunteers", volunteerRoutes);
 app.use("/api/prayers", prayerRoutes);
 app.use("/api/contacts", contactRoutes);

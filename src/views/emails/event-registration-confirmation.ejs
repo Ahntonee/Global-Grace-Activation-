@@ -1,0 +1,15 @@
+<%- include('./partials/header', { title: 'You are registered' }) %>
+<h1 style="font-family:Georgia,serif; color:#064e3b; font-size:20px; margin:0 0 16px;">You're registered, <%= fullName %>!</h1>
+<p style="font-family:Arial,Helvetica,sans-serif; color:#374151; font-size:14.5px; line-height:1.7; margin:0 0 14px;">
+  Your seat is confirmed for <strong><%= eventTitle %></strong>. We can't wait to have you with us.
+</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f0fdf4; border-radius:8px; margin:0 0 14px;">
+  <tr><td style="padding:16px 18px; font-family:Arial,Helvetica,sans-serif; font-size:13.5px; color:#374151; line-height:1.9;">
+    <strong style="color:#064e3b;">Event:</strong> <%= eventTitle %><br>
+    <strong style="color:#064e3b;">Guests:</strong> <%= guests %>
+  </td></tr>
+</table>
+<p style="font-family:Arial,Helvetica,sans-serif; color:#6b7280; font-size:13px; line-height:1.7; margin:0;">
+  If this wasn't you, you can safely ignore this email.
+</p>
+<%- include('./partials/footer') %>

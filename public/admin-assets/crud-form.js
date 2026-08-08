@@ -18,12 +18,41 @@
     cursor[parts[parts.length - 1]] = value;
   }
 
-  function buildPayload() {
+  // Uploads one file to the Media library and returns the new Media._id.
+  async function uploadFile(file) {
+    const fd = new FormData();
+    fd.append("file", file);
+
+    const res = await fetch("/api/media/upload", {
+      method: "POST",
+      credentials: "same-origin",
+      body: fd,
+    });
+    const body = await res.json();
+
+    if (!res.ok) {
+      throw new Error(body.message || "File upload failed");
+    }
+
+    return body.media._id;
+  }
+
+  async function buildPayload() {
     const payload = {};
 
-    config.fields.forEach((f) => {
+    for (const f of config.fields) {
       const el = form.querySelector(`[name="${f.name}"]`);
-      if (!el) return;
+      if (!el) continue;
+
+      if (f.type === "image-upload" || f.type === "file-upload") {
+        // No new file chosen — leave the field out of the payload entirely
+        // so an edit doesn't wipe out whatever's already linked.
+        if (!el.files || !el.files[0]) continue;
+
+        const mediaId = await uploadFile(el.files[0]);
+        setNested(payload, f.name, el.dataset.uploadField === "single-array" ? [mediaId] : mediaId);
+        continue;
+      }
 
       let value;
       if (f.type === "checkbox") {
@@ -40,7 +69,7 @@
       }
 
       setNested(payload, f.name, value);
-    });
+    }
 
     return payload;
   }
@@ -51,13 +80,20 @@
 
     const submitBtn = form.querySelector("button[type=submit]");
     submitBtn.disabled = true;
-
-    const payload = buildPayload();
-    const isEdit = !!recordId;
-    const url = isEdit ? `${writeBase}/${recordId}` : writeBase;
-    const method = isEdit ? "PUT" : "POST";
+    const originalLabel = submitBtn.textContent;
 
     try {
+      const hasFileField = config.fields.some((f) => f.type === "image-upload" || f.type === "file-upload");
+      if (hasFileField) submitBtn.textContent = "Uploading…";
+
+      const payload = await buildPayload();
+
+      submitBtn.textContent = originalLabel;
+
+      const isEdit = !!recordId;
+      const url = isEdit ? `${writeBase}/${recordId}` : writeBase;
+      const method = isEdit ? "PUT" : "POST";
+
       const res = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
@@ -74,6 +110,7 @@
     } catch (err) {
       errorBox.textContent = err.message;
       errorBox.classList.add("show");
+      submitBtn.textContent = originalLabel;
       submitBtn.disabled = false;
     }
   });

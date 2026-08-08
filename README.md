@@ -44,3 +44,4 @@ See `.env.example` for the full list with placeholder values. Notable ones:
 - `PORT` defaults to 5000 if unset; most hosts inject their own via the `PORT` env var, which this app already respects.
 
 **Deliberately not included yet** — specifics depend on which hosting tier is chosen (GoDaddy shared/cPanel vs VPS, or elsewhere): a `Procfile`, reverse-proxy config, cPanel Node.js App Manager setup, TLS termination, and process manager choice (pm2 / systemd / Passenger). These are the last piece once the hosting decision is final.
+
