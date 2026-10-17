@@ -28,13 +28,21 @@
         <button class="active" type="button" data-frequency="One-Time">One-Time</button>
         <button type="button" data-frequency="Monthly">Monthly</button>
       </div>
-      <div class="give-amounts">
+      <div class="field">
+        <label for="give-currency">Currency</label>
+        <select name="currency" id="give-currency">
+          <% currencies.forEach(function(c) { %>
+            <option value="<%= c.code %>"<%= c.code === 'NGN' ? ' selected' : '' %>><%= c.code %> &mdash; <%= c.label %> (<%= c.symbol %>)</option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="give-amounts" id="give-amounts">
         <button class="amt-btn active" type="button" data-amt="10000">&#8358;10,000</button>
         <button class="amt-btn" type="button" data-amt="20000">&#8358;20,000</button>
         <button class="amt-btn" type="button" data-amt="50000">&#8358;50,000</button>
         <button class="amt-btn" type="button" data-amt="100000">&#8358;100,000</button>
         <button class="amt-btn" type="button" data-amt="custom">Custom</button>
-        <input type="text" class="custom-amount amt-btn" id="give-custom-amount" placeholder="&#8358; Amount" style="text-align:center;">
+        <input type="text" class="custom-amount amt-btn" id="give-custom-amount" placeholder="&#8358; Amount" inputmode="decimal" style="text-align:center;">
       </div>
       <div class="field-row">
         <div class="field"><label>Full Name</label><input type="text" name="fullName" required placeholder="Your name"></div>
@@ -51,15 +59,11 @@
         </select>
       </div>
       <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text); margin-bottom:16px;"><input type="checkbox" name="isAnonymous" style="width:auto;"> Give anonymously</label>
-      <div class="give-toggle" id="give-provider-toggle">
-        <button class="active" type="button" data-provider="paystack">Paystack</button>
-        <button type="button" data-provider="flutterwave">Flutterwave</button>
-      </div>
+      <input type="hidden" name="paymentProvider" value="flutterwave">
       <div class="admin-auth-error" id="give-error" style="margin-top:14px;"></div>
       <button class="btn btn-primary btn-block" type="submit" style="margin-top:16px;">Give Securely Now</button>
       <div class="gateways">
         <span style="font-size:12.5px; color:var(--mist);">We accept</span>
-        <span class="gateway-badge">Paystack</span>
         <span class="gateway-badge">Flutterwave</span>
       </div>
       <p style="font-size:12px; color:var(--mist); margin-top:16px;">All transactions are encrypted and processed securely. You'll receive an email receipt instantly.</p>
@@ -67,6 +71,9 @@
   </div>
 </section>
 
+<script nonce="<%= nonce %>">
+  window.__GIVE_CURRENCIES__ = <%- jsonScript(currencies) %>;
+</script>
 <script src="/give.js"></script>
 
 <section class="section-pad-sm" style="background:var(--paper-2);">
@@ -91,7 +98,7 @@
       <h2>Secure, accountable giving</h2>
     </div>
     <div class="grid-4 reveal-stagger" style="text-align:center;">
-      <div class="card" style="padding:26px;"><strong>Bank-level encryption</strong><p style="color:var(--mist); font-size:13.5px; margin-top:8px;">All gifts processed via Paystack &amp; Flutterwave.</p></div>
+      <div class="card" style="padding:26px;"><strong>Bank-level encryption</strong><p style="color:var(--mist); font-size:13.5px; margin-top:8px;">All gifts are processed securely by Flutterwave.</p></div>
       <div class="card" style="padding:26px;"><strong>Instant receipt</strong><p style="color:var(--mist); font-size:13.5px; margin-top:8px;">Email confirmation sent for every gift.</p></div>
       <div class="card" style="padding:26px;"><strong>Annual report</strong><p style="color:var(--mist); font-size:13.5px; margin-top:8px;">A yearly summary of how funds were used.</p></div>
       <div class="card" style="padding:26px;"><strong>Cancel anytime</strong><p style="color:var(--mist); font-size:13.5px; margin-top:8px;">Manage or stop recurring giving whenever you like.</p></div>

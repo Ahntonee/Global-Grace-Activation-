@@ -37,6 +37,12 @@ const broadcastSchema = new mongoose.Schema(
     actualStart: Date,
     actualEnd: Date,
 
+    // Flyer / thumbnail shown on the public Live page.
+    thumbnail: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Media",
+    },
+
     chatEnabled: {
       type: Boolean,
       default: true,

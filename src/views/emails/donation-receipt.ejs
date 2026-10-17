@@ -1,7 +1,7 @@
 <%- include('./partials/header', { title: 'Thank you for giving' }) %>
 <h1 style="font-family:Georgia,serif; color:#064e3b; font-size:20px; margin:0 0 16px;">Thank you for giving<% if (donorName) { %>, <%= donorName %><% } %>!</h1>
 <p style="font-family:Arial,Helvetica,sans-serif; color:#374151; font-size:14.5px; line-height:1.7; margin:0 0 14px;">
-  Your gift of <strong>&#8358;<%= amount.toLocaleString() %></strong> toward <strong><%= fund %></strong> has been received. This receipt confirms your <%= frequency === 'Monthly' ? 'first monthly' : 'one-time' %> gift.
+  Your gift of <strong><%= new Intl.NumberFormat('en', { style: 'currency', currency: (typeof currency !== 'undefined' && currency) ? currency : 'NGN' }).format(amount) %></strong> toward <strong><%= fund %></strong> has been received. This receipt confirms your <%= frequency === 'Monthly' ? 'first monthly' : 'one-time' %> gift.
 </p>
 <p style="font-family:Arial,Helvetica,sans-serif; color:#6b7280; font-size:13px; line-height:1.7; margin:0;">
   Reference: <%= reference %>

@@ -10,11 +10,11 @@ const {
   deleteProduct,
 } = require("../controllers/productController");
 
-const { protect, authorize } = require("../middleware/authMiddleware");
+const { protect, authorize, optionalAuth } = require("../middleware/authMiddleware");
 
 // Public
-router.get("/", getProducts);
-router.get("/:slug", getProduct);
+router.get("/", optionalAuth, getProducts);
+router.get("/:slug", optionalAuth, getProduct);
 
 // Admin
 router.post("/", protect, authorize("admin"), createProduct);

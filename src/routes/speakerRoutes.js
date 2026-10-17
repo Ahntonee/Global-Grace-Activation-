@@ -10,10 +10,10 @@ const {
   deleteSpeaker,
 } = require("../controllers/speakerController");
 
-const { protect, authorize } = require("../middleware/authMiddleware");
+const { protect, authorize, optionalAuth } = require("../middleware/authMiddleware");
 
 // Public
-router.get("/", getSpeakers);
+router.get("/", optionalAuth, getSpeakers);
 router.get("/:id", getSpeaker);
 
 // Admin

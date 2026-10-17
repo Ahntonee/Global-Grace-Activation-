@@ -27,11 +27,8 @@
       </div>
 
       <h3 style="margin:26px 0 18px;">Payment method</h3>
-      <div class="give-toggle" id="payment-provider-toggle">
-        <button type="button" class="active" data-provider="paystack">Paystack</button>
-        <button type="button" data-provider="flutterwave">Flutterwave</button>
-      </div>
-      <input type="hidden" name="paymentProvider" value="paystack">
+      <p style="font-size:14px; color:var(--mist);">You'll pay securely by card, bank transfer or USSD through <span class="gateway-badge">Flutterwave</span>.</p>
+      <input type="hidden" name="paymentProvider" value="flutterwave">
 
       <div class="admin-auth-error" id="checkout-error" style="margin-top:18px;"></div>
       <button class="btn btn-primary btn-block" type="submit" style="margin-top:22px;">Continue to Payment</button>

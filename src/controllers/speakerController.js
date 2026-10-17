@@ -1,4 +1,5 @@
 const Speaker = require("../models/Speaker");
+const { wantsAll } = require("../middleware/authMiddleware");
 const asyncHandler = require("../utils/asyncHandler");
 const ApiError = require("../utils/apiError");
 
@@ -12,7 +13,9 @@ exports.createSpeaker = asyncHandler(async (req, res) => {
 });
 
 exports.getSpeakers = asyncHandler(async (req, res) => {
-  const speakers = await Speaker.find()
+  const filter = wantsAll(req) ? {} : { isPublished: true };
+  if (req.query.type) filter.type = req.query.type;
+  const speakers = await Speaker.find(filter)
     .populate("photo")
     .sort({ order: 1, createdAt: 1 });
 

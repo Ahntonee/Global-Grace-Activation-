@@ -7,10 +7,10 @@ const ApiError = require("../utils/apiError");
 // upcoming Scheduled one, so the Watch Live page always has something
 // sensible to show.
 exports.getCurrentBroadcast = asyncHandler(async (req, res) => {
-  let broadcast = await Broadcast.findOne({ status: "Live", isPublished: true });
+  let broadcast = await Broadcast.findOne({ status: "Live", isPublished: true }).populate("thumbnail");
 
   if (!broadcast) {
-    broadcast = await Broadcast.findOne({ status: "Scheduled", isPublished: true }).sort({ scheduledStart: 1 });
+    broadcast = await Broadcast.findOne({ status: "Scheduled", isPublished: true }).sort({ scheduledStart: 1 }).populate("thumbnail");
   }
 
   res.json({ success: true, broadcast });
@@ -27,12 +27,12 @@ exports.createBroadcast = asyncHandler(async (req, res) => {
 });
 
 exports.getBroadcasts = asyncHandler(async (req, res) => {
-  const broadcasts = await Broadcast.find().sort({ createdAt: -1 });
+  const broadcasts = await Broadcast.find().populate("thumbnail").sort({ createdAt: -1 });
   res.json({ success: true, broadcasts });
 });
 
 exports.getBroadcast = asyncHandler(async (req, res) => {
-  const broadcast = await Broadcast.findById(req.params.id);
+  const broadcast = await Broadcast.findById(req.params.id).populate("thumbnail");
   if (!broadcast) throw new ApiError(404, "Broadcast not found");
   res.json({ success: true, broadcast });
 });

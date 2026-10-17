@@ -72,6 +72,15 @@ const productSchema = new mongoose.Schema(
       ref: "Media",
     },
 
+    // When set, the shop shows a "Buy Now" button that sends the visitor to
+    // this third-party page (Selar, Amazon, etc.) instead of the on-site cart.
+    externalUrl: {
+      type: String,
+      default: "",
+      trim: true,
+      validate: [(v) => !v || /^https?:\/\/\S+$/i.test(v), "External purchase link must start with http:// or https://"],
+    },
+
     // Physical shipping calc input
     weightGrams: Number,
 

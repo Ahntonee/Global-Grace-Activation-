@@ -24,7 +24,12 @@
         <div class="pill" style="margin-bottom:20px;">Add-on for <%= product.relatedEvent.title %></div>
       <% } %>
 
-      <% if (product.type === 'physical' && product.stock === 0) { %>
+      <% if (product.externalUrl) { %>
+        <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
+          <a href="<%= product.externalUrl %>" class="btn btn-primary" target="_blank" rel="noopener noreferrer sponsored">Buy Now</a>
+        </div>
+        <p style="font-size:13px; color:var(--mist); margin-top:14px;">You'll complete this purchase on the seller's website.</p>
+      <% } else if (product.type === 'physical' && product.stock === 0) { %>
         <p style="color:var(--mist); font-weight:700;">Currently out of stock.</p>
       <% } else { %>
         <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
@@ -42,7 +47,7 @@
         </div>
       <% } %>
 
-      <% if (product.type === 'physical') { %>
+      <% if (product.type === 'physical' && !product.externalUrl) { %>
         <p style="font-size:13px; color:var(--mist); margin-top:18px;">Ships within Nigeria only.</p>
       <% } %>
     </div>

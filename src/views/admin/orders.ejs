@@ -2,23 +2,58 @@
   <h2>Orders</h2>
 </div>
 
+<div class="admin-stats-grid" id="order-totals" style="margin-bottom:18px;"></div>
+
+<div class="admin-filters">
+  <div>
+    <label for="flt-q">Search</label>
+    <input type="search" id="flt-q" placeholder="Order #, customer, item…">
+  </div>
+  <div>
+    <label for="flt-from">From date</label>
+    <input type="date" id="flt-from">
+  </div>
+  <div>
+    <label for="flt-to">To date</label>
+    <input type="date" id="flt-to">
+  </div>
+  <div>
+    <label for="flt-status">Payment</label>
+    <select id="flt-status">
+      <option value="">All</option>
+      <option>Paid</option>
+      <option>Pending</option>
+      <option>Failed</option>
+    </select>
+  </div>
+  <button type="button" class="btn btn-sm btn-outline-dark" id="flt-clear">Clear</button>
+  <span class="count" id="flt-count"></span>
+  <span class="spacer"></span>
+  <div class="admin-export-group">
+    <button type="button" class="btn btn-sm btn-primary" data-export="xlsx">Download Excel report</button>
+    <button type="button" class="btn btn-sm btn-outline-dark" data-export="csv">Download CSV</button>
+  </div>
+</div>
+
 <div class="admin-table-wrap">
   <table class="admin-table" id="orders-table">
     <thead>
       <tr>
+        <th>Date</th>
         <th>Order #</th>
         <th>Customer</th>
         <th>Items</th>
         <th>Total</th>
         <th>Payment</th>
         <th>Fulfillment</th>
-        <th>Date</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody id="orders-body">
-      <tr><td colspan="7" class="admin-empty">Loading&hellip;</td></tr>
+      <tr><td colspan="8" class="admin-empty">Loading&hellip;</td></tr>
     </tbody>
   </table>
 </div>
 
+<script src="/admin-assets/record-tools.js"></script>
 <script src="/admin-assets/orders.js"></script>

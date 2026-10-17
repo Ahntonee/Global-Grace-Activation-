@@ -15,6 +15,7 @@ const Newsletter = require("../models/Newsletter");
 const Product = require("../models/Product");
 const Order = require("../models/Order");
 const Donation = require("../models/Donation");
+const { getFeedToken } = require("../utils/feedToken");
 
 const modelsByKey = {
   pages: Page,
@@ -36,24 +37,75 @@ exports.loginPage = (req, res) => {
 };
 
 exports.dashboard = asyncHandler(async (req, res) => {
-  const [pages, blogs, events, speakers, testimonies, faqs, products, pendingOrders, totalDonations] = await Promise.all([
+  const [
+    pages, blogs, blogsLive, events, eventsLive, speakers, ministers, leaders, testimonies, testimoniesPending, faqs,
+    products, orders, ordersToFulfill, donations, donationsOk,
+    registrations, contacts, contactsNew, prayers, prayersPending, volunteers, volunteersPending, subscribers,
+  ] = await Promise.all([
     Page.countDocuments(),
     Blog.countDocuments(),
+    Blog.countDocuments({ isPublished: true }),
     Event.countDocuments(),
+    Event.countDocuments({ isPublished: true }),
     Speaker.countDocuments(),
+    Speaker.countDocuments({ type: "conference-speaker" }),
+    Speaker.countDocuments({ type: "leadership" }),
     Testimony.countDocuments(),
+    Testimony.countDocuments({ isPublished: false }),
     Faq.countDocuments(),
     Product.countDocuments(),
+    Order.countDocuments(),
     Order.countDocuments({ fulfillmentStatus: "Unfulfilled", paymentStatus: "Paid" }),
+    Donation.countDocuments(),
     Donation.countDocuments({ status: "Successful" }),
+    EventRegistration.countDocuments(),
+    Contact.countDocuments(),
+    Contact.countDocuments({ status: "New" }),
+    Prayer.countDocuments(),
+    Prayer.countDocuments({ status: "Pending" }),
+    Volunteer.countDocuments(),
+    Volunteer.countDocuments({ status: "Pending" }),
+    Newsletter.countDocuments(),
   ]);
+
+  // Every total below is the full record count — the same number the
+  // matching admin list shows. The small note under it is a subset.
+  const cards = [
+    { label: "Pages", total: pages, href: "/admin/pages" },
+    { label: "Blog Posts", total: blogs, sub: `${blogsLive} published`, href: "/admin/blogs" },
+    { label: "Events", total: events, sub: `${eventsLive} published`, href: "/admin/events" },
+    { label: "Speakers & Leaders", total: speakers, sub: `${ministers} ministers · ${leaders} leadership`, href: "/admin/speakers" },
+    { label: "Testimonies", total: testimonies, sub: `${testimoniesPending} awaiting review`, href: "/admin/testimonies" },
+    { label: "FAQs", total: faqs, href: "/admin/faqs" },
+    { label: "Products", total: products, href: "/admin/products" },
+    { label: "Orders", total: orders, sub: `${ordersToFulfill} to fulfil`, href: "/admin/orders" },
+    { label: "Donations", total: donations, sub: `${donationsOk} successful`, href: "/admin/donations" },
+    { label: "Event Registrations", total: registrations, href: "/admin/eventRegistrations" },
+    { label: "Contact Messages", total: contacts, sub: `${contactsNew} new`, href: "/admin/contacts" },
+    { label: "Prayer Requests", total: prayers, sub: `${prayersPending} pending`, href: "/admin/prayers" },
+    { label: "Volunteer Applications", total: volunteers, sub: `${volunteersPending} pending`, href: "/admin/volunteers" },
+    { label: "Newsletter Subscribers", total: subscribers, href: "/admin/newsletter" },
+  ];
+
+  const shortcuts = [
+    { label: "+ New blog post", note: "Write a post with up to 3 images", href: "/admin/blogs/new" },
+    { label: "+ New event", note: "Add an event with up to 3 flyers", href: "/admin/events/new" },
+    { label: "+ New minister / leader", note: "Upload a photo and set their category", href: "/admin/speakers/new" },
+    { label: "+ New testimony", note: "Add an image and YouTube video", href: "/admin/testimonies/new" },
+    { label: "+ New product", note: "Image, PDF or an external Buy Now link", href: "/admin/products/new" },
+    { label: "Event registrations", note: "View, filter and download to Excel", href: "/admin/eventRegistrations" },
+    { label: "Donations", note: "Review gifts and download reports", href: "/admin/donations" },
+    { label: "Live broadcast", note: "Go live, set the flyer, moderate chat", href: "/admin/broadcast" },
+    { label: "Media library", note: "Everything uploaded so far", href: "/admin/media" },
+  ];
 
   res.render("admin/dashboard", {
     layout: "layouts/admin",
-    title: "Dashboard",
+    title: "GGA Admin Dashboard",
     currentModule: "dashboard",
     user: req.user,
-    stats: { pages, blogs, events, speakers, testimonies, faqs, products, pendingOrders, totalDonations },
+    cards,
+    shortcuts,
   });
 });
 
@@ -65,6 +117,11 @@ exports.listPage = (req, res) => {
     return res.status(404).render("pages/404", { title: "Not found" });
   }
 
+  let feedUrl = null;
+  if (config.liveFeed) {
+    feedUrl = `${req.protocol}://${req.get("host")}/api/export/feed/${moduleKey}.csv?token=${getFeedToken()}`;
+  }
+
   res.render("admin/generic-list", {
     layout: "layouts/admin",
     title: config.label,
@@ -72,6 +129,7 @@ exports.listPage = (req, res) => {
     user: req.user,
     moduleKey,
     config,
+    feedUrl,
   });
 };
 
@@ -113,6 +171,15 @@ exports.editFormPage = asyncHandler(async (req, res) => {
 
   if (!record) {
     return res.status(404).render("pages/404", { title: "Not found" });
+  }
+
+  // Posts/events created before multi-image support only have the single
+  // legacy image — show it in the new widget so it isn't lost on save.
+  if (moduleKey === "blogs" && !(record.images && record.images.length) && record.featuredImage && record.featuredImage.url) {
+    record.images = [record.featuredImage];
+  }
+  if (moduleKey === "events" && !(record.flyers && record.flyers.length) && record.featuredImage && record.featuredImage.url) {
+    record.flyers = [record.featuredImage];
   }
 
   res.render("admin/generic-form", {

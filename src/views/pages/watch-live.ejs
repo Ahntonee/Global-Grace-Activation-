@@ -25,7 +25,7 @@
           </div>
         <% } else { %>
           <div style="aspect-ratio:16/9; border-radius:var(--radius-lg); background:linear-gradient(155deg,#ecfdf5,#f0fdf4); position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden;">
-            <img src="/images/worship-stage.jpg" alt="Live stream" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;" loading="lazy">
+            <img src="<%= broadcast && broadcast.thumbnail && broadcast.thumbnail.url ? broadcast.thumbnail.url : '/images/worship-stage.jpg' %>" alt="<%= broadcast ? broadcast.title : 'Live stream' %>" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;" loading="lazy">
             <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,78,59,.55),transparent 60%);z-index:1;"></div>
             <div style="width:76px;height:76px;border-radius:50%; background:rgba(255,255,255,.18); border:1.5px solid rgba(255,255,255,.45); display:flex; align-items:center; justify-content:center; color:#fff; backdrop-filter:blur(6px); position:relative; z-index:2;"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
             <span class="live-badge" style="position:absolute; top:18px; left:18px; z-index:2; background:rgba(107,114,128,.85);"><span class="dot"></span> OFF AIR</span>

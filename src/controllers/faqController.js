@@ -1,3 +1,4 @@
+const { wantsAll } = require("../middleware/authMiddleware");
 const Faq = require("../models/Faq");
 const asyncHandler = require("../utils/asyncHandler");
 const ApiError = require("../utils/apiError");
@@ -12,7 +13,7 @@ exports.createFaq = asyncHandler(async (req, res) => {
 });
 
 exports.getFaqs = asyncHandler(async (req, res) => {
-  const filter = req.query.all === "true" ? {} : { isPublished: true };
+  const filter = wantsAll(req) ? {} : { isPublished: true };
   if (req.query.context) filter.context = req.query.context;
 
   const faqs = await Faq.find(filter).sort({ order: 1, createdAt: 1 });

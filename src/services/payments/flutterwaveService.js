@@ -12,12 +12,12 @@ function client() {
   });
 }
 
-// amount is in the major unit (Naira) — Flutterwave takes it as-is, no minor-unit conversion
-async function initiate({ amount, email, reference, callbackUrl, metadata }) {
+// amount is in the major unit (Naira, Dollars, ...) — Flutterwave takes it as-is, no minor-unit conversion
+async function initiate({ amount, currency = "NGN", email, reference, callbackUrl, metadata }) {
   const res = await client().post("/payments", {
     tx_ref: reference,
     amount,
-    currency: "NGN",
+    currency,
     redirect_url: callbackUrl,
     customer: { email },
     meta: metadata,

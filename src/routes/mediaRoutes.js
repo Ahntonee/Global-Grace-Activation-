@@ -14,14 +14,14 @@ const {
   authorize,
 } = require("../middleware/authMiddleware");
 
-const upload = require("../middleware/uploadMiddleware");
+const { uploadSingle } = require("../middleware/uploadMiddleware");
 
 // Upload (Admin only)
 router.post(
   "/upload",
   protect,
   authorize("admin"),
-  upload.single("file"),
+  uploadSingle("file"),
   uploadMedia
 );
 

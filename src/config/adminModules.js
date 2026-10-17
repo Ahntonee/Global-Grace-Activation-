@@ -1,10 +1,25 @@
 /*
  * One config object per admin-manageable content type. Drives the generic
  * list/form views (src/views/admin/generic-list.ejs, generic-form.ejs) and
- * the generic client-side CRUD script (public/admin/crud.js), so adding a
- * new manageable content type is a config entry here, not a new set of
- * hand-written admin screens.
+ * the generic client-side CRUD scripts (public/admin-assets/crud-*.js), so
+ * adding a new manageable content type is a config entry here, not a new set
+ * of hand-written admin screens.
+ *
+ * Field types: text, email, url, number, textarea, select, checkbox, tags,
+ * datetime-local, image-upload, file-upload.
+ *   - image-upload / file-upload take `max` (how many files) and `array`
+ *     (true when the model stores an array of Media ids, false for one id).
+ *   - select options can be plain strings or { value, label }.
+ * Column extras: type "boolean" | "date", or `labels` to map stored values
+ * to friendlier display text.
+ * Module extras: `exportable` (Excel/CSV download), `liveFeed` (shows the
+ * live spreadsheet link), `populateFields` (refs loaded for the edit form).
  */
+const SPEAKER_TYPES = [
+  { value: "conference-speaker", label: "Minister" },
+  { value: "leadership", label: "Leadership" },
+];
+
 module.exports = {
   products: {
     label: "Products",
@@ -30,13 +45,14 @@ module.exports = {
       { name: "description", label: "Full description (product page)", type: "textarea", rows: 5, required: true },
       { name: "price", label: "Price (NGN)", type: "number", required: true },
       { name: "compareAtPrice", label: "Compare-at price (optional, shows as struck-through)", type: "number" },
+      { name: "externalUrl", label: "External purchase link (Selar, Amazon, other store)", type: "url", placeholder: "https://selar.com/your-product", hint: "Optional. When filled in, the shop shows a \"Buy Now\" button that sends visitors to this link instead of the on-site cart." },
       { name: "category", label: "Category", type: "text", default: "General" },
       { name: "tags", label: "Tags (comma-separated)", type: "tags" },
       { name: "sku", label: "SKU", type: "text" },
       { name: "stock", label: "Stock (physical only — ignored for digital)", type: "number", default: 0 },
       { name: "weightGrams", label: "Weight in grams (physical only, for future shipping calc)", type: "number" },
-      { name: "images", label: "Product image", type: "image-upload", accept: "image/*", hint: "One photo shown on the shop grid and product page. Uploading a new one replaces the current image." },
-      { name: "digitalAsset", label: "Digital file (PDF)", type: "file-upload", accept: ".pdf,application/pdf", hint: "The file customers receive after payment — used for digital products." },
+      { name: "images", label: "Product image", type: "image-upload", max: 1, array: true, hint: "One photo shown on the shop grid and product page." },
+      { name: "digitalAsset", label: "Digital file (PDF)", type: "file-upload", accept: ".pdf,application/pdf", max: 1, array: false, hint: "The file customers receive after payment — used for digital products." },
       { name: "featured", label: "Featured", type: "checkbox" },
       { name: "isPublished", label: "Published", type: "checkbox" },
     ],
@@ -67,17 +83,21 @@ module.exports = {
   blogs: {
     label: "Blog Posts",
     singular: "Blog Post",
-    apiBase: "/api/blogs",
+    apiBase: "/api/blogs?all=true",
+    apiBaseWrite: "/api/blogs",
     idField: "slug",
+    populateFields: ["images", "featuredImage"],
     columns: [
       { key: "title", label: "Title" },
       { key: "category", label: "Category" },
+      { key: "createdAt", label: "Created", type: "date" },
       { key: "isPublished", label: "Published", type: "boolean" },
     ],
     fields: [
       { name: "title", label: "Title", type: "text", required: true },
       { name: "slug", label: "Slug", type: "text", required: true },
       { name: "excerpt", label: "Excerpt", type: "textarea", rows: 2, required: true },
+      { name: "images", label: "Images / flyers (up to 3)", type: "image-upload", max: 3, array: true, hint: "Upload up to three images. The first one is used as the thumbnail on the blog page; all of them are shown on the post." },
       { name: "content", label: "Content (HTML)", type: "textarea", rows: 16, required: true },
       { name: "category", label: "Category", type: "text", default: "General" },
       { name: "tags", label: "Tags (comma-separated)", type: "tags" },
@@ -91,8 +111,10 @@ module.exports = {
   events: {
     label: "Events",
     singular: "Event",
-    apiBase: "/api/events",
+    apiBase: "/api/events?all=true",
+    apiBaseWrite: "/api/events",
     idField: "slug",
+    populateFields: ["flyers", "featuredImage"],
     columns: [
       { key: "title", label: "Title" },
       { key: "location", label: "Location" },
@@ -104,6 +126,7 @@ module.exports = {
       { name: "title", label: "Title", type: "text", required: true },
       { name: "slug", label: "Slug", type: "text", required: true },
       { name: "description", label: "Description", type: "textarea", rows: 4, required: true },
+      { name: "flyers", label: "Event flyers (up to 3)", type: "image-upload", max: 3, array: true, hint: "Upload up to three flyers. They are shown on the Events page." },
       { name: "location", label: "Location", type: "text", required: true },
       { name: "startDate", label: "Start date/time", type: "datetime-local", required: true },
       { name: "endDate", label: "End date/time", type: "datetime-local", required: true },
@@ -118,20 +141,23 @@ module.exports = {
   speakers: {
     label: "Speakers & Leadership",
     singular: "Person",
-    apiBase: "/api/speakers",
+    apiBase: "/api/speakers?all=true",
+    apiBaseWrite: "/api/speakers",
     idField: "_id",
+    populateFields: ["photo"],
     columns: [
       { key: "name", label: "Name" },
       { key: "role", label: "Role" },
-      { key: "type", label: "Type" },
+      { key: "type", label: "Category", labels: { "conference-speaker": "Minister", leadership: "Leadership" } },
       { key: "isPublished", label: "Published", type: "boolean" },
     ],
     fields: [
       { name: "name", label: "Full name", type: "text", required: true },
       { name: "role", label: "Role / title", type: "text", required: true },
-      { name: "type", label: "Shows on", type: "select", options: ["conference-speaker", "leadership"], hint: "conference-speaker → Speakers page. leadership → About page team grid." },
+      { name: "type", label: "Category", type: "select", options: SPEAKER_TYPES, hint: "Minister → appears on the Speakers page. Leadership → appears in the team section of the About page." },
+      { name: "photo", label: "Photo", type: "image-upload", max: 1, array: false, hint: "A portrait works best (square or 4:5). Shown on the Speakers page for ministers and the About page team section for leadership." },
       { name: "bio", label: "Bio", type: "textarea", rows: 3 },
-      { name: "featured", label: "Featured on homepage (conference speakers only)", type: "checkbox" },
+      { name: "featured", label: "Featured on homepage (ministers only)", type: "checkbox" },
       { name: "order", label: "Display order", type: "number", default: 0 },
       { name: "socialLinks.instagram", label: "Instagram URL", type: "text" },
       { name: "socialLinks.youtube", label: "YouTube URL", type: "text" },
@@ -146,16 +172,20 @@ module.exports = {
     apiBase: "/api/testimonies?all=true",
     apiBaseWrite: "/api/testimonies",
     idField: "_id",
+    populateFields: ["thumbnail"],
     columns: [
       { key: "title", label: "Title" },
       { key: "category", label: "Category" },
       { key: "location", label: "Location" },
+      { key: "createdAt", label: "Submitted", type: "date" },
       { key: "isPublished", label: "Published", type: "boolean" },
     ],
     fields: [
       { name: "title", label: "Title", type: "text", required: true },
       { name: "category", label: "Category", type: "select", options: ["Healing", "Breakthrough", "Salvation", "Restoration", "Deliverance", "Family"] },
       { name: "location", label: "Location", type: "text" },
+      { name: "thumbnail", label: "Testimony image", type: "image-upload", max: 1, array: false, hint: "Shown on the testimony card on the public Testimonies page." },
+      { name: "youtubeUrl", label: "YouTube video link", type: "url", placeholder: "https://www.youtube.com/watch?v=...", hint: "Optional. Paste a YouTube link (watch, youtu.be or embed). Visitors can play it right on the Testimonies page." },
       { name: "body", label: "Full story", type: "textarea", rows: 6 },
       { name: "featured", label: "Featured", type: "checkbox" },
       { name: "isPublished", label: "Published", type: "checkbox" },
@@ -187,7 +217,9 @@ module.exports = {
     singular: "Message",
     apiBase: "/api/contacts",
     idField: "_id",
+    exportable: true,
     columns: [
+      { key: "createdAt", label: "Date", type: "date" },
       { key: "fullName", label: "From" },
       { key: "subject", label: "Subject" },
       { key: "category", label: "Category" },
@@ -210,7 +242,9 @@ module.exports = {
     singular: "Prayer Request",
     apiBase: "/api/prayers",
     idField: "_id",
+    exportable: true,
     columns: [
+      { key: "createdAt", label: "Date", type: "date" },
       { key: "fullName", label: "From" },
       { key: "category", label: "Category" },
       { key: "isConfidential", label: "Confidential", type: "boolean" },
@@ -234,7 +268,9 @@ module.exports = {
     singular: "Application",
     apiBase: "/api/volunteers",
     idField: "_id",
+    exportable: true,
     columns: [
+      { key: "createdAt", label: "Date", type: "date" },
       { key: "fullName", label: "Name" },
       { key: "department", label: "Department" },
       { key: "availability", label: "Availability" },
@@ -258,7 +294,10 @@ module.exports = {
     apiBase: "/api/event-registrations",
     dataKey: "eventRegistrations",
     idField: "_id",
+    exportable: true,
+    liveFeed: true,
     columns: [
+      { key: "createdAt", label: "Date", type: "date" },
       { key: "fullName", label: "Name" },
       { key: "eventTitle", label: "Event" },
       { key: "guests", label: "Guests" },
@@ -281,7 +320,9 @@ module.exports = {
     apiBase: "/api/newsletters",
     dataKey: "subscribers",
     idField: "_id",
+    exportable: true,
     columns: [
+      { key: "createdAt", label: "Date", type: "date" },
       { key: "email", label: "Email" },
       { key: "fullName", label: "Name" },
       { key: "status", label: "Status" },

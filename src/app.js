@@ -31,6 +31,7 @@ const orderRoutes = require("./routes/orderRoutes");
 const donationRoutes = require("./routes/donationRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 const broadcastRoutes = require("./routes/broadcastRoutes");
+const exportRoutes = require("./routes/exportRoutes");
 
 // Public site (server-rendered) routes
 const viewRoutes = require("./routes/viewRoutes");
@@ -39,6 +40,14 @@ const adminRoutes = require("./routes/adminRoutes");
 const app = express();
 
 app.disable("x-powered-by");
+
+// Behind a reverse proxy (GoDaddy/cPanel Passenger, nginx, a load balancer)
+// every request otherwise appears to come from the proxy's own IP, which
+// makes the rate limiters below treat ALL visitors as one person — an admin
+// uploading a few images could then be blocked with "Too many requests".
+// TRUST_PROXY=0 turns this off; by default it is on in production.
+const trustProxy = process.env.TRUST_PROXY !== undefined ? Number(process.env.TRUST_PROXY) : process.env.NODE_ENV === "production" ? 1 : 0;
+if (trustProxy) app.set("trust proxy", trustProxy);
 
 // View engine
 app.set("view engine", "ejs");
@@ -53,6 +62,23 @@ app.set("layout", "layouts/main");
 // letting anything after it render as new markup. Escaping "<" to "<"
 // keeps the string intact as a single JS string literal instead.
 app.locals.jsonScript = (value) => JSON.stringify(value).replace(/</g, "\\u003c");
+
+// Pulls the 11-character video id out of any common YouTube link style
+// (watch?v=, youtu.be/, /embed/, /shorts/, /live/) — null if it isn't one.
+app.locals.youtubeId = (url) => {
+  if (!url || typeof url !== "string") return null;
+  const m = url.match(/(?:youtube(?:-nocookie)?\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/|v\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/i);
+  return m ? m[1] : null;
+};
+
+// First available image URL for a record that has a list of Media docs and
+// possibly a legacy single image — used for card thumbnails.
+app.locals.firstImage = (list, legacy, fallback) => {
+  const first = Array.isArray(list) ? list.find((m) => m && m.url) : null;
+  if (first) return first.url;
+  if (legacy && legacy.url) return legacy.url;
+  return fallback || "";
+};
 // NOT using "layout extractScripts" — it was silently dropping
 // page-specific <script> blocks instead of relocating them (found via
 // browser testing, not visible from curl). Scripts render in their
@@ -77,6 +103,11 @@ app.use(
       directives: {
         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
         "script-src": ["'self'", (req, res) => `'nonce-${res.locals.nonce}'`],
+        // Uploaded media is served from Cloudinary; blob: is for the admin's
+        // instant preview of a file before it's uploaded; YouTube for
+        // testimony video thumbnails.
+        "img-src": ["'self'", "data:", "blob:", "https://res.cloudinary.com", "https://i.ytimg.com", "https://img.youtube.com"],
+        "media-src": ["'self'", "https://res.cloudinary.com"],
         // Video embeds (Broadcast.platform) need their player origins allowed to frame us.
         "frame-src": [
           "'self'",
@@ -118,10 +149,29 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-// Apply rate limiter BEFORE API routes
+// A request carrying a valid login token (the admin cookie or a Bearer
+// header) belongs to signed-in staff, not anonymous traffic.
+const jwt = require("jsonwebtoken");
+function hasValidSession(req) {
+  const header = req.headers.authorization;
+  const token = header && header.startsWith("Bearer") ? header.split(" ")[1] : req.cookies && req.cookies.token;
+  if (!token) return false;
+  try {
+    jwt.verify(token, process.env.JWT_SECRET);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
+// Apply rate limiter BEFORE API routes. It exists to slow down anonymous
+// abuse of the public endpoints; signed-in admins are skipped, otherwise a
+// normal editing session (lists, saves, several image uploads) would run
+// into "Too many requests". Login attempts have their own stricter limiter.
 app.use("/api", rateLimit({
     windowMs: 15 * 60 * 1000,
     max: 100,
+    skip: hasValidSession,
     message: {
         success: false,
         message: "Too many requests. Please try again later."
@@ -150,6 +200,7 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/donations", donationRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/broadcasts", broadcastRoutes);
+app.use("/api/export", exportRoutes);
 
 app.get("/api/status", (req, res) => {
     res.status(200).json({

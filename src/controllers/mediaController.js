@@ -84,8 +84,11 @@ exports.deleteMedia = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Media not found");
   }
 
-  // Delete from Cloudinary
-  await cloudinary.uploader.destroy(media.public_id);
+  // Delete from Cloudinary — destroy() assumes "image" unless told the
+  // resource type, and files uploaded with resource_type "auto" can have
+  // landed as raw/video (it's in the stored URL).
+  const resourceType = /\/(raw|video)\/upload\//.exec(media.url);
+  await cloudinary.uploader.destroy(media.public_id, { resource_type: resourceType ? resourceType[1] : "image" });
 
   // Delete from MongoDB
   await media.deleteOne();

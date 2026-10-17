@@ -5,6 +5,46 @@
   const modPanel = document.getElementById("moderation-panel");
   if (!listBody) return;
 
+  const thumbWidget = window.MediaField.mount(document.getElementById("broadcast-thumbnail"));
+  const submitBtn = document.getElementById("broadcast-submit");
+  const cancelBtn = document.getElementById("broadcast-cancel");
+  const formTitle = document.getElementById("broadcast-form-title");
+  let editingId = null;
+  let broadcastsById = {};
+
+  function toLocalInput(value) {
+    if (!value) return "";
+    const d = new Date(value);
+    const pad = (n) => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+
+  function startEditing(b) {
+    editingId = b._id;
+    form.elements.title.value = b.title || "";
+    form.elements.platform.value = b.platform || "YouTube";
+    form.elements.embedUrl.value = b.embedUrl || "";
+    form.elements.scheduledStart.value = toLocalInput(b.scheduledStart);
+    form.elements.chatEnabled.checked = !!b.chatEnabled;
+    thumbWidget.setItems(b.thumbnail ? [b.thumbnail] : []);
+    formTitle.textContent = `Edit broadcast — ${b.title}`;
+    submitBtn.textContent = "Save Changes";
+    cancelBtn.style.display = "";
+    form.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function stopEditing() {
+    editingId = null;
+    form.reset();
+    thumbWidget.reset();
+    formTitle.textContent = "Create a broadcast";
+    submitBtn.textContent = "Create Broadcast";
+    cancelBtn.style.display = "none";
+    errorBox.classList.remove("show");
+  }
+
+  cancelBtn.addEventListener("click", stopEditing);
+
   let socket = null;
   let currentModeratedId = null;
 
@@ -16,9 +56,10 @@
     const res = await fetch("/api/broadcasts", { credentials: "same-origin" });
     const body = await res.json();
     const broadcasts = body.broadcasts || [];
+    broadcastsById = Object.fromEntries(broadcasts.map((b) => [b._id, b]));
 
     if (!broadcasts.length) {
-      listBody.innerHTML = '<tr><td colspan="4" class="admin-empty">No broadcasts yet — create one above.</td></tr>';
+      listBody.innerHTML = '<tr><td colspan="5" class="admin-empty">No broadcasts yet — create one above.</td></tr>';
     } else {
       listBody.innerHTML = broadcasts
         .map((b) => {
@@ -27,11 +68,15 @@
             b.status === "Live"
               ? `<button type="button" class="btn btn-sm btn-outline-dark" data-end="${b._id}">End Broadcast</button>`
               : `<button type="button" class="btn btn-sm btn-primary" data-go-live="${b._id}">Go Live</button>`;
+          const thumb = b.thumbnail && b.thumbnail.url
+            ? `<img src="${escapeHtml(b.thumbnail.url)}" alt="Flyer" style="width:64px;height:44px;object-fit:cover;border-radius:6px;border:1px solid var(--line);">`
+            : '<span style="color:var(--mist);">—</span>';
           return `<tr>
+            <td>${thumb}</td>
             <td>${escapeHtml(b.title)}</td>
             <td>${b.platform}</td>
             <td>${badge}</td>
-            <td>${actionBtn} <button type="button" class="btn btn-sm btn-outline-dark" data-delete="${b._id}">Delete</button></td>
+            <td>${actionBtn} <button type="button" class="btn btn-sm btn-outline-dark" data-edit="${b._id}">Edit</button> <button type="button" class="btn btn-sm btn-outline-dark" data-delete="${b._id}">Delete</button></td>
           </tr>`;
         })
         .join("");
@@ -47,6 +92,9 @@
           await fetch(`/api/broadcasts/${btn.getAttribute("data-end")}/end`, { method: "PUT", credentials: "same-origin" });
           loadBroadcasts();
         })
+      );
+      listBody.querySelectorAll("[data-edit]").forEach((btn) =>
+        btn.addEventListener("click", () => startEditing(broadcastsById[btn.getAttribute("data-edit")]))
       );
       listBody.querySelectorAll("[data-delete]").forEach((btn) =>
         btn.addEventListener("click", async () => {
@@ -117,23 +165,36 @@
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     errorBox.classList.remove("show");
-    const data = Object.fromEntries(new FormData(form).entries());
-    data.chatEnabled = !!data.chatEnabled;
+    submitBtn.disabled = true;
 
     try {
-      const res = await fetch("/api/broadcasts", {
-        method: "POST",
+      const data = Object.fromEntries(new FormData(form).entries());
+      data.chatEnabled = !!form.elements.chatEnabled.checked;
+      if (!data.scheduledStart) delete data.scheduledStart;
+
+      if (thumbWidget.hasPending()) submitBtn.textContent = "Uploading…";
+      const ids = await thumbWidget.resolve();
+      if (ids.length) data.thumbnail = ids[0];
+      else if (editingId) data.thumbnail = null; // flyer removed
+
+      submitBtn.textContent = "Saving…";
+      const res = await fetch(editingId ? `/api/broadcasts/${editingId}` : "/api/broadcasts", {
+        method: editingId ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "same-origin",
         body: JSON.stringify(data),
       });
-      const body = await res.json();
-      if (!res.ok) throw new Error(body.message || "Failed to create broadcast");
-      form.reset();
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(body.message || "Failed to save broadcast");
+
+      stopEditing();
       loadBroadcasts();
     } catch (err) {
       errorBox.textContent = err.message;
       errorBox.classList.add("show");
+      submitBtn.textContent = editingId ? "Save Changes" : "Create Broadcast";
+    } finally {
+      submitBtn.disabled = false;
     }
   });
 

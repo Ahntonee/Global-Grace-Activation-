@@ -1,20 +1,21 @@
-<div class="admin-stats-grid">
-  <div class="admin-stat-card"><div class="num"><%= stats.pages %></div><div class="label">Pages</div></div>
-  <div class="admin-stat-card"><div class="num"><%= stats.blogs %></div><div class="label">Blog Posts</div></div>
-  <div class="admin-stat-card"><div class="num"><%= stats.events %></div><div class="label">Events</div></div>
-  <div class="admin-stat-card"><div class="num"><%= stats.speakers %></div><div class="label">Speakers &amp; Leaders</div></div>
-  <div class="admin-stat-card"><div class="num"><%= stats.testimonies %></div><div class="label">Testimonies</div></div>
-  <div class="admin-stat-card"><div class="num"><%= stats.faqs %></div><div class="label">FAQs</div></div>
-  <div class="admin-stat-card"><div class="num"><%= stats.products %></div><div class="label">Products</div></div>
-  <div class="admin-stat-card"><div class="num"><%= stats.pendingOrders %></div><div class="label">Orders to Fulfill</div></div>
-  <div class="admin-stat-card"><div class="num"><%= stats.totalDonations %></div><div class="label">Successful Donations</div></div>
+<div class="admin-toolbar">
+  <h2>GGA Admin Dashboard</h2>
 </div>
 
-<div class="admin-form-card" style="max-width:none;">
-  <h2 style="font-size:17px; margin-bottom:14px;">Welcome, <%= user.fullName %></h2>
-  <p style="color:var(--mist); font-size:14px; line-height:1.7;">
-    Use the sidebar to manage pages, blog posts, events, speakers, testimonies and FAQs — everything
-    you edit here updates the live site immediately. The Shop, Giving, Engagement, and Live sections
-    are being built next.
-  </p>
+<h3 class="admin-section-title">Overview</h3>
+<div class="admin-stats-grid">
+  <% cards.forEach(function(card) { %>
+    <a class="admin-stat-card" href="<%= card.href %>">
+      <div class="num"><%= card.total %></div>
+      <div class="label"><%= card.label %></div>
+      <% if (card.sub) { %><div class="field-hint" style="margin-top:6px;"><%= card.sub %></div><% } %>
+    </a>
+  <% }) %>
+</div>
+
+<h3 class="admin-section-title">Shortcuts</h3>
+<div class="admin-shortcuts">
+  <% shortcuts.forEach(function(s) { %>
+    <a class="admin-shortcut" href="<%= s.href %>"><strong><%= s.label %></strong><span><%= s.note %></span></a>
+  <% }) %>
 </div>

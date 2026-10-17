@@ -10,14 +10,11 @@ const {
   deleteBlog,
 } = require("../controllers/blogController");
 
-const {
-  protect,
-  authorize,
-} = require("../middleware/authMiddleware");
+const { protect, authorize, optionalAuth } = require("../middleware/authMiddleware");
 
 // Public
-router.get("/", getBlogs);
-router.get("/:slug", getBlog);
+router.get("/", optionalAuth, getBlogs);
+router.get("/:slug", optionalAuth, getBlog);
 
 // Admin
 router.post(

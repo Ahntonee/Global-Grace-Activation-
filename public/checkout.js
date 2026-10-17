@@ -5,8 +5,6 @@
   const totalEl = document.getElementById("checkout-total");
   const shippingFields = document.getElementById("shipping-fields");
   const errorBox = document.getElementById("checkout-error");
-  const providerToggle = document.getElementById("payment-provider-toggle");
-  const providerInput = form ? form.querySelector('input[name="paymentProvider"]') : null;
 
   if (!form) return;
 
@@ -31,14 +29,6 @@
       ? `<div style="display:flex; justify-content:space-between; color:var(--mist);"><span>Shipping</span><span>${window.ggaCart.fmtNaira(shippingFee)}</span></div>`
       : "");
   totalEl.textContent = window.ggaCart.fmtNaira(total);
-
-  providerToggle.querySelectorAll("button").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      providerToggle.querySelectorAll("button").forEach((b) => b.classList.remove("active"));
-      btn.classList.add("active");
-      providerInput.value = btn.getAttribute("data-provider");
-    });
-  });
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();

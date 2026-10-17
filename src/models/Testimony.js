@@ -29,6 +29,17 @@ const testimonySchema = new mongoose.Schema(
       ref: "Media",
     },
 
+    // Optional YouTube link (watch / youtu.be / embed / shorts) shown with the testimony.
+    youtubeUrl: {
+      type: String,
+      default: "",
+      trim: true,
+      validate: [
+        (v) => !v || /^(https?:\/\/)?(www\.|m\.)?(youtube\.com|youtu\.be|youtube-nocookie\.com)\//i.test(v),
+        "Please enter a valid YouTube link",
+      ],
+    },
+
     submittedBy: {
       fullName: { type: String, default: "" },
       isAnonymous: { type: Boolean, default: false },

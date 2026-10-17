@@ -6,7 +6,16 @@
   const errorBox = document.getElementById("form-error");
   if (!config || !form) return;
 
-  const writeBase = config.apiBaseWrite || config.apiBase;
+  const writeBase = config.apiBaseWrite || config.apiBase.split("?")[0];
+  const isEdit = !!recordId;
+
+  const MEDIA_TYPES = ["image-upload", "file-upload"];
+
+  // Mount an upload widget (preview / replace / remove) for every media field.
+  const mediaFields = {};
+  form.querySelectorAll(".media-field").forEach((el) => {
+    mediaFields[el.dataset.name] = window.MediaField.mount(el);
+  });
 
   function setNested(obj, path, value) {
     const parts = path.split(".");
@@ -18,41 +27,28 @@
     cursor[parts[parts.length - 1]] = value;
   }
 
-  // Uploads one file to the Media library and returns the new Media._id.
-  async function uploadFile(file) {
-    const fd = new FormData();
-    fd.append("file", file);
-
-    const res = await fetch("/api/media/upload", {
-      method: "POST",
-      credentials: "same-origin",
-      body: fd,
-    });
-    const body = await res.json();
-
-    if (!res.ok) {
-      throw new Error(body.message || "File upload failed");
-    }
-
-    return body.media._id;
-  }
-
   async function buildPayload() {
     const payload = {};
 
     for (const f of config.fields) {
-      const el = form.querySelector(`[name="${f.name}"]`);
-      if (!el) continue;
+      if (MEDIA_TYPES.includes(f.type)) {
+        const widget = mediaFields[f.name];
+        if (!widget) continue;
 
-      if (f.type === "image-upload" || f.type === "file-upload") {
-        // No new file chosen — leave the field out of the payload entirely
-        // so an edit doesn't wipe out whatever's already linked.
-        if (!el.files || !el.files[0]) continue;
-
-        const mediaId = await uploadFile(el.files[0]);
-        setNested(payload, f.name, el.dataset.uploadField === "single-array" ? [mediaId] : mediaId);
+        const ids = await widget.resolve();
+        if (widget.isArray) {
+          setNested(payload, f.name, ids);
+        } else if (ids.length) {
+          setNested(payload, f.name, ids[0]);
+        } else if (isEdit) {
+          // Removed in the widget — clear the link on the record.
+          setNested(payload, f.name, null);
+        }
         continue;
       }
+
+      const el = form.querySelector(`[name="${f.name}"]`);
+      if (!el) continue;
 
       let value;
       if (f.type === "checkbox") {
@@ -83,14 +79,13 @@
     const originalLabel = submitBtn.textContent;
 
     try {
-      const hasFileField = config.fields.some((f) => f.type === "image-upload" || f.type === "file-upload");
-      if (hasFileField) submitBtn.textContent = "Uploading…";
+      const pending = Object.values(mediaFields).some((w) => w.hasPending());
+      if (pending) submitBtn.textContent = "Uploading…";
 
       const payload = await buildPayload();
 
-      submitBtn.textContent = originalLabel;
+      submitBtn.textContent = "Saving…";
 
-      const isEdit = !!recordId;
       const url = isEdit ? `${writeBase}/${recordId}` : writeBase;
       const method = isEdit ? "PUT" : "POST";
 
@@ -100,16 +95,19 @@
         credentials: "same-origin",
         body: JSON.stringify(payload),
       });
-      const body = await res.json();
+      const body = await res.json().catch(() => ({}));
 
       if (!res.ok) {
-        throw new Error(body.message || (body.errors && body.errors.map((e) => e.message).join(", ")) || "Save failed");
+        throw new Error(body.message === "Validation failed" && body.errors
+          ? body.errors.map((er) => er.message).join(", ")
+          : body.message || (body.errors && body.errors.map((er) => er.message).join(", ")) || "Save failed");
       }
 
       window.location.href = `/admin/${moduleKey}`;
     } catch (err) {
       errorBox.textContent = err.message;
       errorBox.classList.add("show");
+      errorBox.scrollIntoView({ behavior: "smooth", block: "center" });
       submitBtn.textContent = originalLabel;
       submitBtn.disabled = false;
     }

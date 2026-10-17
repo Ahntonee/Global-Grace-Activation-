@@ -46,6 +46,22 @@
 </section>
 <% } %>
 
+<% if (featuredEvent && featuredEvent.flyers && featuredEvent.flyers.length) { %>
+<section class="section-pad-sm">
+  <div class="container">
+    <div class="center-head reveal">
+      <span class="eyebrow">Event flyers</span>
+      <h2><%= featuredEvent.title %></h2>
+    </div>
+    <div class="flyer-grid reveal">
+      <% featuredEvent.flyers.forEach(function(f, i) { if (!f || !f.url) return; %>
+        <a href="<%= f.url %>" target="_blank" rel="noopener"><img src="<%= f.url %>" alt="<%= featuredEvent.title %> flyer <%= i + 1 %>" loading="lazy"></a>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
 <% if (addons && addons.length) { %>
 <section class="section-pad">
   <div class="container">
@@ -90,6 +106,13 @@
               <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg> <%= ev.startDate.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}) %></span>
               <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s7-7.4 7-12.5A7 7 0 0 0 5 9.5C5 14.6 12 22 12 22z"/><circle cx="12" cy="9.5" r="2.5"/></svg> <%= ev.location %></span>
             </div>
+            <% if (ev.flyers && ev.flyers.length) { %>
+              <div class="flyer-thumbs">
+                <% ev.flyers.forEach(function(f, i) { if (!f || !f.url) return; %>
+                  <a href="<%= f.url %>" target="_blank" rel="noopener" title="View flyer <%= i + 1 %>"><img src="<%= f.url %>" alt="<%= ev.title %> flyer <%= i + 1 %>" loading="lazy"></a>
+                <% }) %>
+              </div>
+            <% } %>
             <% if (ev.isVirtual && ev.meetingLink) { %>
               <a href="<%= ev.meetingLink %>" class="btn btn-sm btn-outline-dark">Watch Live</a>
             <% } else { %>
@@ -116,7 +139,7 @@
     <div class="grid-3 reveal-stagger">
       <% past.forEach(function(ev) { %>
         <div class="card blog-card">
-          <div class="thumb"><img src="<%= ev.featuredImage && ev.featuredImage.url ? ev.featuredImage.url : '/images/conference-arena.jpg' %>" alt="<%= ev.title %>" loading="lazy"></div>
+          <div class="thumb"><img src="<%= firstImage(ev.flyers, ev.featuredImage, '/images/conference-arena.jpg') %>" alt="<%= ev.title %>" loading="lazy"></div>
           <div class="body">
             <span class="tag"><%= ev.startDate.getFullYear() %></span>
             <h4><%= ev.title %></h4>

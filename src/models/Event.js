@@ -26,6 +26,13 @@ const eventSchema = new mongoose.Schema(
       ref: "Media",
     },
 
+    // Up to three flyers per event (the first one is the primary flyer).
+    flyers: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Media" }],
+      validate: [(v) => v.length <= 3, "An event can have at most 3 flyers"],
+      default: [],
+    },
+
     location: {
       type: String,
       required: true,

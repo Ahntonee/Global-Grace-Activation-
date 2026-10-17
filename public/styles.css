@@ -1170,3 +1170,37 @@ footer ul a:hover{ color:var(--flame-dim); }
 .footer-brand .nav-brand{
   gap: 0;
 }
+
+/* ============ GIVE BUTTON (nav) ============ */
+.btn-give{
+  background: var(--ink);
+  color:#ffffff;
+  border-color: var(--ink);
+  box-shadow: 0 8px 22px rgba(6,78,59,.25);
+}
+.btn-give::before{ content:'\2665'; margin-right:7px; color:#6ee7b7; font-size:.95em; }
+.btn-give:hover{ transform:translateY(-2px); background:var(--flame-dim); border-color:var(--flame-dim); box-shadow:0 14px 30px rgba(4,120,87,.4); }
+.nav-links a.nav-mobile-give{ display:none; }
+@media(max-width:940px){
+  .nav-links a.nav-mobile-give{ display:flex; margin:10px 0 0; border-radius:999px; padding:14px 20px; border-bottom:1px solid rgba(18,32,26,.25); }
+}
+
+/* ============ FLYERS / BLOG GALLERY ============ */
+.flyer-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:20px; max-width:980px; margin:0 auto; }
+.flyer-grid a{ display:block; border-radius:var(--radius-lg); overflow:hidden; border:1px solid var(--line); box-shadow:var(--shadow-sm, 0 6px 18px rgba(0,0,0,.06)); background:#fff; }
+.flyer-grid img{ width:100%; height:auto; display:block; transition:transform .5s var(--ease); }
+.flyer-grid a:hover img{ transform:scale(1.03); }
+.flyer-thumbs{ display:flex; gap:8px; margin:10px 0 12px; flex-wrap:wrap; }
+.flyer-thumbs a{ width:54px; height:54px; border-radius:10px; overflow:hidden; border:1px solid var(--line); display:block; }
+.flyer-thumbs img{ width:100%; height:100%; object-fit:cover; display:block; }
+.media-gallery{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px; }
+.media-gallery .img-frame{ aspect-ratio:4/3; display:block; }
+.media-gallery .img-frame img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+/* ============ TESTIMONY VIDEO ============ */
+.testimony-card .thumb.has-video{ cursor:pointer; }
+.testimony-card .thumb.is-playing{ cursor:default; }
+.testimony-card .thumb.is-playing img,
+.testimony-card .thumb.is-playing .play,
+.testimony-card .thumb.is-playing .cat{ display:none; }
+.testimony-card .thumb iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }

@@ -126,11 +126,15 @@
     </div>
     <div class="grid-4 reveal-stagger">
       <% testimonies.forEach(function(t) { %>
-        <div class="card testimony-card" data-caption="<%= t.title %>">
-          <div class="thumb">
-            <img src="<%= t.thumbnail && t.thumbnail.url ? t.thumbnail.url : '/images/worship-stage.jpg' %>" alt="<%= t.title %>" loading="lazy">
+        <%
+          const ytId = youtubeId(t.youtubeUrl);
+          const thumbSrc = t.thumbnail && t.thumbnail.url ? t.thumbnail.url : (ytId ? 'https://i.ytimg.com/vi/' + ytId + '/hqdefault.jpg' : '/images/worship-stage.jpg');
+        %>
+        <div class="card testimony-card">
+          <div class="thumb<%= ytId ? ' has-video' : '' %>"<% if (ytId) { %> data-yt="<%= ytId %>" role="button" tabindex="0" aria-label="Play video: <%= t.title %>"<% } %>>
+            <img src="<%= thumbSrc %>" alt="<%= t.title %>" loading="lazy">
             <span class="cat"><%= t.category %></span>
-            <div class="play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+            <% if (ytId) { %><div class="play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><% } %>
           </div>
           <div class="body"><h4><%= t.title %></h4><small>Testimony<% if (t.location) { %> &middot; <%= t.location %><% } %></small></div>
         </div>
@@ -149,7 +153,7 @@
     <div class="grid-3 reveal-stagger">
       <% blogs.forEach(function(post) { %>
         <a href="/blog/<%= post.slug %>" class="card blog-card">
-          <div class="thumb"><img src="<%= post.featuredImage && post.featuredImage.url ? post.featuredImage.url : '/images/worship-stage.jpg' %>" alt="<%= post.title %>" loading="lazy"></div>
+          <div class="thumb"><img src="<%= firstImage(post.images, post.featuredImage, '/images/worship-stage.jpg') %>" alt="<%= post.title %>" loading="lazy"></div>
           <div class="body">
             <span class="tag"><%= post.category %></span>
             <h4><%= post.title %></h4>

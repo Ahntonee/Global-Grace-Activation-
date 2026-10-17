@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { CODES } = require("../config/currencies");
 
 const donationSchema = new mongoose.Schema(
   {
@@ -16,6 +17,7 @@ const donationSchema = new mongoose.Schema(
 
     currency: {
       type: String,
+      enum: CODES,
       default: "NGN",
     },
 

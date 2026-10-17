@@ -5,12 +5,15 @@ const ApiError = require("../utils/apiError");
 const generateReference = require("../utils/generateReference");
 const { calculateShippingFee } = require("../config/shipping");
 const payments = require("../services/payments");
+const { findTargetByReference, reconcileOnReturn } = require("../services/paymentReconcile");
+const { DEFAULT_PROVIDER, isEnabled } = require("../config/paymentProviders");
 
 // Public — guest checkout. Prices are always recomputed server-side from
 // the current Product records; the client only sends product IDs and
 // quantities, never prices, so a tampered request can't change the total.
 exports.createOrder = asyncHandler(async (req, res) => {
-  const { customer, items, shippingAddress, paymentProvider } = req.body;
+  const { customer, items, shippingAddress } = req.body;
+  const paymentProvider = req.body.paymentProvider || DEFAULT_PROVIDER;
 
   if (!customer || !customer.fullName || !customer.email) {
     throw new ApiError(400, "Customer name and email are required");
@@ -18,8 +21,8 @@ exports.createOrder = asyncHandler(async (req, res) => {
   if (!Array.isArray(items) || !items.length) {
     throw new ApiError(400, "At least one item is required");
   }
-  if (!["paystack", "flutterwave"].includes(paymentProvider)) {
-    throw new ApiError(400, "A valid payment provider is required");
+  if (!isEnabled(paymentProvider)) {
+    throw new ApiError(400, "That payment method isn't available right now");
   }
 
   const productIds = items.map((i) => i.productId);
@@ -96,6 +99,11 @@ exports.createOrder = asyncHandler(async (req, res) => {
 // Public — the confirmation page polls this by reference (not by Mongo
 // _id, which is never exposed to an unauthenticated client for orders).
 exports.getOrderStatus = asyncHandler(async (req, res) => {
+  if (req.query.transaction_id) {
+    const target = await findTargetByReference(req.params.reference);
+    await reconcileOnReturn(target, req.query.transaction_id);
+  }
+
   const order = await Order.findOne({ paymentReference: req.params.reference }).select(
     "orderNumber paymentStatus fulfillmentStatus total currency items digitalDeliveryLinks requiresShipping"
   );
@@ -137,4 +145,11 @@ exports.updateOrder = asyncHandler(async (req, res) => {
 
   if (!order) throw new ApiError(404, "Order not found");
   res.json({ success: true, order });
+});
+
+exports.deleteOrder = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id);
+  if (!order) throw new ApiError(404, "Order not found");
+  await order.deleteOne();
+  res.json({ success: true, message: "Order deleted successfully" });
 });

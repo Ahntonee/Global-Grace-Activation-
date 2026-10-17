@@ -1,4 +1,5 @@
 const Event = require("../models/Event");
+const { wantsAll } = require("../middleware/authMiddleware");
 const asyncHandler = require("../utils/asyncHandler");
 const ApiError = require("../utils/apiError");
 
@@ -23,9 +24,11 @@ exports.createEvent = asyncHandler(async (req, res) => {
 
 // Get all events
 exports.getEvents = asyncHandler(async (req, res) => {
-  const events = await Event.find()
+  const filter = wantsAll(req) ? {} : { isPublished: true };
+  const events = await Event.find(filter)
     .populate("createdBy", "fullName email")
     .populate("featuredImage")
+    .populate("flyers")
     .sort({ startDate: 1 });
 
   res.json({
@@ -38,9 +41,11 @@ exports.getEvents = asyncHandler(async (req, res) => {
 exports.getEvent = asyncHandler(async (req, res) => {
   const event = await Event.findOne({
     slug: req.params.slug,
+    ...(req.user && req.user.role === "admin" ? {} : { isPublished: true }),
   })
     .populate("createdBy", "fullName email")
-    .populate("featuredImage");
+    .populate("featuredImage")
+    .populate("flyers");
 
   if (!event) {
     throw new ApiError(404, "Event not found");

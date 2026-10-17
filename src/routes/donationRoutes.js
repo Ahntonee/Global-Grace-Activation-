@@ -7,6 +7,7 @@ const {
   getDonationStatus,
   getDonations,
   getDonation,
+  deleteDonation,
 } = require("../controllers/donationController");
 
 const { protect, authorize } = require("../middleware/authMiddleware");
@@ -18,5 +19,6 @@ router.get("/:reference/status", getDonationStatus);
 // Admin
 router.get("/", protect, authorize("admin"), getDonations);
 router.get("/:id", protect, authorize("admin"), getDonation);
+router.delete("/:id", protect, authorize("admin"), deleteDonation);
 
 module.exports = router;

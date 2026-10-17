@@ -1,4 +1,5 @@
 const Testimony = require("../models/Testimony");
+const { wantsAll } = require("../middleware/authMiddleware");
 const asyncHandler = require("../utils/asyncHandler");
 const ApiError = require("../utils/apiError");
 
@@ -35,7 +36,7 @@ exports.submitTestimony = asyncHandler(async (req, res) => {
 });
 
 exports.getTestimonies = asyncHandler(async (req, res) => {
-  const filter = req.query.all === "true" ? {} : { isPublished: true };
+  const filter = wantsAll(req) ? {} : { isPublished: true };
 
   const testimonies = await Testimony.find(filter)
     .populate("thumbnail")

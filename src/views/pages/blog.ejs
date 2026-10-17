@@ -23,7 +23,7 @@
     <div class="grid-3" id="blog-grid">
       <% blogs.forEach(function(post) { %>
         <a href="/blog/<%= post.slug %>" class="card blog-card reveal" data-cat="<%= post.category.toLowerCase() %>">
-          <div class="thumb"><img src="<%= post.featuredImage && post.featuredImage.url ? post.featuredImage.url : '/images/worship-stage.jpg' %>" alt="<%= post.title %>" loading="lazy"></div>
+          <div class="thumb"><img src="<%= firstImage(post.images, post.featuredImage, '/images/worship-stage.jpg') %>" alt="<%= post.title %>" loading="lazy"></div>
           <div class="body">
             <span class="tag"><%= post.category %></span>
             <h4><%= post.title %></h4>

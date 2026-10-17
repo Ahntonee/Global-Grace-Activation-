@@ -10,14 +10,11 @@ const {
   deleteEvent,
 } = require("../controllers/eventController");
 
-const {
-  protect,
-  authorize,
-} = require("../middleware/authMiddleware");
+const { protect, authorize, optionalAuth } = require("../middleware/authMiddleware");
 
 // Public
-router.get("/", getEvents);
-router.get("/:slug", getEvent);
+router.get("/", optionalAuth, getEvents);
+router.get("/:slug", optionalAuth, getEvent);
 
 // Admin
 router.post(

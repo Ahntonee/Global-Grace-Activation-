@@ -3,6 +3,45 @@
   <a href="/admin/<%= moduleKey %>/new" class="btn btn-primary btn-sm">+ New <%= config.singular %></a>
 </div>
 
+<% if (typeof feedUrl !== 'undefined' && feedUrl) { %>
+<div class="admin-sheet-card">
+  <h3>Live spreadsheet connection</h3>
+  <p>Connect Excel or Google Sheets to this link and every new registration appears in your spreadsheet automatically when it refreshes. Keep the link private — anyone who has it can read these records.</p>
+  <div class="admin-sheet-row">
+    <input type="text" id="feed-url" readonly value="<%= feedUrl %>">
+    <button type="button" class="btn btn-sm btn-primary" id="feed-copy">Copy link</button>
+  </div>
+  <ol>
+    <li><strong>Excel:</strong> Data &rarr; Get Data &rarr; From Other Sources &rarr; From Web, paste the link, then load. Use Data &rarr; Refresh All any time (or set it to refresh every few minutes in Query Properties).</li>
+    <li><strong>Google Sheets:</strong> in any cell type <code>=IMPORTDATA("paste-link-here")</code>.</li>
+  </ol>
+</div>
+<% } %>
+
+<div class="admin-filters" id="admin-filters">
+  <div>
+    <label for="flt-q">Search</label>
+    <input type="search" id="flt-q" placeholder="Type to filter…">
+  </div>
+  <div>
+    <label for="flt-from">From date</label>
+    <input type="date" id="flt-from">
+  </div>
+  <div>
+    <label for="flt-to">To date</label>
+    <input type="date" id="flt-to">
+  </div>
+  <button type="button" class="btn btn-sm btn-outline-dark" id="flt-clear">Clear</button>
+  <span class="count" id="flt-count"></span>
+  <span class="spacer"></span>
+  <% if (config.exportable) { %>
+  <div class="admin-export-group">
+    <button type="button" class="btn btn-sm btn-primary" data-export="xlsx">Download Excel</button>
+    <button type="button" class="btn btn-sm btn-outline-dark" data-export="csv">Download CSV</button>
+  </div>
+  <% } %>
+</div>
+
 <div class="admin-table-wrap">
   <table class="admin-table" id="admin-list-table">
     <thead>

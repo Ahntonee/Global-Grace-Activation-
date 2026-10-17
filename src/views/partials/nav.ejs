@@ -21,10 +21,12 @@
       <% navLinks.forEach(function(link) { %>
         <a href="<%= link.href %>"<%= currentPage === link.key ? ' class="active"' : '' %>><%= link.label %></a>
       <% }) %>
+      <a href="/give" class="btn btn-outline-dark btn-block nav-mobile-give">Give</a>
       <a href="/events" class="btn btn-primary btn-block nav-mobile-cta js-register-btn">Register Now</a>
     </div>
     <div class="nav-actions">
       <a href="/watch-live" class="btn btn-outline btn-sm">Watch Live</a>
+      <a href="/give" class="btn btn-give btn-sm">Give</a>
       <a href="/events" class="btn btn-primary btn-sm js-register-btn">Register Now</a>
     </div>
     <button class="nav-burger" aria-label="Menu"><span></span><span></span><span></span></button>

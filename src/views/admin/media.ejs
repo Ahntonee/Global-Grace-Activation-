@@ -7,7 +7,8 @@
   <form id="media-upload-form" style="display:flex; gap:12px; align-items:flex-end; flex-wrap:wrap;">
     <div class="field" style="margin:0; flex:1; min-width:220px;">
       <label>Upload a file</label>
-      <input type="file" name="file" id="media-file-input" accept="image/*" required>
+      <input type="file" name="file" id="media-file-input" accept="image/*,.pdf,application/pdf" required>
+      <div class="field-hint">JPG, PNG, WebP, GIF or PDF — up to 10MB. Large photos are resized automatically before uploading.</div>
     </div>
     <button class="btn btn-primary" type="submit">Upload</button>
   </form>
@@ -17,4 +18,5 @@
   <p class="admin-empty">Loading&hellip;</p>
 </div>
 
+<script src="/admin-assets/media-field.js"></script>
 <script src="/admin-assets/media.js"></script>

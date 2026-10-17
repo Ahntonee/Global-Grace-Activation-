@@ -20,7 +20,9 @@
         .map(
           (item) => `
         <div class="admin-media-item">
-          <img src="${item.url}" alt="${(item.originalName || "").replace(/</g, "&lt;")}" loading="lazy">
+          ${/\.pdf$/i.test(item.url) || item.format === "pdf" || !/\/image\/upload\//.test(item.url)
+            ? `<div style="height:140px;display:flex;align-items:center;justify-content:center;background:var(--paper-2);font-weight:700;color:var(--mist);">${(item.format || "FILE").toUpperCase()}</div>`
+            : `<img src="${item.url}" alt="${(item.originalName || "").replace(/</g, "&lt;")}" loading="lazy">`}
           <div class="info">
             <small>${(item.originalName || "").replace(/</g, "&lt;")}</small>
             <small>${item.url}</small>
@@ -62,21 +64,14 @@
       errorBox.classList.remove("show");
       if (!fileInput.files[0]) return;
 
-      const fd = new FormData();
-      fd.append("file", fileInput.files[0]);
-
       const submitBtn = form.querySelector("button[type=submit]");
       submitBtn.disabled = true;
       submitBtn.textContent = "Uploading…";
 
       try {
-        const res = await fetch("/api/media/upload", {
-          method: "POST",
-          credentials: "same-origin",
-          body: fd,
-        });
-        const body = await res.json();
-        if (!res.ok) throw new Error(body.message || "Upload failed");
+        // Shared uploader: shrinks big photos, checks size/type, and turns
+        // server/network failures into readable messages.
+        await window.MediaField.prepareAndUpload(fileInput.files[0]);
         form.reset();
         load();
       } catch (err) {

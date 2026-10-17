@@ -1,4 +1,5 @@
 const Product = require("../models/Product");
+const { wantsAll } = require("../middleware/authMiddleware");
 const asyncHandler = require("../utils/asyncHandler");
 const ApiError = require("../utils/apiError");
 
@@ -12,7 +13,7 @@ exports.createProduct = asyncHandler(async (req, res) => {
 });
 
 exports.getProducts = asyncHandler(async (req, res) => {
-  const filter = req.query.all === "true" ? {} : { isPublished: true };
+  const filter = wantsAll(req) ? {} : { isPublished: true };
   if (req.query.type) filter.type = req.query.type;
   if (req.query.relatedEvent) filter.relatedEvent = req.query.relatedEvent;
 
@@ -26,7 +27,10 @@ exports.getProducts = asyncHandler(async (req, res) => {
 });
 
 exports.getProduct = asyncHandler(async (req, res) => {
-  const product = await Product.findOne({ slug: req.params.slug })
+  const product = await Product.findOne({
+    slug: req.params.slug,
+    ...(req.user && req.user.role === "admin" ? {} : { isPublished: true }),
+  })
     .populate("images")
     .populate("relatedEvent", "title slug");
 

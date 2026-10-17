@@ -10,10 +10,10 @@ const {
   deleteFaq,
 } = require("../controllers/faqController");
 
-const { protect, authorize } = require("../middleware/authMiddleware");
+const { protect, authorize, optionalAuth } = require("../middleware/authMiddleware");
 
 // Public
-router.get("/", getFaqs);
+router.get("/", optionalAuth, getFaqs);
 router.get("/:id", getFaq);
 
 // Admin

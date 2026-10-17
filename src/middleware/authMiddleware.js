@@ -62,6 +62,24 @@ const protectView = async (req, res, next) => {
   }
 };
 
+// For public JSON routes that return more to a logged-in admin (e.g. drafts
+// via ?all=true) — never rejects; req.user is simply left unset for visitors.
+const optionalAuth = async (req, res, next) => {
+  const token = extractToken(req);
+  if (!token) return next();
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = (await User.findById(decoded.id).select("-password")) || undefined;
+  } catch (error) {
+    // Invalid/expired token — treat as an anonymous visitor.
+  }
+  next();
+};
+
+// True when the caller asked for unpublished records AND is an admin.
+const wantsAll = (req) => req.query.all === "true" && !!req.user && req.user.role === "admin";
+
 const authorize = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
@@ -77,5 +95,7 @@ const authorize = (...roles) => {
 module.exports = {
   protect,
   protectView,
+  optionalAuth,
+  wantsAll,
   authorize,
 };

@@ -11,12 +11,12 @@ const {
   deleteTestimony,
 } = require("../controllers/testimonyController");
 
-const { protect, authorize } = require("../middleware/authMiddleware");
+const { protect, authorize, optionalAuth } = require("../middleware/authMiddleware");
 const { submitTestimonyValidation } = require("../validations/testimonyValidation");
 const handleValidationErrors = require("../validations/handleValidationErrors");
 
 // Public
-router.get("/", getTestimonies);
+router.get("/", optionalAuth, getTestimonies);
 router.get("/:id", getTestimony);
 router.post("/submit", submitTestimonyValidation, handleValidationErrors, submitTestimony);
 

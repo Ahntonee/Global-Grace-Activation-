@@ -31,6 +31,13 @@ const blogSchema = new mongoose.Schema(
       ref: "Media",
     },
 
+    // Up to three flyers/images per post (the first one is the card thumbnail).
+    images: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Media" }],
+      validate: [(v) => v.length <= 3, "A blog post can have at most 3 images"],
+      default: [],
+    },
+
     category: {
       type: String,
       default: "General",

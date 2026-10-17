@@ -13,7 +13,7 @@ const isMock = () => process.env.PAYMENT_MODE === "mock";
  * "mock" requires zero controller changes — this function is the only
  * fork point.
  */
-async function initiate({ provider, amount, email, reference, callbackUrl, metadata }) {
+async function initiate({ provider, amount, currency = "NGN", email, reference, callbackUrl, metadata }) {
   if (isMock()) {
     return {
       checkoutUrl: `/checkout/mock?reference=${encodeURIComponent(reference)}&provider=${provider}`,
@@ -25,7 +25,7 @@ async function initiate({ provider, amount, email, reference, callbackUrl, metad
     return paystackService.initiate({ amount, email, reference, callbackUrl, metadata });
   }
   if (provider === "flutterwave") {
-    return flutterwaveService.initiate({ amount, email, reference, callbackUrl, metadata });
+    return flutterwaveService.initiate({ amount, currency, email, reference, callbackUrl, metadata });
   }
   throw new Error(`Unknown payment provider: ${provider}`);
 }

@@ -312,6 +312,26 @@
   /* ---------- Watch Live chat is handled entirely by watch-live.js
      (real Socket.io implementation) — nothing to do here anymore. ---------- */
 
+  /* ---------- Testimony videos: load the YouTube player only when clicked ---------- */
+  function playTestimonyVideo(thumb){
+    if(thumb.classList.contains('is-playing')) return;
+    const id = thumb.getAttribute('data-yt');
+    if(!id) return;
+    const frame = document.createElement('iframe');
+    frame.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) + '?autoplay=1&rel=0';
+    frame.title = 'Testimony video';
+    frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    frame.allowFullscreen = true;
+    thumb.classList.add('is-playing');
+    thumb.appendChild(frame);
+  }
+  document.querySelectorAll('.testimony-card .thumb[data-yt]').forEach(thumb=>{
+    thumb.addEventListener('click', ()=>playTestimonyVideo(thumb));
+    thumb.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); playTestimonyVideo(thumb); }
+    });
+  });
+
   /* ---------- Gallery lightbox (simple caption toast) ---------- */
   document.querySelectorAll('.gallery-item').forEach(item=>{
     item.addEventListener('click', ()=>{
