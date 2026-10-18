@@ -194,6 +194,15 @@ exports.editFormPage = asyncHandler(async (req, res) => {
   });
 });
 
+exports.settingsPage = (req, res) => {
+  res.render("admin/settings", {
+    layout: "layouts/admin",
+    title: "Site Settings",
+    currentModule: "settings",
+    user: req.user,
+  });
+};
+
 exports.mediaPage = (req, res) => {
   res.render("admin/media", {
     layout: "layouts/admin",

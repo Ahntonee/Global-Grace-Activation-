@@ -32,6 +32,8 @@ const donationRoutes = require("./routes/donationRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 const broadcastRoutes = require("./routes/broadcastRoutes");
 const exportRoutes = require("./routes/exportRoutes");
+const settingsRoutes = require("./routes/settingsRoutes");
+const { getSite } = require("./services/siteSettings");
 
 // Public site (server-rendered) routes
 const viewRoutes = require("./routes/viewRoutes");
@@ -183,6 +185,13 @@ app.use("/api", rateLimit({
 }));
 
 // API routes
+// Public contact details / social links, editable under Admin > Site Settings.
+// Overrides the env-based default in app.locals for every rendered page.
+app.use(async (req, res, next) => {
+  if (!req.path.startsWith("/api")) res.locals.site = await getSite();
+  next();
+});
+
 app.use("/api/auth", authRoutes);
 app.use("/api/pages", pageRoutes);
 app.use("/api/media", mediaRoutes);
@@ -203,6 +212,7 @@ app.use("/api/donations", donationRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/broadcasts", broadcastRoutes);
 app.use("/api/export", exportRoutes);
+app.use("/api/settings", settingsRoutes);
 
 app.get("/api/status", (req, res) => {
     res.status(200).json({

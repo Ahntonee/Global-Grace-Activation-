@@ -1,0 +1,30 @@
+<div class="admin-toolbar">
+  <h2>Site Settings</h2>
+</div>
+
+<div class="admin-form-card">
+  <div class="admin-auth-error" id="settings-error"></div>
+  <p style="color:var(--mist); font-size:13.5px; margin-bottom:18px;">These details appear in the website footer, on the Contact page and on the floating WhatsApp button. Leave a field empty to hide it from the site.</p>
+  <form id="settings-form">
+    <div class="field">
+      <label>Phone number</label>
+      <input type="text" name="phone" placeholder="+234 803 000 0000">
+      <div class="field-hint">Include the country code. Shown in the footer and on the Contact page.</div>
+    </div>
+    <div class="field">
+      <label>WhatsApp number</label>
+      <input type="text" name="whatsapp" placeholder="+234 803 000 0000">
+      <div class="field-hint">Include the country code. Powers the floating WhatsApp chat button and the Contact page card.</div>
+    </div>
+    <div class="field"><label>Instagram link</label><input type="url" name="instagram" placeholder="https://instagram.com/yourpage"></div>
+    <div class="field"><label>YouTube link</label><input type="url" name="youtube" placeholder="https://youtube.com/@yourchannel"></div>
+    <div class="field"><label>Facebook link</label><input type="url" name="facebook" placeholder="https://facebook.com/yourpage"></div>
+    <div class="field"><label>TikTok link</label><input type="url" name="tiktok" placeholder="https://tiktok.com/@yourpage"></div>
+    <div class="admin-form-actions">
+      <button class="btn btn-primary" type="submit">Save Settings</button>
+      <span id="settings-saved" style="display:none; align-self:center; color:var(--flame-dim); font-weight:700; font-size:13.5px;">Saved ✓ — live on the site now</span>
+    </div>
+  </form>
+</div>
+
+<script src="/admin-assets/settings.js"></script>
