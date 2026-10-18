@@ -3,11 +3,18 @@ const Media = require("../models/Media");
 const streamifier = require("streamifier");
 const asyncHandler = require("../utils/asyncHandler");
 const ApiError = require("../utils/apiError");
+const { cloudinaryConfigured } = require("../utils/envCheck");
 
 // Upload Media
 exports.uploadMedia = asyncHandler(async (req, res) => {
   if (!req.file) {
     throw new ApiError(400, "Please upload a file");
+  }
+
+  // Left as the .env.example placeholders, Cloudinary answers with the
+  // cryptic "Unknown API key replace_me" — say what is actually wrong.
+  if (!cloudinaryConfigured()) {
+    throw new ApiError(503, "Image uploads aren't set up on this server yet (the Cloudinary keys are missing). Please ask the developer to add them.");
   }
 
   const streamUpload = () => {

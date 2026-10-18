@@ -65,6 +65,8 @@ app.locals.jsonScript = (value) => JSON.stringify(value).replace(/</g, "\\u003c"
 
 // Pulls the 11-character video id out of any common YouTube link style
 // (watch?v=, youtu.be/, /embed/, /shorts/, /live/) — null if it isn't one.
+app.locals.site = require("./config/site");
+
 app.locals.youtubeId = (url) => {
   if (!url || typeof url !== "string") return null;
   const m = url.match(/(?:youtube(?:-nocookie)?\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/|v\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/i);

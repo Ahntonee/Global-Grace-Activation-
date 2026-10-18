@@ -20,6 +20,8 @@ process.on("uncaughtException", (err) => {
   console.error("Uncaught exception:", err);
 });
 
+require("./utils/envCheck").runEnvCheck();
+
 connectDB();
 
 // Wrapped in http.createServer (rather than app.listen directly) so
