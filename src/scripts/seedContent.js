@@ -284,6 +284,28 @@ async function seed() {
   });
 
   await upsertPage({
+    slug: "speakers",
+    title: "Speakers | Global Grace Activation",
+    heroTitle: "Voices carrying the message.",
+    heroSubtitle: "Meet the ministers and worship leaders carrying the message at Global Grace Activation.",
+    content: "",
+    seoTitle: "Speakers | Global Grace Activation",
+    seoDescription: "Meet the speakers and ministers at Global Grace Activation gatherings.",
+    isPublished: true,
+  });
+
+  await upsertPage({
+    slug: "shop",
+    title: "Shop | Global Grace Activation",
+    heroTitle: "Resources & merchandise.",
+    heroSubtitle: "",
+    content: "",
+    seoTitle: "Shop | Global Grace Activation",
+    seoDescription: "Merchandise, resources and digital downloads from Global Grace Activation.",
+    isPublished: true,
+  });
+
+  await upsertPage({
     slug: "gallery",
     title: "Gallery | Global Grace Activation",
     heroTitle: "Moments from the move.",

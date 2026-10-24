@@ -1,4 +1,5 @@
 const Product = require("../models/Product");
+const Page = require("../models/Page");
 const asyncHandler = require("../utils/asyncHandler");
 
 exports.shopList = asyncHandler(async (req, res) => {
@@ -7,9 +8,11 @@ exports.shopList = asyncHandler(async (req, res) => {
 
   const products = await Product.find(filter).populate("images").sort({ createdAt: -1 });
 
+  const page = await Page.findOne({ slug: "shop", isPublished: true });
+
   res.render("pages/shop", {
-    title: "Shop | Global Grace Activation",
-    description: "Merchandise, resources and digital downloads from Global Grace Activation.",
+    title: (page && (page.seoTitle || page.title)) || "Shop | Global Grace Activation",
+    description: (page && page.seoDescription) || "Merchandise, resources and digital downloads from Global Grace Activation.",
     currentPage: "shop",
     products,
   });
