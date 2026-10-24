@@ -1,0 +1,18 @@
+<div class="admin-toolbar">
+  <h2>Page Content</h2>
+</div>
+
+<p style="color:var(--mist); font-size:14px; margin:-6px 0 20px; max-width:760px; line-height:1.7;">
+  Choose a page to change its photos, background video and wording. Everything you save appears on the live website straight away.
+  A page's <strong>title and intro line</strong> are edited under <a href="/admin/pages" style="color:var(--flame-dim); font-weight:700;">Pages</a>;
+  blog posts, events, speakers, testimonies, products and broadcasts have their own sections in the sidebar.
+</p>
+
+<div class="admin-shortcuts">
+  <% pages.forEach(function(p) { %>
+    <a class="admin-shortcut" href="/admin/content/<%= p.page %>">
+      <strong><%= p.title %></strong>
+      <span><%= p.images %> image<%= p.images === 1 ? '' : 's' %><%= p.videos ? ', ' + p.videos + ' video' : '' %> &middot; <%= p.texts %> text item<%= p.texts === 1 ? '' : 's' %></span>
+    </a>
+  <% }) %>
+</div>

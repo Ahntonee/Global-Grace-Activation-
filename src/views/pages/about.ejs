@@ -1,19 +1,22 @@
 <header class="page-header">
   <div class="container">
     <span class="crumb">Home &rsaquo; <span>About</span></span>
-    <span class="eyebrow">Our story</span>
+    <span class="eyebrow"><%= txt('about.intro.eyebrow', 'Our story', 'Small label at the top') %></span>
     <h1 style="margin-top:18px;"><%= page.heroTitle %></h1>
     <p><%= page.heroSubtitle %></p>
   </div>
 </header>
 
-<%- page.content %>
+<%- page.content
+  .split('/images/worship-crowd-1.jpg').join(cimg('about.story.photo1', '/images/worship-crowd-1.jpg', 'Story photo 1'))
+  .split('/images/mission-photo.jpg').join(cimg('about.story.photo2', '/images/mission-photo.jpg', 'Story photo 2 (mission)'))
+  .split('/images/pastor-portrait.jpg').join(cimg('about.story.founderPhoto', '/images/pastor-portrait.jpg', 'Founder photo (Pastor Daniel Obi)')) %>
 
 <section class="section-pad">
   <div class="container">
     <div class="center-head reveal">
-      <span class="eyebrow">Leadership</span>
-      <h2>The team behind the move</h2>
+      <span class="eyebrow"><%= txt('about.leadership.eyebrow', 'Leadership', 'Small label') %></span>
+      <h2><%= txt('about.leadership.title', 'The team behind the move', 'Heading') %></h2>
     </div>
     <div class="grid-4 reveal-stagger">
       <% leadership.forEach(function(leader) { %>
@@ -30,14 +33,14 @@
 <section class="section-pad-sm" style="background:var(--paper-2);">
   <div class="container">
     <div class="center-head reveal">
-      <span class="eyebrow">Global impact</span>
-      <h2>Reach at a glance</h2>
+      <span class="eyebrow"><%= txt('about.impact.eyebrow', 'Global impact', 'Small label') %></span>
+      <h2><%= txt('about.impact.title', 'Reach at a glance', 'Heading') %></h2>
     </div>
     <div class="stats-row reveal-stagger">
-      <div><div class="stat-num">25+</div><div class="stat-label">Nations</div></div>
-      <div><div class="stat-num">500K+</div><div class="stat-label">Lives Impacted</div></div>
-      <div><div class="stat-num">10+</div><div class="stat-label">Years of Grace</div></div>
-      <div><div class="stat-num">1,000+</div><div class="stat-label">Testimonies</div></div>
+      <div><div class="stat-num"><%= txt('about.impact.nations', '25+', 'Nations — number') %></div><div class="stat-label"><%= txt('about.impact.nationsLabel', 'Nations', 'Nations — wording') %></div></div>
+      <div><div class="stat-num"><%= txt('about.impact.lives', '500K+', 'Lives Impacted — number') %></div><div class="stat-label"><%= txt('about.impact.livesLabel', 'Lives Impacted', 'Lives Impacted — wording') %></div></div>
+      <div><div class="stat-num"><%= txt('about.impact.years', '10+', 'Years of Grace — number') %></div><div class="stat-label"><%= txt('about.impact.yearsLabel', 'Years of Grace', 'Years of Grace — wording') %></div></div>
+      <div><div class="stat-num"><%= txt('about.impact.testimonies', '1,000+', 'Testimonies — number') %></div><div class="stat-label"><%= txt('about.impact.testimoniesLabel', 'Testimonies', 'Testimonies — wording') %></div></div>
     </div>
   </div>
 </section>

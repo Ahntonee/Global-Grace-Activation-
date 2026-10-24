@@ -194,6 +194,38 @@ exports.editFormPage = asyncHandler(async (req, res) => {
   });
 });
 
+exports.contentIndex = (req, res) => {
+  const pages = require("../services/siteContent").getGroups().map((g) => {
+    const all = g.sections.flatMap((s) => s.fields);
+    return {
+      page: g.page,
+      title: g.title,
+      images: all.filter((f) => f.type === "image").length,
+      videos: all.filter((f) => f.type === "video").length,
+      texts: all.filter((f) => f.type === "text" || f.type === "textarea").length,
+    };
+  });
+
+  res.render("admin/content-index", { layout: "layouts/admin", title: "Page Content", currentModule: "content", user: req.user, pages });
+};
+
+const LIVE_PATH = { home: "/", about: "/about", events: "/events", speakers: "/speakers", watch: "/watch-live", give: "/give", gallery: "/gallery", contact: "/contact", faqs: "/faqs", prayer: "/prayer", volunteer: "/volunteer", testimonies: "/testimonies", blog: "/blog", shop: "/shop", site: "/" };
+
+exports.contentEdit = (req, res) => {
+  const group = require("../services/siteContent").getGroups().find((g) => g.page === req.params.page);
+  if (!group) return res.status(404).render("pages/404", { title: "Not found" });
+
+  res.render("admin/content-edit", {
+    layout: "layouts/admin",
+    title: group.title,
+    currentModule: "content",
+    user: req.user,
+    page: group.page,
+    pageTitle: group.title,
+    liveUrl: LIVE_PATH[group.page] || "/",
+  });
+};
+
 exports.settingsPage = (req, res) => {
   res.render("admin/settings", {
     layout: "layouts/admin",

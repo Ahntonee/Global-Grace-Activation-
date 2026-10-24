@@ -1,7 +1,7 @@
 <header class="page-header">
   <div class="container">
     <span class="crumb">Home &rsaquo; <span>Prayer Request</span></span>
-    <span class="eyebrow">We stand with you</span>
+    <span class="eyebrow"><%= txt('prayer.intro.eyebrow', 'We stand with you', 'Small label at the top') %></span>
     <h1 style="margin-top:18px;"><%= page.heroTitle %></h1>
     <p><%= page.heroSubtitle %></p>
   </div>
@@ -10,13 +10,13 @@
 <section class="section-pad">
   <div class="container two-col" style="align-items:start;">
     <div class="reveal">
-      <span class="eyebrow">How it works</span>
-      <h2 style="font-size:1.8rem; margin:16px 0 20px;">Prayed over, kept private</h2>
+      <span class="eyebrow"><%= txt('prayer.how.eyebrow', 'How it works', 'How it works — small label') %></span>
+      <h2 style="font-size:1.8rem; margin:16px 0 20px;"><%= txt('prayer.how.title', 'Prayed over, kept private', 'How it works — heading') %></h2>
       <ul style="color:var(--mist); font-size:15px; display:flex; flex-direction:column; gap:14px;">
-        <li>&#10003; Requests are reviewed by our prayer team within 24 hours</li>
-        <li>&#10003; You may submit anonymously &mdash; no name required</li>
-        <li>&#10003; You'll receive an email confirmation once it's received</li>
-        <li>&#10003; Every request is treated with confidentiality and care</li>
+        <li>&#10003; <%= txt('prayer.how.point1', 'Requests are reviewed by our prayer team within 24 hours', 'Point 1') %></li>
+        <li>&#10003; <%= txt('prayer.how.point2', 'You may submit anonymously — no name required', 'Point 2') %></li>
+        <li>&#10003; <%= txt('prayer.how.point3', 'You\'ll receive an email confirmation once it\'s received', 'Point 3') %></li>
+        <li>&#10003; <%= txt('prayer.how.point4', 'Every request is treated with confidentiality and care', 'Point 4') %></li>
       </ul>
     </div>
     <form data-api-form data-endpoint="/api/prayers" data-success="Received — our team is praying with you." class="reveal">

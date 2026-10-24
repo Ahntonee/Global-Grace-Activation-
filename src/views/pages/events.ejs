@@ -1,7 +1,7 @@
 <header class="page-header">
   <div class="container">
     <span class="crumb">Home &rsaquo; <span>Events</span></span>
-    <span class="eyebrow">Gatherings</span>
+    <span class="eyebrow"><%= txt('events.intro.eyebrow', 'Gatherings', 'Small label at the top') %></span>
     <h1 style="margin-top:18px;"><%= page.heroTitle %></h1>
     <p><%= page.heroSubtitle %></p>
   </div>
@@ -12,21 +12,21 @@
   <div class="container">
     <div class="two-col" style="align-items:start;">
       <div class="reveal">
-        <span class="eyebrow">Flagship 2026</span>
+        <span class="eyebrow"><%= txt('events.flagship.eyebrow', 'Flagship 2026', 'Featured event — small label') %></span>
         <h2 style="font-size:2rem; margin:16px 0 20px;"><%= featuredEvent.title %></h2>
         <p style="color:var(--mist); font-size:16px; margin-bottom:22px;"><%= featuredEvent.description %></p>
         <ul class="hero-meta" style="color:var(--text); gap:14px; margin-bottom:28px;">
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg> <%= featuredEvent.startDate.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}) %></li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s7-7.4 7-12.5A7 7 0 0 0 5 9.5C5 14.6 12 22 12 22z"/><circle cx="12" cy="9.5" r="2.5"/></svg> <%= featuredEvent.location %></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.3 3-6 7-6s7 2.7 7 6"/><circle cx="18" cy="9" r="2.4"/><path d="M16 14.2c2.6.5 4.5 2.4 4.5 5.3"/></svg> Open to all &middot; free registration</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.3 3-6 7-6s7 2.7 7 6"/><circle cx="18" cy="9" r="2.4"/><path d="M16 14.2c2.6.5 4.5 2.4 4.5 5.3"/></svg> <%= txt('events.flagship.perk', 'Open to all · free registration', 'Featured event — note under the date') %></li>
         </ul>
         <div style="display:flex; gap:14px; flex-wrap:wrap;">
           <a href="#register" class="btn btn-primary js-register-btn" data-event="<%= featuredEvent.title %>" data-event-id="<%= featuredEvent._id %>">Register Now</a>
         </div>
       </div>
       <div class="hero-panel" style="border-radius:var(--radius-lg);">
-        <span class="eyebrow">Countdown</span>
-        <h3 style="margin:14px 0 20px;">Time until we gather</h3>
+        <span class="eyebrow"><%= txt('events.countdown.eyebrow', 'Countdown', 'Countdown card — small label') %></span>
+        <h3 style="margin:14px 0 20px;"><%= txt('events.countdown.title', 'Time until we gather', 'Countdown card — heading') %></h3>
         <div class="countdown" data-event-date="<%= featuredEvent.startDate.toISOString() %>">
           <div class="c-cell"><div class="c-num" id="cd-days">00</div><div class="c-label">Days</div></div>
           <div class="c-cell"><div class="c-num" id="cd-hours">00</div><div class="c-label">Hours</div></div>
@@ -34,9 +34,9 @@
           <div class="c-cell"><div class="c-num" id="cd-secs">00</div><div class="c-label">Secs</div></div>
         </div>
         <div class="map-frame" style="height:180px; background:linear-gradient(155deg,#ecfdf5,#f0fdf4); position:relative; overflow:hidden;">
-          <img src="/images/venue-aerial.jpg" alt="Aerial view of Solution Arena venue" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
+          <img src="<%= cimg('events.venue.image', '/images/venue-aerial.jpg', 'Venue photo (under the countdown)') %>" alt="Aerial view of Solution Arena venue" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
           <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--mist);background:rgba(255,255,255,.6);">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/></svg> &nbsp; Venue map &mdash; Solution Arena, Lagos
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/></svg> <%= txt('events.venue.caption', '  Venue map — Solution Arena, Lagos', 'Venue photo caption') %>
           </div>
         </div>
       </div>
@@ -49,7 +49,7 @@
 <section class="section-pad-sm">
   <div class="container">
     <div class="center-head reveal">
-      <span class="eyebrow">Event flyers</span>
+      <span class="eyebrow"><%= txt('events.flyers.eyebrow', 'Event flyers', 'Flyers section — small label') %></span>
       <h2><%= featuredEvent.title %></h2>
     </div>
     <div class="flyer-grid reveal">
@@ -65,8 +65,8 @@
 <section class="section-pad">
   <div class="container">
     <div class="center-head reveal">
-      <span class="eyebrow">Upgrade your seat</span>
-      <h2>Event add-ons</h2>
+      <span class="eyebrow"><%= txt('events.addons.eyebrow', 'Upgrade your seat', 'Add-ons section — small label') %></span>
+      <h2><%= txt('events.addons.title', 'Event add-ons', 'Add-ons section — heading') %></h2>
       <p>Optional extras for <%= featuredEvent.title %>.</p>
     </div>
     <div class="grid-3 reveal-stagger">
@@ -89,8 +89,8 @@
 <section class="section-pad-sm" style="background:var(--paper-2);" id="register">
   <div class="container">
     <div class="center-head reveal">
-      <span class="eyebrow">Upcoming</span>
-      <h2>All upcoming events</h2>
+      <span class="eyebrow"><%= txt('events.upcoming.eyebrow', 'Upcoming', 'Upcoming list — small label') %></span>
+      <h2><%= txt('events.upcoming.title', 'All upcoming events', 'Upcoming list — heading') %></h2>
     </div>
     <div id="upcoming-list" style="display:flex; flex-direction:column; gap:18px;">
       <% upcoming.forEach(function(ev) { %>
@@ -131,9 +131,9 @@
 <section class="section-pad">
   <div class="container">
     <div class="center-head reveal">
-      <span class="eyebrow">Archive</span>
-      <h2>Previous events</h2>
-      <p>Relive the moves of God from past gatherings.</p>
+      <span class="eyebrow"><%= txt('events.archive.eyebrow', 'Archive', 'Past events — small label') %></span>
+      <h2><%= txt('events.archive.title', 'Previous events', 'Past events — heading') %></h2>
+      <p><%= txt('events.archive.intro', 'Relive the moves of God from past gatherings.', 'Past events — intro line') %></p>
     </div>
     <div class="grid-3 reveal-stagger">
       <% past.forEach(function(ev) { %>
@@ -155,8 +155,8 @@
 <section class="section-pad-sm" style="background:var(--paper-2);">
   <div class="container">
     <div class="center-head reveal">
-      <span class="eyebrow">FAQs</span>
-      <h2>Good to know before you register</h2>
+      <span class="eyebrow"><%= txt('events.faq.eyebrow', 'FAQs', 'FAQ section — small label') %></span>
+      <h2><%= txt('events.faq.title', 'Good to know before you register', 'FAQ section — heading') %></h2>
     </div>
     <div style="max-width:760px; margin:0 auto;">
       <% faqs.forEach(function(faq) { %>

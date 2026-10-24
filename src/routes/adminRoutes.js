@@ -11,6 +11,8 @@ router.get("/", protectView, authorize("admin"), adminViewController.dashboard);
 router.get("/media", protectView, authorize("admin"), adminViewController.mediaPage);
 router.get("/orders", protectView, authorize("admin"), adminViewController.ordersPage);
 router.get("/donations", protectView, authorize("admin"), adminViewController.donationsPage);
+router.get("/content", protectView, authorize("admin"), adminViewController.contentIndex);
+router.get("/content/:page", protectView, authorize("admin"), adminViewController.contentEdit);
 router.get("/settings", protectView, authorize("admin"), adminViewController.settingsPage);
 router.get("/broadcast", protectView, authorize("admin"), adminViewController.broadcastPage);
 

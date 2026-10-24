@@ -1,7 +1,7 @@
 <header class="page-header">
   <div class="container">
     <span class="crumb">Home &rsaquo; <span>Contact</span></span>
-    <span class="eyebrow">Get in touch</span>
+    <span class="eyebrow"><%= txt('contact.intro.eyebrow', 'Get in touch', 'Small label at the top') %></span>
     <h1 style="margin-top:18px;"><%= page.heroTitle %></h1>
     <p><%= page.heroSubtitle %></p>
   </div>
@@ -10,8 +10,8 @@
 <section class="section-pad">
   <div class="container two-col" style="align-items:start;">
     <div class="reveal">
-      <span class="eyebrow">Send a message</span>
-      <h2 style="font-size:1.8rem; margin:16px 0 26px;">Fill out the form</h2>
+      <span class="eyebrow"><%= txt('contact.form.eyebrow', 'Send a message', 'Message form — small label') %></span>
+      <h2 style="font-size:1.8rem; margin:16px 0 26px;"><%= txt('contact.form.title', 'Fill out the form', 'Message form — heading') %></h2>
       <form id="contact-form" data-api-form data-endpoint="/api/contacts" data-success="Message sent — our team will respond within 48 hours.">
         <div class="field-row">
           <div class="field"><label>Full Name</label><input type="text" name="fullName" required placeholder="Your name"></div>
@@ -34,15 +34,15 @@
     </div>
 
     <div class="reveal">
-      <span class="eyebrow">Reach us directly</span>
+      <span class="eyebrow"><%= txt('contact.reach.eyebrow', 'Reach us directly', 'Contact details — small label') %></span>
       <div style="display:flex; flex-direction:column; gap:16px; margin:20px 0 30px;">
         <div class="card" style="padding:20px; display:flex; gap:14px; align-items:flex-start;">
           <span style="color:var(--flame-dim);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s7-7.4 7-12.5A7 7 0 0 0 5 9.5C5 14.6 12 22 12 22z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
-          <div><strong>Office Address</strong><p style="color:var(--mist); font-size:14px; margin-top:4px;">Solution Arena, Ikorodu Road, Onipanu, Lagos, Nigeria</p></div>
+          <div><strong>Office Address</strong><p style="color:var(--mist); font-size:14px; margin-top:4px;"><%= txt('contact.reach.address', 'Solution Arena, Ikorodu Road, Onipanu, Lagos, Nigeria', 'Office address') %></p></div>
         </div>
         <div class="card" style="padding:20px; display:flex; gap:14px; align-items:flex-start;">
           <span style="color:var(--flame-dim);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
-          <div><strong>Email</strong><p style="color:var(--mist); font-size:14px; margin-top:4px;">hello@globalgraceactivation.com<br>support@globalgraceactivation.com</p></div>
+          <div><strong>Email</strong><p style="color:var(--mist); font-size:14px; margin-top:4px;"><%- rich('contact.reach.emails', 'hello@globalgraceactivation.com\nsupport@globalgraceactivation.com', 'Email addresses (one per line)') %></p></div>
         </div>
         <% if (site.phone) { %><div class="card" style="padding:20px; display:flex; gap:14px; align-items:flex-start;">
           <span style="color:var(--flame-dim);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>
@@ -50,14 +50,14 @@
         </div><% } %>
         <% if (site.whatsapp) { %><a href="https://wa.me/<%= site.whatsapp %>" target="_blank" rel="noopener" class="card" style="padding:20px; display:flex; gap:14px; align-items:center; background:var(--flame); color:#ffffff;">
           <span style="color:#ffffff;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.7.44 3.35 1.29 4.8L2 22l5.44-1.38a9.9 9.9 0 0 0 4.6 1.13h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.13-2.9-7C17.17 3.02 14.69 2 12.04 2z"/></svg></span>
-          <div><strong style="color:#ffffff;">Chat on WhatsApp</strong><p style="color:rgba(6,78,59,.7); font-size:13.5px; margin-top:2px;">Fastest way to reach our team</p></div>
+          <div><strong style="color:#ffffff;">Chat on WhatsApp</strong><p style="color:rgba(6,78,59,.7); font-size:13.5px; margin-top:2px;"><%= txt('contact.reach.whatsapp', 'Fastest way to reach our team', 'WhatsApp card — small line') %></p></div>
         </a><% } %>
       </div>
       <div class="map-frame" style="position:relative; overflow:hidden;">
-        <img src="/images/venue-interior.jpg" alt="Solution Arena interior" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
+        <img src="<%= cimg('contact.map.image', '/images/venue-interior.jpg', 'Venue photo (next to the contact details)') %>" alt="Solution Arena interior" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
         <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.65);flex-direction:column;gap:10px;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/></svg>
-          <span style="font-family:'Space Mono',monospace; font-size:12px;">Google Map &mdash; Solution Arena, Lagos</span>
+          <span style="font-family:'Space Mono',monospace; font-size:12px;"><%= txt('contact.map.caption', 'Google Map — Solution Arena, Lagos', 'Venue photo caption') %></span>
         </div>
       </div>
     </div>

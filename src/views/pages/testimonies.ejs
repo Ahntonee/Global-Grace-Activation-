@@ -4,7 +4,7 @@
 <header class="page-header">
   <div class="container">
     <span class="crumb">Home &rsaquo; <span>Testimonies</span></span>
-    <span class="eyebrow">Real stories</span>
+    <span class="eyebrow"><%= txt('testimonies.intro.eyebrow', 'Real stories', 'Small label at the top') %></span>
     <h1 style="margin-top:18px;"><%= page.heroTitle %></h1>
     <p><%= page.heroSubtitle %></p>
   </div>
@@ -46,9 +46,9 @@
   <div class="container">
     <div class="two-col" style="align-items:start;">
       <div class="reveal">
-        <span class="eyebrow">Share yours</span>
-        <h2 style="font-size:1.8rem; margin:16px 0 20px;">Submit a testimony</h2>
-        <p style="color:var(--mist);">Your story could be the encouragement someone else needs today.</p>
+        <span class="eyebrow"><%= txt('testimonies.submit.eyebrow', 'Share yours', 'Share-your-story box — small label') %></span>
+        <h2 style="font-size:1.8rem; margin:16px 0 20px;"><%= txt('testimonies.submit.title', 'Submit a testimony', 'Share-your-story box — heading') %></h2>
+        <p style="color:var(--mist);"><%= txt('testimonies.submit.body', 'Your story could be the encouragement someone else needs today.', 'Share-your-story box — paragraph') %></p>
       </div>
       <form data-api-form data-endpoint="/api/testimonies/submit" data-success="Thank you — your testimony has been received!" class="reveal">
         <div class="field"><label>Title</label><input type="text" name="title" required placeholder="A short title for your story, e.g. &quot;Healed from years of pain&quot;"></div>

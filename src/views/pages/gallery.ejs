@@ -1,7 +1,7 @@
 <header class="page-header">
   <div class="container">
     <span class="crumb">Home &rsaquo; <span>Gallery</span></span>
-    <span class="eyebrow">Media</span>
+    <span class="eyebrow"><%= txt('gallery.intro.eyebrow', 'Media', 'Small label at the top') %></span>
     <h1 style="margin-top:18px;"><%= page.heroTitle %></h1>
     <p><%= page.heroSubtitle %></p>
   </div>
@@ -16,16 +16,16 @@
       <button class="tab-btn" type="button">Highlights</button>
     </div>
     <div class="gallery-grid reveal-stagger">
-      <div class="gallery-item wide" data-caption="GGA 2025 — Opening Night"><img src="/images/worship-crowd-1.jpg" alt="GGA 2025 — Opening Night" loading="lazy"><div class="overlay"><span>GGA 2025 &mdash; Opening Night</span></div></div>
-      <div class="gallery-item" data-caption="Worship Under the Lights"><img src="/images/worship-stage.jpg" alt="Worship Under the Lights" loading="lazy"><div class="overlay"><span>Worship Under the Lights</span></div></div>
-      <div class="gallery-item" data-caption="Altar Call, Night Two"><img src="/images/conference-arena.jpg" alt="Altar Call, Night Two" loading="lazy"><div class="overlay"><span>Altar Call, Night Two</span></div></div>
-      <div class="gallery-item" data-caption="Nations Flag Procession"><img src="/images/worship-team.jpg" alt="Nations Flag Procession" loading="lazy"><div class="overlay"><span>Nations Flag Procession</span></div></div>
-      <div class="gallery-item" data-caption="Prayer Room Moments"><img src="/images/prayer-hands.jpg" alt="Prayer Room Moments" loading="lazy"><div class="overlay"><span>Prayer Room Moments</span></div></div>
-      <div class="gallery-item wide" data-caption="Crowd at Solution Arena"><img src="/images/worship-crowd-2.jpg" alt="Crowd at Solution Arena" loading="lazy"><div class="overlay"><span>Crowd at Solution Arena</span></div></div>
-      <div class="gallery-item" data-caption="Backstage with the Team"><img src="/images/prayer-gathering.jpg" alt="Backstage with the Team" loading="lazy"><div class="overlay"><span>Backstage with the Team</span></div></div>
-      <div class="gallery-item" data-caption="Volunteer Squad 2025"><img src="/images/hero-bg.jpg" alt="Volunteer Squad 2025" loading="lazy"><div class="overlay"><span>Volunteer Squad 2025</span></div></div>
-      <div class="gallery-item" data-caption="Highlight Reel — Night One"><img src="/images/pastor-podium.jpg" alt="Highlight Reel — Night One" loading="lazy"><div class="overlay"><span>Highlight Reel &mdash; Night One</span></div></div>
-      <div class="gallery-item" data-caption="Kids Activation Corner"><img src="/images/speaker-avatar.jpg" alt="Kids Activation Corner" loading="lazy"><div class="overlay"><span>Kids Activation Corner</span></div></div>
+      <% const cap01 = txt('gallery.photo01.caption', 'GGA 2025 — Opening Night', 'Photo 1 — caption'); %><div class="gallery-item wide" data-caption="<%= cap01 %>"><img src="<%= cimg('gallery.photo01.image', '/images/worship-crowd-1.jpg', 'Photo 1') %>" alt="<%= cap01 %>" loading="lazy"><div class="overlay"><span><%= cap01 %></span></div></div>
+      <% const cap02 = txt('gallery.photo02.caption', 'Worship Under the Lights', 'Photo 2 — caption'); %><div class="gallery-item" data-caption="<%= cap02 %>"><img src="<%= cimg('gallery.photo02.image', '/images/worship-stage.jpg', 'Photo 2') %>" alt="<%= cap02 %>" loading="lazy"><div class="overlay"><span><%= cap02 %></span></div></div>
+      <% const cap03 = txt('gallery.photo03.caption', 'Altar Call, Night Two', 'Photo 3 — caption'); %><div class="gallery-item" data-caption="<%= cap03 %>"><img src="<%= cimg('gallery.photo03.image', '/images/conference-arena.jpg', 'Photo 3') %>" alt="<%= cap03 %>" loading="lazy"><div class="overlay"><span><%= cap03 %></span></div></div>
+      <% const cap04 = txt('gallery.photo04.caption', 'Nations Flag Procession', 'Photo 4 — caption'); %><div class="gallery-item" data-caption="<%= cap04 %>"><img src="<%= cimg('gallery.photo04.image', '/images/worship-team.jpg', 'Photo 4') %>" alt="<%= cap04 %>" loading="lazy"><div class="overlay"><span><%= cap04 %></span></div></div>
+      <% const cap05 = txt('gallery.photo05.caption', 'Prayer Room Moments', 'Photo 5 — caption'); %><div class="gallery-item" data-caption="<%= cap05 %>"><img src="<%= cimg('gallery.photo05.image', '/images/prayer-hands.jpg', 'Photo 5') %>" alt="<%= cap05 %>" loading="lazy"><div class="overlay"><span><%= cap05 %></span></div></div>
+      <% const cap06 = txt('gallery.photo06.caption', 'Crowd at Solution Arena', 'Photo 6 — caption'); %><div class="gallery-item wide" data-caption="<%= cap06 %>"><img src="<%= cimg('gallery.photo06.image', '/images/worship-crowd-2.jpg', 'Photo 6') %>" alt="<%= cap06 %>" loading="lazy"><div class="overlay"><span><%= cap06 %></span></div></div>
+      <% const cap07 = txt('gallery.photo07.caption', 'Backstage with the Team', 'Photo 7 — caption'); %><div class="gallery-item" data-caption="<%= cap07 %>"><img src="<%= cimg('gallery.photo07.image', '/images/prayer-gathering.jpg', 'Photo 7') %>" alt="<%= cap07 %>" loading="lazy"><div class="overlay"><span><%= cap07 %></span></div></div>
+      <% const cap08 = txt('gallery.photo08.caption', 'Volunteer Squad 2025', 'Photo 8 — caption'); %><div class="gallery-item" data-caption="<%= cap08 %>"><img src="<%= cimg('gallery.photo08.image', '/images/hero-bg.jpg', 'Photo 8') %>" alt="<%= cap08 %>" loading="lazy"><div class="overlay"><span><%= cap08 %></span></div></div>
+      <% const cap09 = txt('gallery.photo09.caption', 'Highlight Reel — Night One', 'Photo 9 — caption'); %><div class="gallery-item" data-caption="<%= cap09 %>"><img src="<%= cimg('gallery.photo09.image', '/images/pastor-podium.jpg', 'Photo 9') %>" alt="<%= cap09 %>" loading="lazy"><div class="overlay"><span><%= cap09 %></span></div></div>
+      <% const cap10 = txt('gallery.photo10.caption', 'Kids Activation Corner', 'Photo 10 — caption'); %><div class="gallery-item" data-caption="<%= cap10 %>"><img src="<%= cimg('gallery.photo10.image', '/images/speaker-avatar.jpg', 'Photo 10') %>" alt="<%= cap10 %>" loading="lazy"><div class="overlay"><span><%= cap10 %></span></div></div>
     </div>
     <div style="text-align:center; margin-top:44px;">
       <button class="btn btn-outline-dark" type="button">Load More</button>
@@ -36,10 +36,10 @@
 <section class="section-pad-sm" style="background:var(--paper-2);">
   <div class="container">
     <div class="panel-dark reveal" style="text-align:center;">
-      <span class="eyebrow" style="justify-content:center;">Downloads</span>
-      <h2 style="margin-top:16px; font-size:1.8rem;">Media &amp; press kit</h2>
-      <p style="color:var(--text); max-width:480px; margin:16px auto 26px;">Logos, approved photography and highlight reels available for press and partner churches.</p>
-      <a href="/contact" class="btn btn-primary">Request Press Kit</a>
+      <span class="eyebrow" style="justify-content:center;"><%= txt('gallery.press.eyebrow', 'Downloads', 'Press kit box — small label') %></span>
+      <h2 style="margin-top:16px; font-size:1.8rem;"><%= txt('gallery.press.title', 'Media & press kit', 'Press kit box — heading') %></h2>
+      <p style="color:var(--text); max-width:480px; margin:16px auto 26px;"><%= txt('gallery.press.body', 'Logos, approved photography and highlight reels available for press and partner churches.', 'Press kit box — paragraph') %></p>
+      <a href="/contact" class="btn btn-primary"><%= txt('gallery.press.button', 'Request Press Kit', 'Press kit box — button') %></a>
     </div>
   </div>
 </section>

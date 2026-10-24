@@ -1,0 +1,25 @@
+<div class="admin-toolbar">
+  <h2><%= pageTitle %></h2>
+  <div style="display:flex; gap:10px; flex-wrap:wrap;">
+    <a href="/admin/content" class="btn btn-outline-dark btn-sm">&larr; All pages</a>
+    <a href="<%= liveUrl %>" target="_blank" rel="noopener" class="btn btn-outline-dark btn-sm">View live page &nearr;</a>
+  </div>
+</div>
+
+<div class="admin-auth-error" id="content-error"></div>
+
+<form id="content-form" class="content-form">
+  <p class="field-hint" style="margin:0 0 18px;">Changed an image or line? Press <strong>Save changes</strong> at the bottom. Clearing a text box (or removing a picture) puts the original back.</p>
+  <div id="content-sections"><p class="admin-empty">Loading&hellip;</p></div>
+
+  <div class="content-savebar">
+    <button class="btn btn-primary" type="submit" id="content-save">Save changes</button>
+    <span id="content-saved" style="display:none; color:var(--flame-dim); font-weight:700; font-size:13.5px;">Saved ✓ — live on the site now</span>
+  </div>
+</form>
+
+<script nonce="<%= nonce %>">
+  window.__CONTENT_PAGE__ = <%- jsonScript(page) %>;
+</script>
+<script src="/admin-assets/media-field.js"></script>
+<script src="/admin-assets/content-edit.js"></script>

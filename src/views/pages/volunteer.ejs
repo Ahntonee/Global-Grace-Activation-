@@ -1,7 +1,7 @@
 <header class="page-header">
   <div class="container">
     <span class="crumb">Home &rsaquo; <span>Volunteer</span></span>
-    <span class="eyebrow">Serve with us</span>
+    <span class="eyebrow"><%= txt('volunteer.intro.eyebrow', 'Serve with us', 'Small label at the top') %></span>
     <h1 style="margin-top:18px;"><%= page.heroTitle %></h1>
     <p><%= page.heroSubtitle %></p>
   </div>
@@ -10,22 +10,22 @@
 <section class="section-pad">
   <div class="container two-col" style="align-items:start;">
     <div class="reveal">
-      <span class="eyebrow">Departments</span>
-      <h2 style="font-size:1.8rem; margin:16px 0 22px;">Where you can serve</h2>
+      <span class="eyebrow"><%= txt('volunteer.departments.eyebrow', 'Departments', 'Departments — small label') %></span>
+      <h2 style="font-size:1.8rem; margin:16px 0 22px;"><%= txt('volunteer.departments.title', 'Where you can serve', 'Departments — heading') %></h2>
       <div class="grid-2" style="gap:16px;">
-        <div class="card" style="padding:20px;"><strong>Ushering &amp; Guest Care</strong><p style="color:var(--mist); font-size:13.5px; margin-top:6px;">Welcome guests and manage seating on the ground.</p></div>
-        <div class="card" style="padding:20px;"><strong>Media &amp; Production</strong><p style="color:var(--mist); font-size:13.5px; margin-top:6px;">Cameras, streaming, sound and lighting.</p></div>
-        <div class="card" style="padding:20px;"><strong>Prayer &amp; Altar Ministry</strong><p style="color:var(--mist); font-size:13.5px; margin-top:6px;">Stand with guests at the altar and prayer room.</p></div>
-        <div class="card" style="padding:20px;"><strong>Logistics &amp; Security</strong><p style="color:var(--mist); font-size:13.5px; margin-top:6px;">Crowd flow, parking and venue coordination.</p></div>
-        <div class="card" style="padding:20px;"><strong>Registration Desk</strong><p style="color:var(--mist); font-size:13.5px; margin-top:6px;">Check guests in and issue QR tickets.</p></div>
-        <div class="card" style="padding:20px;"><strong>Hospitality</strong><p style="color:var(--mist); font-size:13.5px; margin-top:6px;">Care for speakers, ministers and VIP guests.</p></div>
+        <div class="card" style="padding:20px;"><strong><%= txt('volunteer.departments.name1', 'Ushering & Guest Care', 'Department 1 — name') %></strong><p style="color:var(--mist); font-size:13.5px; margin-top:6px;"><%= txt('volunteer.departments.desc1', 'Welcome guests and manage seating on the ground.', 'Department 1 — description') %></p></div>
+        <div class="card" style="padding:20px;"><strong><%= txt('volunteer.departments.name2', 'Media & Production', 'Department 2 — name') %></strong><p style="color:var(--mist); font-size:13.5px; margin-top:6px;"><%= txt('volunteer.departments.desc2', 'Cameras, streaming, sound and lighting.', 'Department 2 — description') %></p></div>
+        <div class="card" style="padding:20px;"><strong><%= txt('volunteer.departments.name3', 'Prayer & Altar Ministry', 'Department 3 — name') %></strong><p style="color:var(--mist); font-size:13.5px; margin-top:6px;"><%= txt('volunteer.departments.desc3', 'Stand with guests at the altar and prayer room.', 'Department 3 — description') %></p></div>
+        <div class="card" style="padding:20px;"><strong><%= txt('volunteer.departments.name4', 'Logistics & Security', 'Department 4 — name') %></strong><p style="color:var(--mist); font-size:13.5px; margin-top:6px;"><%= txt('volunteer.departments.desc4', 'Crowd flow, parking and venue coordination.', 'Department 4 — description') %></p></div>
+        <div class="card" style="padding:20px;"><strong><%= txt('volunteer.departments.name5', 'Registration Desk', 'Department 5 — name') %></strong><p style="color:var(--mist); font-size:13.5px; margin-top:6px;"><%= txt('volunteer.departments.desc5', 'Check guests in and issue QR tickets.', 'Department 5 — description') %></p></div>
+        <div class="card" style="padding:20px;"><strong><%= txt('volunteer.departments.name6', 'Hospitality', 'Department 6 — name') %></strong><p style="color:var(--mist); font-size:13.5px; margin-top:6px;"><%= txt('volunteer.departments.desc6', 'Care for speakers, ministers and VIP guests.', 'Department 6 — description') %></p></div>
       </div>
-      <div class="pill" style="margin-top:26px;">All volunteers are added to our WhatsApp coordination group after signup</div>
+      <div class="pill" style="margin-top:26px;"><%= txt('volunteer.departments.note', 'All volunteers are added to our WhatsApp coordination group after signup', 'Note under the list') %></div>
     </div>
 
     <div class="panel-dark reveal">
-      <span class="eyebrow">Apply now</span>
-      <h3 style="margin:14px 0 22px;">Volunteer Application</h3>
+      <span class="eyebrow"><%= txt('volunteer.form.eyebrow', 'Apply now', 'Application form — small label') %></span>
+      <h3 style="margin:14px 0 22px;"><%= txt('volunteer.form.title', 'Volunteer Application', 'Application form — heading') %></h3>
       <form data-api-form data-endpoint="/api/volunteers/apply" data-success="Application received — welcome to the team!">
         <div class="field-row">
           <div class="field"><label>Full Name</label><input type="text" name="fullName" required placeholder="Your name"></div>

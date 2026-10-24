@@ -6,12 +6,12 @@
     <div class="hero-slide" data-slide="4"></div>
   </div>
   <div class="hero-video-wrap">
-    <video class="hero-video" id="hero-video" autoplay muted loop playsinline poster="/hero-poster.jpg" style="display:block;">
-      <source src="/hero-bg.mp4" type="video/mp4">
+    <video class="hero-video" id="hero-video" autoplay muted loop playsinline poster="<%= cimg('home.hero.poster', '/hero-poster.jpg', 'Video poster (shown while the video loads)') %>" style="display:block;">
+      <source src="<%= cvid('home.hero.video', '/hero-bg.mp4', 'Background video (MP4 or WebM, up to 10MB)') %>" type="video/mp4">
     </video>
   </div>
   <div class="hero-video-overlay"></div>
-  <div class="hero-bg-image"></div>
+  <div class="hero-bg-image" style="background-image:url('<%= cimg('home.hero.background', '/images/hero-bg.jpg', 'Faded background photo behind the headline') %>')"></div>
   <div class="hero-glow"></div>
   <canvas id="ember-canvas"></canvas>
   <div class="hero-grid-lines"></div>
@@ -19,21 +19,21 @@
     <div class="hero-inner">
       <div>
         <div class="hero-flame-word">
-          <span><% if (featuredEvent) { %><%= featuredEvent.title %><% } else { %>The Gathering<% } %></span>
+          <span><% if (featuredEvent) { %><%= featuredEvent.title %><% } else { %><%= txt('home.hero.fallbackLabel', 'The Gathering', 'Small label above the headline (when no event is featured)') %><% } %></span>
         </div>
         <h1>
-          <span class="split-line"><span>A global move of God.</span></span>
-          <span class="split-line"><span>A generation <em>activated.</em></span></span>
+          <span class="split-line"><span><%= txt('home.hero.line1', 'A global move of God.', 'Headline — line 1') %></span></span>
+          <span class="split-line"><span><%= txt('home.hero.line2', 'A generation', 'Headline — line 2') %> <em><%= txt('home.hero.line2Accent', 'activated.', 'Headline — line 2 highlighted word') %></em></span></span>
         </h1>
-        <p class="lede"><%= page.heroSubtitle || "Global Grace Activation is a worldwide movement raised to ignite revival, release destiny, and transform lives through the power of God — one encounter, spreading across nations." %></p>
+        <p class="lede"><%= page.heroSubtitle || txt('home.hero.intro', 'Global Grace Activation is a worldwide movement raised to ignite revival, release destiny, and transform lives through the power of God — one encounter, spreading across nations.', 'Intro paragraph under the headline') %></p>
         <div class="hero-cta-row">
-          <a href="/events" class="btn btn-primary js-register-btn">Register Now</a>
-          <a href="/watch-live" class="btn btn-outline">Watch Live</a>
+          <a href="/events" class="btn btn-primary js-register-btn"><%= txt('home.hero.btnPrimary', 'Register Now', 'Main button') %></a>
+          <a href="/watch-live" class="btn btn-outline"><%= txt('home.hero.btnSecondary', 'Watch Live', 'Second button') %></a>
         </div>
       </div>
       <div class="hero-panel">
-        <span class="eyebrow">GGA Global Conference 2026</span>
-        <h3>Experience Grace. Activate Destiny.</h3>
+        <span class="eyebrow"><%= txt('home.hero.panelLabel', 'GGA Global Conference 2026', 'Event card — small label') %></span>
+        <h3><%= txt('home.hero.panelTitle', 'Experience Grace. Activate Destiny.', 'Event card — title') %></h3>
         <div class="countdown" <% if (featuredEvent) { %>data-event-date="<%= featuredEvent.startDate.toISOString() %>"<% } %>>
           <div class="c-cell"><div class="c-num" id="cd-days">00</div><div class="c-label">Days</div></div>
           <div class="c-cell"><div class="c-num" id="cd-hours">00</div><div class="c-label">Hours</div></div>
@@ -41,8 +41,8 @@
           <div class="c-cell"><div class="c-num" id="cd-secs">00</div><div class="c-label">Secs</div></div>
         </div>
         <ul class="hero-meta">
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg> December 4&ndash;5, 2026 &middot; 6PM&ndash;5AM</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s7-7.4 7-12.5A7 7 0 0 0 5 9.5C5 14.6 12 22 12 22z"/><circle cx="12" cy="9.5" r="2.5"/></svg> Solution Arena, Lagos, Nigeria</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg> <%= txt('home.hero.panelDate', 'December 4–5, 2026 · 6PM–5AM', 'Event card — date and time') %></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s7-7.4 7-12.5A7 7 0 0 0 5 9.5C5 14.6 12 22 12 22z"/><circle cx="12" cy="9.5" r="2.5"/></svg> <%= txt('home.hero.panelPlace', 'Solution Arena, Lagos, Nigeria', 'Event card — venue') %></li>
         </ul>
       </div>
     </div>
@@ -54,52 +54,52 @@
   <div class="container">
     <a href="/events" class="ql-item js-register-btn">
       <span class="ql-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg></span>
-      <strong>Register</strong><small>Secure your seat</small>
+      <strong><%= txt('home.quick.registerTitle', 'Register', 'Shortcut — Register (title)') %></strong><small><%= txt('home.quick.registerSub', 'Secure your seat', 'Shortcut — Register (small line)') %></small>
     </a>
     <a href="/watch-live" class="ql-item">
       <span class="ql-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/></svg></span>
-      <strong>Watch Live</strong><small>Join from anywhere</small>
+      <strong><%= txt('home.quick.watchTitle', 'Watch Live', 'Shortcut — Watch Live (title)') %></strong><small><%= txt('home.quick.watchSub', 'Join from anywhere', 'Shortcut — Watch Live (small line)') %></small>
     </a>
     <a href="/give" class="ql-item">
       <span class="ql-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7.5-4.9-10-9.2C.4 8.6 2 5 5.6 5c2 0 3.4 1 4.4 2.4C11 6 12.4 5 14.4 5 18 5 19.6 8.6 22 11.8 19.5 16.1 12 21 12 21z"/></svg></span>
-      <strong>Give</strong><small>Partner with us</small>
+      <strong><%= txt('home.quick.giveTitle', 'Give', 'Shortcut — Give (title)') %></strong><small><%= txt('home.quick.giveSub', 'Partner with us', 'Shortcut — Give (small line)') %></small>
     </a>
     <a href="/volunteer" class="ql-item">
       <span class="ql-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 11V5a2 2 0 1 1 4 0v5M11 10V4a2 2 0 1 1 4 0v6M15 10V6a2 2 0 1 1 4 0v8c0 4-2.5 6-6 6h-2c-3 0-4.5-1-6-3l-3-4.5c-.6-1 0-2.3 1.2-2.5 1-.2 1.8.3 2.3 1L7 13"/></svg></span>
-      <strong>Volunteer</strong><small>Be part of the move</small>
+      <strong><%= txt('home.quick.volunteerTitle', 'Volunteer', 'Shortcut — Volunteer (title)') %></strong><small><%= txt('home.quick.volunteerSub', 'Be part of the move', 'Shortcut — Volunteer (small line)') %></small>
     </a>
   </div>
 </section>
 
 <div class="divider-tape"><div class="track">
-  <span><b>25+</b> Nations Reached</span><span><b>500K+</b> Lives Impacted</span><span><b>10+</b> Years of Grace</span><span><b>1,000+</b> Testimonies</span>
-  <span><b>25+</b> Nations Reached</span><span><b>500K+</b> Lives Impacted</span><span><b>10+</b> Years of Grace</span><span><b>1,000+</b> Testimonies</span>
+  <span><b><%= txt('home.stats.nations', '25+', 'Nations — number') %></b> <%= txt('home.stats.nationsStrip', 'Nations Reached', 'Nations — wording in the scrolling strip') %></span><span><b><%= txt('home.stats.lives', '500K+', 'Lives impacted — number') %></b> <%= txt('home.stats.livesStrip', 'Lives Impacted', 'Lives impacted — wording in the scrolling strip') %></span><span><b><%= txt('home.stats.years', '10+', 'Years of grace — number') %></b> <%= txt('home.stats.yearsStrip', 'Years of Grace', 'Years of grace — wording in the scrolling strip') %></span><span><b><%= txt('home.stats.testimonies', '1,000+', 'Testimonies — number') %></b> <%= txt('home.stats.testimoniesStrip', 'Testimonies', 'Testimonies — wording in the scrolling strip') %></span>
+  <span><b><%= txt('home.stats.nations', '25+', 'Nations — number') %></b> <%= txt('home.stats.nationsStrip', 'Nations Reached', 'Nations — wording in the scrolling strip') %></span><span><b><%= txt('home.stats.lives', '500K+', 'Lives impacted — number') %></b> <%= txt('home.stats.livesStrip', 'Lives Impacted', 'Lives impacted — wording in the scrolling strip') %></span><span><b><%= txt('home.stats.years', '10+', 'Years of grace — number') %></b> <%= txt('home.stats.yearsStrip', 'Years of Grace', 'Years of grace — wording in the scrolling strip') %></span><span><b><%= txt('home.stats.testimonies', '1,000+', 'Testimonies — number') %></b> <%= txt('home.stats.testimoniesStrip', 'Testimonies', 'Testimonies — wording in the scrolling strip') %></span>
 </div></div>
 
 <section class="section-pad">
   <div class="container two-col">
     <div class="reveal">
-      <span class="eyebrow">Who we are</span>
-      <h2 style="font-size:clamp(1.9rem,3.4vw,2.7rem); margin-top:18px;">A move of God.<br>A global impact.</h2>
-      <p style="color:var(--mist); font-size:16.5px; margin-top:20px; max-width:520px;">Global Grace Activation is a divine mandate to raise a generation that seeks God, walks in purpose, and influences the world &mdash; carried through worship, the Word, prayer and transformation across every nation we reach.</p>
+      <span class="eyebrow"><%= txt('home.who.eyebrow', 'Who we are', 'Small label') %></span>
+      <h2 style="font-size:clamp(1.9rem,3.4vw,2.7rem); margin-top:18px;"><%- rich('home.who.title', 'A move of God.\nA global impact.', 'Heading') %></h2>
+      <p style="color:var(--mist); font-size:16.5px; margin-top:20px; max-width:520px;"><%- rich('home.who.body', 'Global Grace Activation is a divine mandate to raise a generation that seeks God, walks in purpose, and influences the world — carried through worship, the Word, prayer and transformation across every nation we reach.', 'Paragraph') %></p>
       <div class="stats-row" style="margin-top:40px;">
-        <div><div class="stat-num">25+</div><div class="stat-label">Nations</div></div>
-        <div><div class="stat-num">500K+</div><div class="stat-label">Lives Impacted</div></div>
-        <div><div class="stat-num">10+</div><div class="stat-label">Years of Grace</div></div>
-        <div><div class="stat-num">1,000+</div><div class="stat-label">Testimonies</div></div>
+        <div><div class="stat-num"><%= txt('home.stats.nations', '25+', 'Nations — number') %></div><div class="stat-label"><%= txt('home.stats.nationsLabel', 'Nations', 'Nations — wording in the "Who we are" block') %></div></div>
+        <div><div class="stat-num"><%= txt('home.stats.lives', '500K+', 'Lives impacted — number') %></div><div class="stat-label"><%= txt('home.stats.livesLabel', 'Lives Impacted', 'Lives impacted — wording in the "Who we are" block') %></div></div>
+        <div><div class="stat-num"><%= txt('home.stats.years', '10+', 'Years of grace — number') %></div><div class="stat-label"><%= txt('home.stats.yearsLabel', 'Years of Grace', 'Years of grace — wording in the "Who we are" block') %></div></div>
+        <div><div class="stat-num"><%= txt('home.stats.testimonies', '1,000+', 'Testimonies — number') %></div><div class="stat-label"><%= txt('home.stats.testimoniesLabel', 'Testimonies', 'Testimonies — wording in the "Who we are" block') %></div></div>
       </div>
-      <a href="/about" class="btn btn-ghost" style="margin-top:36px; padding-left:0;">Read our full story</a>
+      <a href="/about" class="btn btn-ghost" style="margin-top:36px; padding-left:0;"><%= txt('home.who.link', 'Read our full story', 'Link text') %></a>
     </div>
-    <div class="img-frame reveal"><img src="/images/worship-crowd-2.jpg" alt="Worship crowd at a Global Grace Activation gathering" loading="lazy"></div>
+    <div class="img-frame reveal"><img src="<%= cimg('home.who.image', '/images/worship-crowd-2.jpg', 'Photo') %>" alt="Worship crowd at a Global Grace Activation gathering" loading="lazy"></div>
   </div>
 </section>
 
 <section class="section-pad-sm" style="background:var(--paper-2);">
   <div class="container">
     <div class="center-head reveal">
-      <span class="eyebrow">Line-up</span>
-      <h2>Voices carrying the message</h2>
-      <p>Ministers and worship leaders converging from across the nations for this year&rsquo;s activation.</p>
+      <span class="eyebrow"><%= txt('home.lineup.eyebrow', 'Line-up', 'Small label') %></span>
+      <h2><%= txt('home.lineup.title', 'Voices carrying the message', 'Heading') %></h2>
+      <p><%= txt('home.lineup.intro', 'Ministers and worship leaders converging from across the nations for this year’s activation.', 'Intro line') %></p>
     </div>
     <div class="grid-4 reveal-stagger">
       <% speakers.forEach(function(speaker) { %>
@@ -113,16 +113,16 @@
         </div>
       <% }) %>
     </div>
-    <div style="text-align:center; margin-top:40px;"><a href="/speakers" class="btn btn-outline-dark">View Full Line-up</a></div>
+    <div style="text-align:center; margin-top:40px;"><a href="/speakers" class="btn btn-outline-dark"><%= txt('home.lineup.button', 'View Full Line-up', 'Button') %></a></div>
   </div>
 </section>
 
 <section class="section-pad">
   <div class="container">
     <div class="center-head reveal">
-      <span class="eyebrow">Real stories</span>
-      <h2>Testimonies from the move</h2>
-      <p>God is still changing lives. Here are a few stories from around the world.</p>
+      <span class="eyebrow"><%= txt('home.testimonies.eyebrow', 'Real stories', 'Small label') %></span>
+      <h2><%= txt('home.testimonies.title', 'Testimonies from the move', 'Heading') %></h2>
+      <p><%= txt('home.testimonies.intro', 'God is still changing lives. Here are a few stories from around the world.', 'Intro line') %></p>
     </div>
     <div class="grid-4 reveal-stagger">
       <% testimonies.forEach(function(t) { %>
@@ -140,15 +140,15 @@
         </div>
       <% }) %>
     </div>
-    <div style="text-align:center; margin-top:40px;"><a href="/testimonies" class="btn btn-outline-dark">View All Testimonies</a></div>
+    <div style="text-align:center; margin-top:40px;"><a href="/testimonies" class="btn btn-outline-dark"><%= txt('home.testimonies.button', 'View All Testimonies', 'Button') %></a></div>
   </div>
 </section>
 
 <section class="section-pad-sm" style="background:var(--paper-2);">
   <div class="container">
     <div class="center-head reveal">
-      <span class="eyebrow">From the blog</span>
-      <h2>Latest messages &amp; devotionals</h2>
+      <span class="eyebrow"><%= txt('home.blog.eyebrow', 'From the blog', 'Small label') %></span>
+      <h2><%= txt('home.blog.title', 'Latest messages & devotionals', 'Heading') %></h2>
     </div>
     <div class="grid-3 reveal-stagger">
       <% blogs.forEach(function(post) { %>
@@ -169,14 +169,14 @@
 <section class="section-pad">
   <div class="container">
     <div class="center-head reveal" style="margin-bottom:36px;">
-      <span class="eyebrow">Partners</span>
-      <h2 style="font-size:1.6rem;">Standing with ministries &amp; sponsors worldwide</h2>
+      <span class="eyebrow"><%= txt('home.partners.eyebrow', 'Partners', 'Small label') %></span>
+      <h2 style="font-size:1.6rem;"><%= txt('home.partners.title', 'Standing with ministries & sponsors worldwide', 'Heading') %></h2>
     </div>
     <div class="grid-4 reveal-stagger" style="text-align:center;">
-      <div class="card" style="padding:26px; font-family:'Fraunces',serif; font-weight:600; color:var(--mist);">Grace Media Group</div>
-      <div class="card" style="padding:26px; font-family:'Fraunces',serif; font-weight:600; color:var(--mist);">Kingdom Broadcast Network</div>
-      <div class="card" style="padding:26px; font-family:'Fraunces',serif; font-weight:600; color:var(--mist);">Nations Arise Foundation</div>
-      <div class="card" style="padding:26px; font-family:'Fraunces',serif; font-weight:600; color:var(--mist);">Solution Arena Lagos</div>
+      <div class="card" style="padding:26px; font-family:'Fraunces',serif; font-weight:600; color:var(--mist);"><%= txt('home.partners.name1', 'Grace Media Group', 'Partner 1') %></div>
+      <div class="card" style="padding:26px; font-family:'Fraunces',serif; font-weight:600; color:var(--mist);"><%= txt('home.partners.name2', 'Kingdom Broadcast Network', 'Partner 2') %></div>
+      <div class="card" style="padding:26px; font-family:'Fraunces',serif; font-weight:600; color:var(--mist);"><%= txt('home.partners.name3', 'Nations Arise Foundation', 'Partner 3') %></div>
+      <div class="card" style="padding:26px; font-family:'Fraunces',serif; font-weight:600; color:var(--mist);"><%= txt('home.partners.name4', 'Solution Arena Lagos', 'Partner 4') %></div>
     </div>
   </div>
 </section>
@@ -184,8 +184,8 @@
 <section class="newsletter-bar">
   <div class="container" style="display:flex; justify-content:space-between; align-items:center; gap:30px; flex-wrap:wrap; position:relative; z-index:1;">
     <div style="max-width:420px;">
-      <span class="eyebrow">Stay connected</span>
-      <h2 style="color:var(--ink); font-size:1.8rem; margin-top:14px;">Get updates on events, messages &amp; more</h2>
+      <span class="eyebrow"><%= txt('home.newsletter.eyebrow', 'Stay connected', 'Small label') %></span>
+      <h2 style="color:var(--ink); font-size:1.8rem; margin-top:14px;"><%= txt('home.newsletter.title', 'Get updates on events, messages & more', 'Heading') %></h2>
     </div>
     <form class="newsletter-form" data-api-form data-endpoint="/api/newsletters/subscribe" data-success="You're subscribed — welcome to the family!">
       <input type="email" name="email" required placeholder="Enter your email address">

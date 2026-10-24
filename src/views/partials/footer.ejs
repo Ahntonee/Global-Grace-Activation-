@@ -3,9 +3,9 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <a href="/" class="nav-brand" style="margin-bottom:6px;">
-          <span class="flame-mark" style="width:34px;height:34px;"><img src="/images/logo.png" alt="Global Grace Activation" style="width:100%;height:100%;object-fit:contain;display:block;"></span>
+          <span class="flame-mark" style="width:34px;height:34px;"><img src="<%= cimg('site.logo.image', '/images/logo.png', 'Logo (header, footer and browser tab icon)') %>" alt="Global Grace Activation" style="width:100%;height:100%;object-fit:contain;display:block;"></span>
         </a>
-        <p>A worldwide movement raised to ignite revival, release destiny, and transform lives through the power of God &mdash; gathering nations for one nightly encounter every year.</p>
+        <p><%= txt('site.footer.about', 'A worldwide movement raised to ignite revival, release destiny, and transform lives through the power of God — gathering nations for one nightly encounter every year.', 'Footer — description') %></p>
         <% if (site.social.instagram || site.social.youtube || site.social.facebook || site.social.tiktok) { %><div class="footer-social">
           <% if (site.social.instagram) { %><a href="<%= site.social.instagram %>" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a><% } %>
           <% if (site.social.youtube) { %><a href="<%= site.social.youtube %>" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3V9z" fill="currentColor" stroke="none"/></svg></a><% } %>
@@ -36,9 +36,9 @@
       <div>
         <h5>Contact</h5>
         <ul>
-          <li><a href="mailto:hello@globalgraceactivation.com">hello@globalgraceactivation.com</a></li>
+          <li><a href="mailto:<%= txt('site.footer.email', 'hello@globalgraceactivation.com', 'Footer — contact email') %>"><%= txt('site.footer.email', 'hello@globalgraceactivation.com', 'Footer — contact email') %></a></li>
           <% if (site.phone) { %><li><a href="tel:<%= site.phoneTel %>"><%= site.phone %></a></li><% } %>
-          <li><a href="/contact">Solution Arena, Lagos, Nigeria</a></li>
+          <li><a href="/contact"><%= txt('site.footer.address', 'Solution Arena, Lagos, Nigeria', 'Footer — address line') %></a></li>
         </ul>
       </div>
     </div>

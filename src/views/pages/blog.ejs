@@ -1,7 +1,7 @@
 <header class="page-header">
   <div class="container">
     <span class="crumb">Home &rsaquo; <span>Blog</span></span>
-    <span class="eyebrow">Media hub</span>
+    <span class="eyebrow"><%= txt('blog.intro.eyebrow', 'Media hub', 'Small label at the top') %></span>
     <h1 style="margin-top:18px;"><%= page.heroTitle %></h1>
     <p><%= page.heroSubtitle %></p>
   </div>
@@ -42,8 +42,8 @@
 <section class="newsletter-bar">
   <div class="container" style="display:flex; justify-content:space-between; align-items:center; gap:30px; flex-wrap:wrap; position:relative; z-index:1;">
     <div style="max-width:420px;">
-      <span class="eyebrow">Never miss a message</span>
-      <h2 style="color:var(--ink); font-size:1.8rem; margin-top:14px;">New posts straight to your inbox</h2>
+      <span class="eyebrow"><%= txt('blog.newsletter.eyebrow', 'Never miss a message', 'Newsletter bar — small label') %></span>
+      <h2 style="color:var(--ink); font-size:1.8rem; margin-top:14px;"><%= txt('blog.newsletter.title', 'New posts straight to your inbox', 'Newsletter bar — heading') %></h2>
     </div>
     <form class="newsletter-form" data-api-form data-endpoint="/api/newsletters/subscribe" data-success="You're subscribed — new posts are on the way!">
       <input type="email" name="email" required placeholder="Enter your email address">

@@ -1,7 +1,7 @@
 <header class="page-header">
   <div class="container">
     <span class="crumb">Home &rsaquo; <span>FAQs</span></span>
-    <span class="eyebrow">Good to know</span>
+    <span class="eyebrow"><%= txt('faqs.intro.eyebrow', 'Good to know', 'Small label at the top') %></span>
     <h1 style="margin-top:18px;"><%= page.heroTitle %></h1>
     <p><%= page.heroSubtitle %></p>
   </div>
@@ -18,9 +18,9 @@
       <% }) %>
     </div>
     <div class="panel-dark reveal" style="text-align:center; margin-top:56px;">
-      <span class="eyebrow" style="justify-content:center;">Still have questions?</span>
-      <h2 style="margin-top:16px; font-size:1.6rem;">We're happy to help</h2>
-      <a href="/contact" class="btn btn-primary" style="margin-top:20px;">Contact Us</a>
+      <span class="eyebrow" style="justify-content:center;"><%= txt('faqs.help.eyebrow', 'Still have questions?', 'Help box — small label') %></span>
+      <h2 style="margin-top:16px; font-size:1.6rem;"><%= txt('faqs.help.title', 'We\'re happy to help', 'Help box — heading') %></h2>
+      <a href="/contact" class="btn btn-primary" style="margin-top:20px;"><%= txt('faqs.help.button', 'Contact Us', 'Help box — button') %></a>
     </div>
   </div>
 </section>

@@ -1,7 +1,7 @@
 <header class="page-header">
   <div class="container">
     <span class="crumb">Home &rsaquo; <span>Give</span></span>
-    <span class="eyebrow">Give &amp; partner</span>
+    <span class="eyebrow"><%= txt('give.intro.eyebrow', 'Give & partner', 'Small label at the top') %></span>
     <h1 style="margin-top:18px;"><%= page.heroTitle %></h1>
     <p><%= page.heroSubtitle %></p>
   </div>
@@ -10,20 +10,20 @@
 <section class="section-pad">
   <div class="container two-col" style="align-items:start;">
     <div class="reveal">
-      <span class="eyebrow">Where it goes</span>
-      <h2 style="font-size:2rem; margin:16px 0 20px;">Four ways to give</h2>
+      <span class="eyebrow"><%= txt('give.ways.eyebrow', 'Where it goes', 'Where it goes — small label') %></span>
+      <h2 style="font-size:2rem; margin:16px 0 20px;"><%= txt('give.ways.title', 'Four ways to give', 'Where it goes — heading') %></h2>
       <div style="display:flex; flex-direction:column; gap:18px;">
-        <div class="card" style="padding:22px;"><h4 style="font-size:17px;">Offering</h4><p style="color:var(--mist); font-size:14.5px; margin-top:6px;">General giving toward the day-to-day work of the movement.</p></div>
-        <div class="card" style="padding:22px;"><h4 style="font-size:17px;">Partnership</h4><p style="color:var(--mist); font-size:14.5px; margin-top:6px;">Monthly commitment that sustains GGA's broadcasts and outreach year-round.</p></div>
-        <div class="card" style="padding:22px;"><h4 style="font-size:17px;">Project Seed</h4><p style="color:var(--mist); font-size:14.5px; margin-top:6px;">One-time seed toward a specific project &mdash; venue, equipment, or a regional activation.</p></div>
-        <div class="card" style="padding:22px;"><h4 style="font-size:17px;">Missions</h4><p style="color:var(--mist); font-size:14.5px; margin-top:6px;">Support for church-planting and outreach teams carrying GGA's message into new nations.</p></div>
-        <div class="card" style="padding:22px;"><h4 style="font-size:17px;">Conference Support</h4><p style="color:var(--mist); font-size:14.5px; margin-top:6px;">Directly funds the annual GGA Global Conference, kept free for every attendee.</p></div>
+        <div class="card" style="padding:22px;"><h4 style="font-size:17px;"><%= txt('give.ways.title1', 'Offering', 'Way 1 — name') %></h4><p style="color:var(--mist); font-size:14.5px; margin-top:6px;"><%= txt('give.ways.desc1', 'General giving toward the day-to-day work of the movement.', 'Way 1 — description') %></p></div>
+        <div class="card" style="padding:22px;"><h4 style="font-size:17px;"><%= txt('give.ways.title2', 'Partnership', 'Way 2 — name') %></h4><p style="color:var(--mist); font-size:14.5px; margin-top:6px;"><%= txt('give.ways.desc2', 'Monthly commitment that sustains GGA\'s broadcasts and outreach year-round.', 'Way 2 — description') %></p></div>
+        <div class="card" style="padding:22px;"><h4 style="font-size:17px;"><%= txt('give.ways.title3', 'Project Seed', 'Way 3 — name') %></h4><p style="color:var(--mist); font-size:14.5px; margin-top:6px;"><%= txt('give.ways.desc3', 'One-time seed toward a specific project — venue, equipment, or a regional activation.', 'Way 3 — description') %></p></div>
+        <div class="card" style="padding:22px;"><h4 style="font-size:17px;"><%= txt('give.ways.title4', 'Missions', 'Way 4 — name') %></h4><p style="color:var(--mist); font-size:14.5px; margin-top:6px;"><%= txt('give.ways.desc4', 'Support for church-planting and outreach teams carrying GGA\'s message into new nations.', 'Way 4 — description') %></p></div>
+        <div class="card" style="padding:22px;"><h4 style="font-size:17px;"><%= txt('give.ways.title5', 'Conference Support', 'Way 5 — name') %></h4><p style="color:var(--mist); font-size:14.5px; margin-top:6px;"><%= txt('give.ways.desc5', 'Directly funds the annual GGA Global Conference, kept free for every attendee.', 'Way 5 — description') %></p></div>
       </div>
     </div>
 
     <form class="panel-dark reveal" id="give-form">
-      <span class="eyebrow">Give now</span>
-      <h3 style="margin:14px 0 20px;">Choose an amount</h3>
+      <span class="eyebrow"><%= txt('give.form.eyebrow', 'Give now', 'Giving form — small label') %></span>
+      <h3 style="margin:14px 0 20px;"><%= txt('give.form.title', 'Choose an amount', 'Giving form — heading') %></h3>
       <div class="give-toggle" id="give-frequency-toggle">
         <button class="active" type="button" data-frequency="One-Time">One-Time</button>
         <button type="button" data-frequency="Monthly">Monthly</button>
@@ -66,7 +66,7 @@
         <span style="font-size:12.5px; color:var(--mist);">We accept</span>
         <span class="gateway-badge">Flutterwave</span>
       </div>
-      <p style="font-size:12px; color:var(--mist); margin-top:16px;">All transactions are encrypted and processed securely. You'll receive an email receipt instantly.</p>
+      <p style="font-size:12px; color:var(--mist); margin-top:16px;"><%= txt('give.form.secure', 'All transactions are encrypted and processed securely. You\'ll receive an email receipt instantly.', 'Giving form — reassurance note') %></p>
     </form>
   </div>
 </section>
@@ -79,14 +79,14 @@
 <section class="section-pad-sm" style="background:var(--paper-2);">
   <div class="container">
     <div class="center-head reveal">
-      <span class="eyebrow">Recurring giving</span>
-      <h2>Become a monthly partner</h2>
-      <p>Monthly partners are the backbone of GGA &mdash; sustaining free broadcasts, translation and outreach between gatherings.</p>
+      <span class="eyebrow"><%= txt('give.recurring.eyebrow', 'Recurring giving', 'Monthly partners — small label') %></span>
+      <h2><%= txt('give.recurring.title', 'Become a monthly partner', 'Monthly partners — heading') %></h2>
+      <p><%= txt('give.recurring.intro', 'Monthly partners are the backbone of GGA — sustaining free broadcasts, translation and outreach between gatherings.', 'Monthly partners — intro line') %></p>
     </div>
     <div class="grid-3 reveal-stagger">
-      <div class="card" style="padding:28px; text-align:center;"><h4 style="font-size:18px;">Grace Partner</h4><p style="color:var(--flame-dim); font-family:'Space Mono',monospace; font-weight:700; margin:10px 0;">&#8358;10,000/mo</p><p style="color:var(--mist); font-size:14px;">Monthly partner updates &amp; prayer letter</p></div>
-      <div class="card" style="padding:28px; text-align:center; border-color:var(--flame);"><h4 style="font-size:18px;">Destiny Partner</h4><p style="color:var(--flame-dim); font-family:'Space Mono',monospace; font-weight:700; margin:10px 0;">&#8358;25,000/mo</p><p style="color:var(--mist); font-size:14px;">Everything above, plus quarterly video updates</p></div>
-      <div class="card" style="padding:28px; text-align:center;"><h4 style="font-size:18px;">Nations Partner</h4><p style="color:var(--flame-dim); font-family:'Space Mono',monospace; font-weight:700; margin:10px 0;">&#8358;100,000/mo</p><p style="color:var(--mist); font-size:14px;">Named recognition at the annual gathering</p></div>
+      <div class="card" style="padding:28px; text-align:center;"><h4 style="font-size:18px;"><%= txt('give.partners.name1', 'Grace Partner', 'Plan 1 — name') %></h4><p style="color:var(--flame-dim); font-family:'Space Mono',monospace; font-weight:700; margin:10px 0;"><%= txt('give.partners.price1', '₦10,000/mo', 'Plan 1 — price') %></p><p style="color:var(--mist); font-size:14px;"><%= txt('give.partners.desc1', 'Monthly partner updates & prayer letter', 'Plan 1 — description') %></p></div>
+      <div class="card" style="padding:28px; text-align:center; border-color:var(--flame);"><h4 style="font-size:18px;"><%= txt('give.partners.name2', 'Destiny Partner', 'Plan 2 — name') %></h4><p style="color:var(--flame-dim); font-family:'Space Mono',monospace; font-weight:700; margin:10px 0;"><%= txt('give.partners.price2', '₦25,000/mo', 'Plan 2 — price') %></p><p style="color:var(--mist); font-size:14px;"><%= txt('give.partners.desc2', 'Everything above, plus quarterly video updates', 'Plan 2 — description') %></p></div>
+      <div class="card" style="padding:28px; text-align:center;"><h4 style="font-size:18px;"><%= txt('give.partners.name3', 'Nations Partner', 'Plan 3 — name') %></h4><p style="color:var(--flame-dim); font-family:'Space Mono',monospace; font-weight:700; margin:10px 0;"><%= txt('give.partners.price3', '₦100,000/mo', 'Plan 3 — price') %></p><p style="color:var(--mist); font-size:14px;"><%= txt('give.partners.desc3', 'Named recognition at the annual gathering', 'Plan 3 — description') %></p></div>
     </div>
   </div>
 </section>
@@ -94,14 +94,14 @@
 <section class="section-pad">
   <div class="container">
     <div class="center-head reveal">
-      <span class="eyebrow">Trust &amp; transparency</span>
-      <h2>Secure, accountable giving</h2>
+      <span class="eyebrow"><%= txt('give.trust.eyebrow', 'Trust & transparency', 'Trust section — small label') %></span>
+      <h2><%= txt('give.trust.title', 'Secure, accountable giving', 'Trust section — heading') %></h2>
     </div>
     <div class="grid-4 reveal-stagger" style="text-align:center;">
-      <div class="card" style="padding:26px;"><strong>Bank-level encryption</strong><p style="color:var(--mist); font-size:13.5px; margin-top:8px;">All gifts are processed securely by Flutterwave.</p></div>
-      <div class="card" style="padding:26px;"><strong>Instant receipt</strong><p style="color:var(--mist); font-size:13.5px; margin-top:8px;">Email confirmation sent for every gift.</p></div>
-      <div class="card" style="padding:26px;"><strong>Annual report</strong><p style="color:var(--mist); font-size:13.5px; margin-top:8px;">A yearly summary of how funds were used.</p></div>
-      <div class="card" style="padding:26px;"><strong>Cancel anytime</strong><p style="color:var(--mist); font-size:13.5px; margin-top:8px;">Manage or stop recurring giving whenever you like.</p></div>
+      <div class="card" style="padding:26px;"><strong><%= txt('give.trust.name1', 'Bank-level encryption', 'Point 1 — heading') %></strong><p style="color:var(--mist); font-size:13.5px; margin-top:8px;"><%= txt('give.trust.desc1', 'All gifts are processed securely by Flutterwave.', 'Point 1 — description') %></p></div>
+      <div class="card" style="padding:26px;"><strong><%= txt('give.trust.name2', 'Instant receipt', 'Point 2 — heading') %></strong><p style="color:var(--mist); font-size:13.5px; margin-top:8px;"><%= txt('give.trust.desc2', 'Email confirmation sent for every gift.', 'Point 2 — description') %></p></div>
+      <div class="card" style="padding:26px;"><strong><%= txt('give.trust.name3', 'Annual report', 'Point 3 — heading') %></strong><p style="color:var(--mist); font-size:13.5px; margin-top:8px;"><%= txt('give.trust.desc3', 'A yearly summary of how funds were used.', 'Point 3 — description') %></p></div>
+      <div class="card" style="padding:26px;"><strong><%= txt('give.trust.name4', 'Cancel anytime', 'Point 4 — heading') %></strong><p style="color:var(--mist); font-size:13.5px; margin-top:8px;"><%= txt('give.trust.desc4', 'Manage or stop recurring giving whenever you like.', 'Point 4 — description') %></p></div>
     </div>
   </div>
 </section>

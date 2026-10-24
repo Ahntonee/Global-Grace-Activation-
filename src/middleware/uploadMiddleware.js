@@ -11,6 +11,8 @@ const ALLOWED_MIME = new Set([
   "image/gif",
   "image/avif",
   "application/pdf",
+  "video/mp4",
+  "video/webm",
 ]);
 
 // Store file temporarily in memory
@@ -23,7 +25,7 @@ const upload = multer({
   },
   fileFilter(req, file, cb) {
     if (!ALLOWED_MIME.has(file.mimetype)) {
-      return cb(new ApiError(415, "Unsupported file type. Please upload a JPG, PNG, WebP, GIF or PDF file."));
+      return cb(new ApiError(415, "Unsupported file type. Please upload a JPG, PNG, WebP, GIF, PDF, MP4 or WebM file."));
     }
     cb(null, true);
   },

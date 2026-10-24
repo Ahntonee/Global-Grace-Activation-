@@ -33,6 +33,8 @@ const paymentRoutes = require("./routes/paymentRoutes");
 const broadcastRoutes = require("./routes/broadcastRoutes");
 const exportRoutes = require("./routes/exportRoutes");
 const settingsRoutes = require("./routes/settingsRoutes");
+const contentRoutes = require("./routes/contentRoutes");
+const siteContent = require("./services/siteContent");
 const { getSite } = require("./services/siteSettings");
 
 // Public site (server-rendered) routes
@@ -188,7 +190,11 @@ app.use("/api", rateLimit({
 // Public contact details / social links, editable under Admin > Site Settings.
 // Overrides the env-based default in app.locals for every rendered page.
 app.use(async (req, res, next) => {
-  if (!req.path.startsWith("/api")) res.locals.site = await getSite();
+  if (!req.path.startsWith("/api")) {
+    res.locals.site = await getSite();
+    // txt()/rich()/cimg()/cvid(): editable page content (Admin > Page Content)
+    Object.assign(res.locals, siteContent.makeHelpers(await siteContent.getOverrides()));
+  }
   next();
 });
 
@@ -213,6 +219,7 @@ app.use("/api/payments", paymentRoutes);
 app.use("/api/broadcasts", broadcastRoutes);
 app.use("/api/export", exportRoutes);
 app.use("/api/settings", settingsRoutes);
+app.use("/api/content", contentRoutes);
 
 app.get("/api/status", (req, res) => {
     res.status(200).json({
