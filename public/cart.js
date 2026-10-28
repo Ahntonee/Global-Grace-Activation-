@@ -69,7 +69,7 @@
     });
 
     const original = btn.textContent;
-    btn.textContent = "Added ✓";
+    btn.textContent = window.ggaT("cartAdded", "Added ✓");
     setTimeout(() => (btn.textContent = original), 1400);
   });
 
@@ -84,7 +84,7 @@
     const cart = getCart();
 
     if (!cart.length) {
-      container.innerHTML = '<p style="color:var(--mist);">Your cart is empty. <a href="/shop">Browse the shop</a>.</p>';
+      container.innerHTML = '<p style="color:var(--mist);">' + ggaH('cartEmpty', 'Your cart is empty.') + ' <a href="/shop">' + ggaH('cartBrowse', 'Browse the shop') + '</a>.</p>';
       subtotalEl.textContent = fmtNaira(0);
       if (checkoutBtn) checkoutBtn.style.pointerEvents = "none", (checkoutBtn.style.opacity = ".5");
       return;
@@ -109,7 +109,7 @@
         <div style="font-family:'Space Mono',monospace; font-weight:700; color:var(--flame-dim); min-width:90px; text-align:right;">
           ${fmtNaira(item.price * item.quantity)}
         </div>
-        <button type="button" class="btn btn-sm btn-outline-dark" data-remove="${item.productId}">Remove</button>
+        <button type="button" class="btn btn-sm btn-outline-dark" data-remove="${item.productId}">${ggaH('cartRemove', 'Remove')}</button>
       </div>
     `
       )

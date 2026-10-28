@@ -3,7 +3,7 @@
 %>
 <header class="page-header">
   <div class="container">
-    <span class="crumb">Home &rsaquo; <span>Testimonies</span></span>
+    <span class="crumb"><%= txt('site.nav.home', 'Home', 'Menu — Home') %> &rsaquo; <span><%= txt('site.nav.testimonies', 'Testimonies', 'Menu — Testimonies') %></span></span>
     <span class="eyebrow"><%= txt('testimonies.intro.eyebrow', 'Real stories', 'Small label at the top') %></span>
     <h1 style="margin-top:18px;"><%= page.heroTitle %></h1>
     <p><%= page.heroSubtitle %></p>
@@ -14,7 +14,7 @@
   <div class="container">
     <% if (categories.length > 1) { %>
     <div class="tab-bar reveal" data-tabs="#testimony-grid">
-      <button class="tab-btn active" type="button" data-filter="all">All</button>
+      <button class="tab-btn active" type="button" data-filter="all"><%= txt('site.words.all', 'All', 'Filter tab — All') %></button>
       <% categories.forEach(function(cat) { %>
         <button class="tab-btn" type="button" data-filter="<%= cat.toLowerCase() %>"><%= cat %></button>
       <% }) %>
@@ -32,11 +32,11 @@
             <span class="cat"><%= t.category %></span>
             <% if (ytId) { %><div class="play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><% } %>
           </div>
-          <div class="body"><h4><%= t.title %></h4><small>Testimony<% if (t.location) { %> &middot; <%= t.location %><% } %></small></div>
+          <div class="body"><h4><%= t.title %></h4><small><%= txt('site.words.testimony', 'Testimony', 'Small word under each testimony card') %><% if (t.location) { %> &middot; <%= t.location %><% } %></small></div>
         </div>
       <% }) %>
       <% if (!testimonies.length) { %>
-        <p style="color:var(--mist);">No testimonies published yet.</p>
+        <p style="color:var(--mist);"><%= txt('testimonies.list.empty', 'No testimonies published yet.', 'Message when there are no testimonies') %></p>
       <% } %>
     </div>
   </div>
@@ -50,18 +50,18 @@
         <h2 style="font-size:1.8rem; margin:16px 0 20px;"><%= txt('testimonies.submit.title', 'Submit a testimony', 'Share-your-story box — heading') %></h2>
         <p style="color:var(--mist);"><%= txt('testimonies.submit.body', 'Your story could be the encouragement someone else needs today.', 'Share-your-story box — paragraph') %></p>
       </div>
-      <form data-api-form data-endpoint="/api/testimonies/submit" data-success="Thank you — your testimony has been received!" class="reveal">
-        <div class="field"><label>Title</label><input type="text" name="title" required placeholder="A short title for your story, e.g. &quot;Healed from years of pain&quot;"></div>
+      <form data-api-form data-endpoint="/api/testimonies/submit" data-success="<%= txt('testimonies.form.successMessage', 'Thank you — your testimony has been received!', 'Message shown after the form is sent') %>" class="reveal">
+        <div class="field"><label><%= txt('site.forms.labelTitle', 'Title', 'Form label — Title') %></label><input type="text" name="title" required placeholder="<%= txt('testimonies.placeholders.title', 'A short title for your story, e.g. "Healed from years of pain"', 'Placeholder inside the title box') %>"></div>
         <div class="field-row">
-          <div class="field"><label>Full Name</label><input type="text" name="fullName" placeholder="Your name (optional)"></div>
-          <div class="field"><label>Location</label><input type="text" name="location" placeholder="City, Country"></div>
+          <div class="field"><label><%= txt('site.forms.labelFullName', 'Full Name', 'Form label — Full Name') %></label><input type="text" name="fullName" placeholder="<%= txt('testimonies.placeholders.fullname', 'Your name (optional)', 'Placeholder inside the fullName box') %>"></div>
+          <div class="field"><label><%= txt('site.forms.labelLocation', 'Location', 'Form label — Location') %></label><input type="text" name="location" placeholder="<%= txt('testimonies.placeholders.location', 'City, Country', 'Placeholder inside the location box') %>"></div>
         </div>
-        <div class="field"><label>Category</label>
-          <select name="category"><option>Healing</option><option>Deliverance</option><option>Breakthrough</option><option>Salvation</option><option>Family</option><option>Restoration</option></select>
+        <div class="field"><label><%= txt('site.forms.labelCategory', 'Category', 'Form label — Category') %></label>
+          <select name="category"><option value="Healing"><%= txt('testimonies.options.categoryHealing', 'Healing', 'Dropdown choice (category) — Healing') %></option><option value="Deliverance"><%= txt('testimonies.options.categoryDeliverance', 'Deliverance', 'Dropdown choice (category) — Deliverance') %></option><option value="Breakthrough"><%= txt('testimonies.options.categoryBreakthrough', 'Breakthrough', 'Dropdown choice (category) — Breakthrough') %></option><option value="Salvation"><%= txt('testimonies.options.categorySalvation', 'Salvation', 'Dropdown choice (category) — Salvation') %></option><option value="Family"><%= txt('testimonies.options.categoryFamily', 'Family', 'Dropdown choice (category) — Family') %></option><option value="Restoration"><%= txt('testimonies.options.categoryRestoration', 'Restoration', 'Dropdown choice (category) — Restoration') %></option></select>
         </div>
-        <div class="field"><label>Your Testimony</label><textarea name="body" rows="5" required placeholder="Tell us what God has done&hellip;"></textarea></div>
-        <label style="display:flex; align-items:center; gap:8px; font-size:13.5px; color:var(--mist); margin-bottom:18px;"><input type="checkbox" name="isAnonymous" style="width:auto;"> Submit anonymously</label>
-        <button class="btn btn-primary btn-block" type="submit">Submit Testimony</button>
+        <div class="field"><label><%= txt('site.forms.labelYourTestimony', 'Your Testimony', 'Form label — Your Testimony') %></label><textarea name="body" rows="5" required placeholder="<%= txt('testimonies.placeholders.body', 'Tell us what God has done…', 'Placeholder inside the body box') %>"></textarea></div>
+        <label style="display:flex; align-items:center; gap:8px; font-size:13.5px; color:var(--mist); margin-bottom:18px;"><input type="checkbox" name="isAnonymous" style="width:auto;"> <%= txt('testimonies.form.anonymousLabel', 'Submit anonymously', 'Checkbox wording (anonymous)') %></label>
+        <button class="btn btn-primary btn-block" type="submit"><%= txt('testimonies.form.button', 'Submit Testimony', 'Testimony form — button') %></button>
       </form>
     </div>
   </div>

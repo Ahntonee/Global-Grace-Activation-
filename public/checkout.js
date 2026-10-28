@@ -26,7 +26,7 @@
       .map((i) => `<div style="display:flex; justify-content:space-between;"><span>${i.name} &times; ${i.quantity}</span><span>${window.ggaCart.fmtNaira(i.price * i.quantity)}</span></div>`)
       .join("") +
     (requiresShipping
-      ? `<div style="display:flex; justify-content:space-between; color:var(--mist);"><span>Shipping</span><span>${window.ggaCart.fmtNaira(shippingFee)}</span></div>`
+      ? `<div style="display:flex; justify-content:space-between; color:var(--mist);"><span>${ggaH('shippingLabel', 'Shipping')}</span><span>${window.ggaCart.fmtNaira(shippingFee)}</span></div>`
       : "");
   totalEl.textContent = window.ggaCart.fmtNaira(total);
 

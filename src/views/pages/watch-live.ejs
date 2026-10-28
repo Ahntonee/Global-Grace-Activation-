@@ -3,11 +3,11 @@
 %>
 <header class="page-header">
   <div class="container">
-    <span class="crumb">Home &rsaquo; <span>Watch Live</span></span>
+    <span class="crumb"><%= txt('site.nav.home', 'Home', 'Menu — Home') %> &rsaquo; <span><%= txt('site.nav.watchLive', 'Watch Live', 'Menu — Watch Live') %></span></span>
     <% if (isLive) { %>
-      <span class="live-badge"><span class="dot"></span> LIVE NOW</span>
+      <span class="live-badge"><span class="dot"></span> <%= txt('watch.status.liveNow', 'LIVE NOW', 'Badge at the top while live') %></span>
     <% } else { %>
-      <span class="live-badge" style="background:var(--mist);"><span class="dot"></span> OFF AIR &mdash; CHECK BACK SOON</span>
+      <span class="live-badge" style="background:var(--mist);"><span class="dot"></span> <%= txt('watch.status.offAirTop', 'OFF AIR — CHECK BACK SOON', 'Badge at the top while off air') %></span>
     <% } %>
     <h1 style="margin-top:20px;"><%= page.heroTitle %></h1>
     <p><%= page.heroSubtitle %></p>
@@ -21,24 +21,24 @@
         <% if (isLive && broadcast.embedUrl) { %>
           <div style="aspect-ratio:16/9; border-radius:var(--radius-lg); overflow:hidden; position:relative;">
             <iframe src="<%= broadcast.embedUrl %>" style="width:100%;height:100%;border:0;" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-            <span class="live-badge" style="position:absolute; top:18px; left:18px; z-index:2;"><span class="dot"></span> LIVE</span>
+            <span class="live-badge" style="position:absolute; top:18px; left:18px; z-index:2;"><span class="dot"></span> <%= txt('watch.status.liveBadge', 'LIVE', 'Badge on the video while live') %></span>
           </div>
         <% } else { %>
           <div style="aspect-ratio:16/9; border-radius:var(--radius-lg); background:linear-gradient(155deg,#ecfdf5,#f0fdf4); position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden;">
             <img src="<%= broadcast && broadcast.thumbnail && broadcast.thumbnail.url ? broadcast.thumbnail.url : cimg('watch.offair.image', '/images/worship-stage.jpg', 'Picture shown while off air (when the broadcast has no flyer)') %>" alt="<%= broadcast ? broadcast.title : 'Live stream' %>" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;" loading="lazy">
             <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,78,59,.55),transparent 60%);z-index:1;"></div>
             <div style="width:76px;height:76px;border-radius:50%; background:rgba(255,255,255,.18); border:1.5px solid rgba(255,255,255,.45); display:flex; align-items:center; justify-content:center; color:#fff; backdrop-filter:blur(6px); position:relative; z-index:2;"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
-            <span class="live-badge" style="position:absolute; top:18px; left:18px; z-index:2; background:rgba(107,114,128,.85);"><span class="dot"></span> OFF AIR</span>
+            <span class="live-badge" style="position:absolute; top:18px; left:18px; z-index:2; background:rgba(107,114,128,.85);"><span class="dot"></span> <%= txt('watch.status.offAirBadge', 'OFF AIR', 'Badge on the picture while off air') %></span>
           </div>
         <% } %>
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:18px; flex-wrap:wrap; gap:12px;">
           <div>
-            <h3 style="font-size:19px;"><%= broadcast ? broadcast.title : 'No stream scheduled yet' %></h3>
+            <h3 style="font-size:19px;"><%= broadcast ? broadcast.title : txt('watch.stream.none', 'No stream scheduled yet', 'Title shown when no broadcast is scheduled') %></h3>
             <p style="color:var(--mist); font-size:14px; margin-top:4px;"><%= txt('watch.stream.location', 'Streaming from Solution Arena, Lagos', 'Line under the stream title') %></p>
           </div>
           <div style="display:flex; gap:10px;">
-            <a href="/prayer" class="btn btn-sm btn-outline-dark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7.5-4.9-10-9.2C.4 8.6 2 5 5.6 5c2 0 3.4 1 4.4 2.4C11 6 12.4 5 14.4 5 18 5 19.6 8.6 22 11.8 19.5 16.1 12 21 12 21z"/></svg> Prayer Request</a>
-            <button class="btn btn-sm btn-outline-dark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.2 10.8l7.6-4.2M8.2 13.2l7.6 4.2"/></svg> Share</button>
+            <a href="/prayer" class="btn btn-sm btn-outline-dark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7.5-4.9-10-9.2C.4 8.6 2 5 5.6 5c2 0 3.4 1 4.4 2.4C11 6 12.4 5 14.4 5 18 5 19.6 8.6 22 11.8 19.5 16.1 12 21 12 21z"/></svg> <%= txt('watch.actions.prayer', 'Prayer Request', 'Button under the video — prayer') %></a>
+            <button class="btn btn-sm btn-outline-dark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.2 10.8l7.6-4.2M8.2 13.2l7.6 4.2"/></svg> <%= txt('watch.actions.share', 'Share', 'Button under the video — share') %></button>
           </div>
         </div>
       </div>
@@ -48,13 +48,13 @@
         <div class="chat-window" style="margin-top:16px;">
           <div class="chat-messages" id="live-chat-messages">
             <div class="chat-msg" style="color:var(--mist);" id="chat-placeholder">
-              <%= isLive ? 'Connecting to chat…' : "Chat opens once we're live. Set a reminder and come back soon." %>
+              <%= isLive ? txt('watch.chat.connecting', 'Connecting to chat…', 'Chat — message while connecting') : txt('watch.chat.closed', 'Chat opens once we\'re live. Set a reminder and come back soon.', 'Chat — message while off air') %>
             </div>
           </div>
           <form class="chat-input-row" id="live-chat-form">
-            <input type="text" id="live-chat-name" placeholder="Your name" maxlength="40" style="max-width:110px; flex:0 0 auto;" <%= isLive ? '' : 'disabled' %>>
-            <input type="text" id="live-chat-input" placeholder="Say something encouraging&hellip;" maxlength="140" <%= isLive ? '' : 'disabled' %>>
-            <button type="submit" <%= isLive ? '' : 'disabled' %>>Send</button>
+            <input type="text" id="live-chat-name" placeholder="<%= txt('watch.chat.namePlaceholder', 'Your name', 'Chat — name box hint') %>" maxlength="40" style="max-width:110px; flex:0 0 auto;" <%= isLive ? '' : 'disabled' %>>
+            <input type="text" id="live-chat-input" placeholder="<%= txt('watch.chat.messagePlaceholder', 'Say something encouraging…', 'Chat — message box hint') %>" maxlength="140" <%= isLive ? '' : 'disabled' %>>
+            <button type="submit" <%= isLive ? '' : 'disabled' %>><%= txt('watch.chat.send', 'Send', 'Chat — send button') %></button>
           </form>
         </div>
       </div>
@@ -70,10 +70,10 @@
     </div>
     <div class="hero-panel" style="max-width:520px; margin:0 auto;">
       <div class="countdown">
-        <div class="c-cell"><div class="c-num" id="cd-days">00</div><div class="c-label">Days</div></div>
-        <div class="c-cell"><div class="c-num" id="cd-hours">00</div><div class="c-label">Hours</div></div>
-        <div class="c-cell"><div class="c-num" id="cd-mins">00</div><div class="c-label">Mins</div></div>
-        <div class="c-cell"><div class="c-num" id="cd-secs">00</div><div class="c-label">Secs</div></div>
+        <div class="c-cell"><div class="c-num" id="cd-days">00</div><div class="c-label"><%= txt('site.countdown.days', 'Days', 'Countdown label — Days') %></div></div>
+        <div class="c-cell"><div class="c-num" id="cd-hours">00</div><div class="c-label"><%= txt('site.countdown.hours', 'Hours', 'Countdown label — Hours') %></div></div>
+        <div class="c-cell"><div class="c-num" id="cd-mins">00</div><div class="c-label"><%= txt('site.countdown.mins', 'Mins', 'Countdown label — Mins') %></div></div>
+        <div class="c-cell"><div class="c-num" id="cd-secs">00</div><div class="c-label"><%= txt('site.countdown.secs', 'Secs', 'Countdown label — Secs') %></div></div>
       </div>
     </div>
   </div>

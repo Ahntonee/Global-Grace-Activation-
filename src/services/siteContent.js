@@ -41,7 +41,14 @@ const PAGES = {
   testimonies: "Testimonies page",
   blog: "Blog page",
   shop: "Shop page",
-  site: "Site-wide (logo & footer)",
+  product: "Product page",
+  cart: "Cart page",
+  checkout: "Checkout page",
+  giveconfirm: "Giving result page",
+  orderconfirm: "Order result page",
+  blogpost: "Blog post page",
+  notfound: "Page-not-found (404) page",
+  site: "Site-wide (menu, footer, forms, logo & messages)",
 };
 const PAGE_ORDER = Object.keys(PAGES);
 
@@ -125,10 +132,12 @@ function getGroups() {
 const TTL_MS = 20 * 1000;
 let cache = null;
 let cachedAt = 0;
+let version = 0; // bumped on every save so a load that was already running can't cache stale content
 
 async function getOverrides() {
   if (cache && Date.now() - cachedAt < TTL_MS) return cache;
 
+  const startedAt = version;
   const map = {};
   try {
     const docs = await SiteContent.find({}).populate("media", "url originalName format").lean();
@@ -144,12 +153,15 @@ async function getOverrides() {
     return cache || {};
   }
 
-  cache = map;
-  cachedAt = Date.now();
+  if (startedAt === version) {
+    cache = map;
+    cachedAt = Date.now();
+  }
   return map;
 }
 
 function clearCache() {
+  version += 1;
   cache = null;
 }
 

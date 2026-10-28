@@ -24,7 +24,7 @@
       e.preventDefault();
 
       const endpoint = form.getAttribute("data-endpoint");
-      const successMsg = form.getAttribute("data-success") || "Thank you — received!";
+      const successMsg = form.getAttribute("data-success") || window.ggaT("formSuccessFallback", "Thank you — received!");
       const submitBtn = form.querySelector("button[type=submit]");
       if (submitBtn) submitBtn.disabled = true;
 
@@ -37,7 +37,7 @@
         const body = await res.json();
 
         if (!res.ok) {
-          const msg = body.message || (body.errors && body.errors.map((er) => er.message).join(", ")) || "Something went wrong — please try again.";
+          const msg = body.message || (body.errors && body.errors.map((er) => er.message).join(", ")) || window.ggaT("formErrorFallback", "Something went wrong — please try again.");
           throw new Error(msg);
         }
 

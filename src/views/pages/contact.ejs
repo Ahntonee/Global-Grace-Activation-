@@ -1,6 +1,6 @@
 <header class="page-header">
   <div class="container">
-    <span class="crumb">Home &rsaquo; <span>Contact</span></span>
+    <span class="crumb"><%= txt('site.nav.home', 'Home', 'Menu — Home') %> &rsaquo; <span><%= txt('site.nav.contact', 'Contact', 'Menu — Contact') %></span></span>
     <span class="eyebrow"><%= txt('contact.intro.eyebrow', 'Get in touch', 'Small label at the top') %></span>
     <h1 style="margin-top:18px;"><%= page.heroTitle %></h1>
     <p><%= page.heroSubtitle %></p>
@@ -12,24 +12,24 @@
     <div class="reveal">
       <span class="eyebrow"><%= txt('contact.form.eyebrow', 'Send a message', 'Message form — small label') %></span>
       <h2 style="font-size:1.8rem; margin:16px 0 26px;"><%= txt('contact.form.title', 'Fill out the form', 'Message form — heading') %></h2>
-      <form id="contact-form" data-api-form data-endpoint="/api/contacts" data-success="Message sent — our team will respond within 48 hours.">
+      <form id="contact-form" data-api-form data-endpoint="/api/contacts" data-success="<%= txt('contact.form.successMessage', 'Message sent — our team will respond within 48 hours.', 'Message shown after the form is sent') %>">
         <div class="field-row">
-          <div class="field"><label>Full Name</label><input type="text" name="fullName" required placeholder="Your name"></div>
-          <div class="field"><label>Email Address</label><input type="email" name="email" required placeholder="you@email.com"></div>
+          <div class="field"><label><%= txt('site.forms.labelFullName', 'Full Name', 'Form label — Full Name') %></label><input type="text" name="fullName" required placeholder="<%= txt('contact.placeholders.fullname', 'Your name', 'Placeholder inside the fullName box') %>"></div>
+          <div class="field"><label><%= txt('site.forms.labelEmailAddress', 'Email Address', 'Form label — Email Address') %></label><input type="email" name="email" required placeholder="<%= txt('contact.placeholders.email', 'you@email.com', 'Placeholder inside the email box') %>"></div>
         </div>
-        <div class="field"><label>Subject</label><input type="text" name="subject" required placeholder="What's this about?"></div>
-        <div class="field"><label>Category</label>
+        <div class="field"><label><%= txt('site.forms.labelSubject', 'Subject', 'Form label — Subject') %></label><input type="text" name="subject" required placeholder="<%= txt('contact.placeholders.subject', 'What\'s this about?', 'Placeholder inside the subject box') %>"></div>
+        <div class="field"><label><%= txt('site.forms.labelCategory', 'Category', 'Form label — Category') %></label>
           <select name="category">
-            <option>General</option>
-            <option>Support</option>
-            <option>Partnership</option>
-            <option>Donation</option>
-            <option>Complaint</option>
-            <option>Testimony</option>
+            <option value="General"><%= txt('contact.options.categoryGeneral', 'General', 'Dropdown choice (category) — General') %></option>
+            <option value="Support"><%= txt('contact.options.categorySupport', 'Support', 'Dropdown choice (category) — Support') %></option>
+            <option value="Partnership"><%= txt('contact.options.categoryPartnership', 'Partnership', 'Dropdown choice (category) — Partnership') %></option>
+            <option value="Donation"><%= txt('contact.options.categoryDonation', 'Donation', 'Dropdown choice (category) — Donation') %></option>
+            <option value="Complaint"><%= txt('contact.options.categoryComplaint', 'Complaint', 'Dropdown choice (category) — Complaint') %></option>
+            <option value="Testimony"><%= txt('contact.options.categoryTestimony', 'Testimony', 'Dropdown choice (category) — Testimony') %></option>
           </select>
         </div>
-        <div class="field"><label>Message</label><textarea name="message" rows="5" required placeholder="How can we help?"></textarea></div>
-        <button class="btn btn-primary btn-block" type="submit">Send Message</button>
+        <div class="field"><label><%= txt('site.forms.labelMessage', 'Message', 'Form label — Message') %></label><textarea name="message" rows="5" required placeholder="<%= txt('contact.placeholders.message', 'How can we help?', 'Placeholder inside the message box') %>"></textarea></div>
+        <button class="btn btn-primary btn-block" type="submit"><%= txt('contact.form.button', 'Send Message', 'Message form — button') %></button>
       </form>
     </div>
 
@@ -38,19 +38,19 @@
       <div style="display:flex; flex-direction:column; gap:16px; margin:20px 0 30px;">
         <div class="card" style="padding:20px; display:flex; gap:14px; align-items:flex-start;">
           <span style="color:var(--flame-dim);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s7-7.4 7-12.5A7 7 0 0 0 5 9.5C5 14.6 12 22 12 22z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
-          <div><strong>Office Address</strong><p style="color:var(--mist); font-size:14px; margin-top:4px;"><%= txt('contact.reach.address', 'Solution Arena, Ikorodu Road, Onipanu, Lagos, Nigeria', 'Office address') %></p></div>
+          <div><strong><%= txt('contact.reach.addressTitle', 'Office Address', 'Contact card — address title') %></strong><p style="color:var(--mist); font-size:14px; margin-top:4px;"><%= txt('contact.reach.address', 'Solution Arena, Ikorodu Road, Onipanu, Lagos, Nigeria', 'Office address') %></p></div>
         </div>
         <div class="card" style="padding:20px; display:flex; gap:14px; align-items:flex-start;">
           <span style="color:var(--flame-dim);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
-          <div><strong>Email</strong><p style="color:var(--mist); font-size:14px; margin-top:4px;"><%- rich('contact.reach.emails', 'hello@globalgraceactivation.com\nsupport@globalgraceactivation.com', 'Email addresses (one per line)') %></p></div>
+          <div><strong><%= txt('contact.reach.emailTitle', 'Email', 'Contact card — email title') %></strong><p style="color:var(--mist); font-size:14px; margin-top:4px;"><%- rich('contact.reach.emails', 'hello@globalgraceactivation.com\nsupport@globalgraceactivation.com', 'Email addresses (one per line)') %></p></div>
         </div>
         <% if (site.phone) { %><div class="card" style="padding:20px; display:flex; gap:14px; align-items:flex-start;">
           <span style="color:var(--flame-dim);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>
-          <div><strong>Phone</strong><p style="color:var(--mist); font-size:14px; margin-top:4px;"><%= site.phone %></p></div>
+          <div><strong><%= txt('contact.reach.phoneTitle', 'Phone', 'Contact card — phone title') %></strong><p style="color:var(--mist); font-size:14px; margin-top:4px;"><%= site.phone %></p></div>
         </div><% } %>
         <% if (site.whatsapp) { %><a href="https://wa.me/<%= site.whatsapp %>" target="_blank" rel="noopener" class="card" style="padding:20px; display:flex; gap:14px; align-items:center; background:var(--flame); color:#ffffff;">
           <span style="color:#ffffff;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.7.44 3.35 1.29 4.8L2 22l5.44-1.38a9.9 9.9 0 0 0 4.6 1.13h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.13-2.9-7C17.17 3.02 14.69 2 12.04 2z"/></svg></span>
-          <div><strong style="color:#ffffff;">Chat on WhatsApp</strong><p style="color:rgba(6,78,59,.7); font-size:13.5px; margin-top:2px;"><%= txt('contact.reach.whatsapp', 'Fastest way to reach our team', 'WhatsApp card — small line') %></p></div>
+          <div><strong style="color:#ffffff;"><%= txt('contact.reach.whatsappTitle', 'Chat on WhatsApp', 'WhatsApp card — title') %></strong><p style="color:rgba(6,78,59,.7); font-size:13.5px; margin-top:2px;"><%= txt('contact.reach.whatsapp', 'Fastest way to reach our team', 'WhatsApp card — small line') %></p></div>
         </a><% } %>
       </div>
       <div class="map-frame" style="position:relative; overflow:hidden;">

@@ -1,15 +1,15 @@
 <%
   const navLinks = [
-    { href: '/', label: 'Home', key: 'home' },
-    { href: '/about', label: 'About', key: 'about' },
-    { href: '/events', label: 'Events', key: 'events' },
-    { href: '/speakers', label: 'Speakers', key: 'speakers' },
-    { href: '/watch-live', label: 'Watch Live', key: 'watch-live' },
-    { href: '/give', label: 'Give', key: 'give' },
-    { href: '/shop', label: 'Shop', key: 'shop' },
-    { href: '/gallery', label: 'Gallery', key: 'gallery' },
-    { href: '/blog', label: 'Blog', key: 'blog' },
-    { href: '/contact', label: 'Contact', key: 'contact' },
+    { href: '/', label: txt('site.nav.home', 'Home', 'Menu — Home'), key: 'home' },
+    { href: '/about', label: txt('site.nav.about', 'About', 'Menu — About'), key: 'about' },
+    { href: '/events', label: txt('site.nav.events', 'Events', 'Menu — Events'), key: 'events' },
+    { href: '/speakers', label: txt('site.nav.speakers', 'Speakers', 'Menu — Speakers'), key: 'speakers' },
+    { href: '/watch-live', label: txt('site.nav.watchLive', 'Watch Live', 'Menu — Watch Live'), key: 'watch-live' },
+    { href: '/give', label: txt('site.nav.give', 'Give', 'Menu — Give'), key: 'give' },
+    { href: '/shop', label: txt('site.nav.shop', 'Shop', 'Menu — Shop'), key: 'shop' },
+    { href: '/gallery', label: txt('site.nav.gallery', 'Gallery', 'Menu — Gallery'), key: 'gallery' },
+    { href: '/blog', label: txt('site.nav.blog', 'Blog', 'Menu — Blog'), key: 'blog' },
+    { href: '/contact', label: txt('site.nav.contact', 'Contact', 'Menu — Contact'), key: 'contact' },
   ];
 %>
 <nav class="nav">
@@ -21,13 +21,13 @@
       <% navLinks.forEach(function(link) { %>
         <a href="<%= link.href %>"<%= currentPage === link.key ? ' class="active"' : '' %>><%= link.label %></a>
       <% }) %>
-      <a href="/give" class="btn btn-outline-dark btn-block nav-mobile-give">Give</a>
-      <a href="/events" class="btn btn-primary btn-block nav-mobile-cta js-register-btn">Register Now</a>
+      <a href="/give" class="btn btn-outline-dark btn-block nav-mobile-give"><%= txt('site.nav.giveButton', 'Give', 'Header button — Give') %></a>
+      <a href="/events" class="btn btn-primary btn-block nav-mobile-cta js-register-btn"><%= txt('site.nav.registerButton', 'Register Now', 'Header button — Register Now') %></a>
     </div>
     <div class="nav-actions">
-      <a href="/watch-live" class="btn btn-outline btn-sm">Watch Live</a>
-      <a href="/give" class="btn btn-give btn-sm">Give</a>
-      <a href="/events" class="btn btn-primary btn-sm js-register-btn">Register Now</a>
+      <a href="/watch-live" class="btn btn-outline btn-sm"><%= txt('site.nav.watchLiveButton', 'Watch Live', 'Header button — Watch Live') %></a>
+      <a href="/give" class="btn btn-give btn-sm"><%= txt('site.nav.giveButton', 'Give', 'Header button — Give') %></a>
+      <a href="/events" class="btn btn-primary btn-sm js-register-btn"><%= txt('site.nav.registerButton', 'Register Now', 'Header button — Register Now') %></a>
     </div>
     <button class="nav-burger" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>

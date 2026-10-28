@@ -1,6 +1,6 @@
 <header class="page-header">
   <div class="container">
-    <span class="crumb">Home &rsaquo; <span>Blog</span></span>
+    <span class="crumb"><%= txt('site.nav.home', 'Home', 'Menu — Home') %> &rsaquo; <span><%= txt('site.nav.blog', 'Blog', 'Menu — Blog') %></span></span>
     <span class="eyebrow"><%= txt('blog.intro.eyebrow', 'Media hub', 'Small label at the top') %></span>
     <h1 style="margin-top:18px;"><%= page.heroTitle %></h1>
     <p><%= page.heroSubtitle %></p>
@@ -14,7 +14,7 @@
   <div class="container">
     <% if (categories.length > 1) { %>
     <div class="tab-bar reveal" data-tabs="#blog-grid">
-      <button class="tab-btn active" type="button" data-filter="all">All</button>
+      <button class="tab-btn active" type="button" data-filter="all"><%= txt('site.words.all', 'All', 'Filter tab — All') %></button>
       <% categories.forEach(function(cat) { %>
         <button class="tab-btn" type="button" data-filter="<%= cat.toLowerCase() %>"><%= cat %></button>
       <% }) %>
@@ -28,12 +28,12 @@
             <span class="tag"><%= post.category %></span>
             <h4><%= post.title %></h4>
             <p><%= post.excerpt %></p>
-            <div class="meta"><span>5 min read</span><span><%= post.publishedAt ? post.publishedAt.toLocaleDateString('en-US',{month:'short',year:'numeric'}) : '' %></span></div>
+            <div class="meta"><span><%= txt('blog.list.readTime', '5 min read', 'Reading time shown on each post card') %></span><span><%= post.publishedAt ? post.publishedAt.toLocaleDateString('en-US',{month:'short',year:'numeric'}) : '' %></span></div>
           </div>
         </a>
       <% }) %>
       <% if (!blogs.length) { %>
-        <p style="color:var(--mist);">No posts published yet — check back soon.</p>
+        <p style="color:var(--mist);"><%= txt('blog.list.empty', 'No posts published yet — check back soon.', 'Message when there are no posts') %></p>
       <% } %>
     </div>
   </div>
@@ -45,9 +45,9 @@
       <span class="eyebrow"><%= txt('blog.newsletter.eyebrow', 'Never miss a message', 'Newsletter bar — small label') %></span>
       <h2 style="color:var(--ink); font-size:1.8rem; margin-top:14px;"><%= txt('blog.newsletter.title', 'New posts straight to your inbox', 'Newsletter bar — heading') %></h2>
     </div>
-    <form class="newsletter-form" data-api-form data-endpoint="/api/newsletters/subscribe" data-success="You're subscribed — new posts are on the way!">
-      <input type="email" name="email" required placeholder="Enter your email address">
-      <button class="btn btn-primary" type="submit">Subscribe</button>
+    <form class="newsletter-form" data-api-form data-endpoint="/api/newsletters/subscribe" data-success="<%= txt('blog.form.successMessage', 'You\'re subscribed — new posts are on the way!', 'Newsletter — message after subscribing') %>">
+      <input type="email" name="email" required placeholder="<%= txt('blog.placeholders.email', 'Enter your email address', 'Placeholder inside the email box') %>">
+      <button class="btn btn-primary" type="submit"><%= txt('site.newsletter.button', 'Subscribe', 'Newsletter button') %></button>
     </form>
   </div>
 </section>

@@ -1,6 +1,6 @@
 <header class="page-header">
   <div class="container">
-    <span class="crumb">Home &rsaquo; <span>Prayer Request</span></span>
+    <span class="crumb"><%= txt('site.nav.home', 'Home', 'Menu — Home') %> &rsaquo; <span><%= txt('site.nav.prayer', 'Prayer Request', 'Menu — Prayer Request') %></span></span>
     <span class="eyebrow"><%= txt('prayer.intro.eyebrow', 'We stand with you', 'Small label at the top') %></span>
     <h1 style="margin-top:18px;"><%= page.heroTitle %></h1>
     <p><%= page.heroSubtitle %></p>
@@ -19,26 +19,26 @@
         <li>&#10003; <%= txt('prayer.how.point4', 'Every request is treated with confidentiality and care', 'Point 4') %></li>
       </ul>
     </div>
-    <form data-api-form data-endpoint="/api/prayers" data-success="Received — our team is praying with you." class="reveal">
+    <form data-api-form data-endpoint="/api/prayers" data-success="<%= txt('prayer.form.successMessage', 'Received — our team is praying with you.', 'Message shown after the form is sent') %>" class="reveal">
       <div class="field-row">
-        <div class="field"><label>Full Name</label><input type="text" name="fullName" placeholder="Your name (optional)"></div>
-        <div class="field"><label>Email Address</label><input type="email" name="email" required placeholder="For confirmation only"></div>
+        <div class="field"><label><%= txt('site.forms.labelFullName', 'Full Name', 'Form label — Full Name') %></label><input type="text" name="fullName" placeholder="<%= txt('prayer.placeholders.fullname', 'Your name (optional)', 'Placeholder inside the fullName box') %>"></div>
+        <div class="field"><label><%= txt('site.forms.labelEmailAddress', 'Email Address', 'Form label — Email Address') %></label><input type="email" name="email" required placeholder="<%= txt('prayer.placeholders.email', 'For confirmation only', 'Placeholder inside the email box') %>"></div>
       </div>
-      <div class="field"><label>Category</label>
+      <div class="field"><label><%= txt('site.forms.labelCategory', 'Category', 'Form label — Category') %></label>
         <select name="category">
-          <option>Healing</option>
-          <option>Family</option>
-          <option>Marriage</option>
-          <option>Financial</option>
-          <option>Salvation</option>
-          <option>Thanksgiving</option>
-          <option>Deliverance</option>
-          <option>Other</option>
+          <option value="Healing"><%= txt('prayer.options.categoryHealing', 'Healing', 'Dropdown choice (category) — Healing') %></option>
+          <option value="Family"><%= txt('prayer.options.categoryFamily', 'Family', 'Dropdown choice (category) — Family') %></option>
+          <option value="Marriage"><%= txt('prayer.options.categoryMarriage', 'Marriage', 'Dropdown choice (category) — Marriage') %></option>
+          <option value="Financial"><%= txt('prayer.options.categoryFinancial', 'Financial', 'Dropdown choice (category) — Financial') %></option>
+          <option value="Salvation"><%= txt('prayer.options.categorySalvation', 'Salvation', 'Dropdown choice (category) — Salvation') %></option>
+          <option value="Thanksgiving"><%= txt('prayer.options.categoryThanksgiving', 'Thanksgiving', 'Dropdown choice (category) — Thanksgiving') %></option>
+          <option value="Deliverance"><%= txt('prayer.options.categoryDeliverance', 'Deliverance', 'Dropdown choice (category) — Deliverance') %></option>
+          <option value="Other"><%= txt('prayer.options.categoryOther', 'Other', 'Dropdown choice (category) — Other') %></option>
         </select>
       </div>
-      <div class="field"><label>Prayer Request</label><textarea name="request" rows="6" required placeholder="Share what's on your heart&hellip;"></textarea></div>
-      <label style="display:flex; align-items:center; gap:8px; font-size:13.5px; color:var(--mist); margin-bottom:18px;"><input type="checkbox" name="isAnonymous" style="width:auto;"> Submit anonymously</label>
-      <button class="btn btn-primary btn-block" type="submit">Submit Prayer Request</button>
+      <div class="field"><label><%= txt('site.forms.labelPrayerRequest', 'Prayer Request', 'Form label — Prayer Request') %></label><textarea name="request" rows="6" required placeholder="<%= txt('prayer.placeholders.request', 'Share what\'s on your heart…', 'Placeholder inside the request box') %>"></textarea></div>
+      <label style="display:flex; align-items:center; gap:8px; font-size:13.5px; color:var(--mist); margin-bottom:18px;"><input type="checkbox" name="isAnonymous" style="width:auto;"> <%= txt('prayer.form.anonymousLabel', 'Submit anonymously', 'Checkbox wording (anonymous)') %></label>
+      <button class="btn btn-primary btn-block" type="submit"><%= txt('prayer.form.button', 'Submit Prayer Request', 'Prayer form — button') %></button>
     </form>
   </div>
 </section>

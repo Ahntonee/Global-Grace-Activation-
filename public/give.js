@@ -4,9 +4,13 @@
   if (!form) return;
 
   const currencies = window.__GIVE_CURRENCIES__ || [];
+  // wording comes from the page (editable in the admin); these are only fallbacks
+  const text = Object.assign({ custom: "Custom", amountPlaceholder: "Amount", invalidAmount: "Please choose or enter a valid amount." }, window.__GIVE_TEXT__ || {});
   const currencySelect = document.getElementById("give-currency");
   const amountsWrap = document.getElementById("give-amounts");
   const customInput = document.getElementById("give-custom-amount");
+
+  const escapeHtml = (v) => String(v).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
   function currentCurrency() {
     const code = currencySelect ? currencySelect.value : "NGN";
@@ -27,8 +31,8 @@
 
     amountsWrap.innerHTML =
       presetButtons +
-      `<button class="amt-btn" type="button" data-amt="custom">Custom</button>` +
-      `<input type="text" class="custom-amount amt-btn" id="give-custom-amount" placeholder="${currency.symbol} Amount" inputmode="decimal" style="text-align:center;">`;
+      `<button class="amt-btn" type="button" data-amt="custom">${escapeHtml(text.custom)}</button>` +
+      `<input type="text" class="custom-amount amt-btn" id="give-custom-amount" placeholder="${escapeHtml(currency.symbol)} ${escapeHtml(text.amountPlaceholder)}" inputmode="decimal" style="text-align:center;">`;
 
     amountsWrap.querySelectorAll(".amt-btn[data-amt]").forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -67,7 +71,7 @@
         : Number(((customEl && customEl.value) || "").replace(/[^\d.]/g, ""));
 
     if (!amount || amount <= 0) {
-      errorBox.textContent = "Please choose or enter a valid amount.";
+      errorBox.textContent = text.invalidAmount;
       errorBox.classList.add("show");
       return;
     }

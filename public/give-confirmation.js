@@ -32,31 +32,31 @@
       const donation = data.donation;
 
       if (donation.status === "Successful") {
-        heading.textContent = "Thank you for giving!";
-        body.innerHTML = `<p style="color:var(--text);">Your gift of <strong>${formatMoney(donation.amount, donation.currency)}</strong> toward ${donation.fund} has been received. An email receipt is on its way.</p>`;
+        heading.textContent = window.ggaT("giveThanksHeading", "Thank you for giving!");
+        body.innerHTML = `<p style="color:var(--text);">${ggaH('giveThanksBody', 'Your gift of {amount} toward {fund} has been received. An email receipt is on its way.', { amount: "<strong>" + (function (v) { return String(v).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); })(formatMoney(donation.amount, donation.currency)) + "</strong>", fund: (function (v) { return String(v).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); })(donation.fund) })}</p>`;
         return;
       }
 
       if (donation.status === "Failed") {
-        heading.textContent = "Payment didn't go through.";
-        body.innerHTML = `<p style="color:var(--mist);">Your payment was not successful. No charge was made. <a href="/give">Try again</a>.</p>`;
+        heading.textContent = window.ggaT("payFailedHeading", "Payment didn't go through.");
+        body.innerHTML = `<p style="color:var(--mist);">${ggaH('payFailedBody', 'Your payment was not successful. No charge was made.')} <a href="/give">${ggaH('tryAgain', 'Try again')}</a>.</p>`;
         return;
       }
 
       if (returnedStatus === "cancelled") {
-        heading.textContent = "Payment cancelled";
-        body.innerHTML = `<p style="color:var(--mist);">You cancelled the payment, so no gift was made. <a href="/give">Give again</a> whenever you're ready.</p>`;
+        heading.textContent = window.ggaT("giveCancelledHeading", "Payment cancelled");
+        body.innerHTML = `<p style="color:var(--mist);">${ggaH('giveCancelledBody', 'You cancelled the payment, so no gift was made.')} <a href="/give">${ggaH('giveAgain', 'Give again')}</a> ${ggaH('giveCancelledEnd', 'whenever you\'re ready.')}</p>`;
         return;
       }
 
       if (attempts < MAX_ATTEMPTS) {
         setTimeout(poll, 2000);
       } else {
-        heading.textContent = "Still processing…";
-        body.innerHTML = `<p style="color:var(--mist);">This is taking longer than expected. We'll email you a receipt as soon as it clears.</p>`;
+        heading.textContent = window.ggaT("processingHeading", "Still processing…");
+        body.innerHTML = `<p style="color:var(--mist);">${ggaH('giveProcessingBody', 'This is taking longer than expected. We\'ll email you a receipt as soon as it clears.')}</p>`;
       }
     } catch (err) {
-      heading.textContent = "Couldn't check status";
+      heading.textContent = window.ggaT("giveStatusErrorHeading", "Couldn't check status");
       body.innerHTML = `<p style="color:var(--mist);">${err.message}</p>`;
     }
   }

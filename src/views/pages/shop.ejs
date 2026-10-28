@@ -1,6 +1,6 @@
 <header class="page-header">
   <div class="container">
-    <span class="crumb">Home &rsaquo; <span>Shop</span></span>
+    <span class="crumb"><%= txt('site.nav.home', 'Home', 'Menu — Home') %> &rsaquo; <span><%= txt('site.nav.shop', 'Shop', 'Menu — Shop') %></span></span>
     <span class="eyebrow"><%= txt('shop.intro.eyebrow', 'Store', 'Small label at the top') %></span>
     <h1 style="margin-top:18px;"><%= txt('shop.intro.title', 'Resources & merchandise.', 'Page heading') %></h1>
     <p><%= txt('shop.intro.subtitle', 'Merch, books, worship albums and digital downloads — every purchase supports the movement.', 'Line under the heading') %></p>
@@ -17,12 +17,12 @@
             <span class="tag"><%= p.type === 'digital' ? 'Digital Download' : 'Merchandise' %></span>
             <h4><%= p.name %></h4>
             <p><%= p.shortDescription || p.description %></p>
-            <div class="meta"><span style="font-weight:700; color:var(--flame-dim); font-family:'Space Mono',monospace;">&#8358;<%= p.price.toLocaleString() %></span><% if (p.externalUrl) { %><span class="pill" style="font-size:11px;">Buy Now &#8599;</span><% } %></div>
+            <div class="meta"><span style="font-weight:700; color:var(--flame-dim); font-family:'Space Mono',monospace;">&#8358;<%= p.price.toLocaleString() %></span><% if (p.externalUrl) { %><span class="pill" style="font-size:11px;"><%= txt('shop.list.buyNowTag', 'Buy Now ↗', 'Tag on products sold on another website') %></span><% } %></div>
           </div>
         </a>
       <% }) %>
       <% if (!products.length) { %>
-        <p style="color:var(--mist);">No products available yet — check back soon.</p>
+        <p style="color:var(--mist);"><%= txt('shop.list.empty', 'No products available yet — check back soon.', 'Message when there are no products') %></p>
       <% } %>
     </div>
   </div>

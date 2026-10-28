@@ -1,23 +1,23 @@
 <header class="page-header">
   <div class="container">
-    <span class="crumb">Home &rsaquo; <span>Cart</span></span>
-    <span class="eyebrow">Your cart</span>
-    <h1 style="margin-top:18px;">Review your order.</h1>
+    <span class="crumb"><%= txt('site.nav.home', 'Home', 'Menu — Home') %> &rsaquo; <span><%= txt('cart.page.crumb', 'Cart', 'Breadcrumb') %></span></span>
+    <span class="eyebrow"><%= txt('cart.page.eyebrow', 'Your cart', 'Small label at the top') %></span>
+    <h1 style="margin-top:18px;"><%= txt('cart.page.title', 'Review your order.', 'Heading') %></h1>
   </div>
 </header>
 
 <section class="section-pad">
   <div class="container" style="max-width:820px;">
     <div id="cart-items" style="display:flex; flex-direction:column; gap:16px;">
-      <p class="admin-empty" style="color:var(--mist);">Loading&hellip;</p>
+      <p class="admin-empty" style="color:var(--mist);"><%= txt('site.words.loading', 'Loading…', '\'Loading\' wording') %></p>
     </div>
 
     <div class="panel-dark reveal" style="margin-top:32px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
       <div>
-        <div style="font-size:13px; color:var(--mist);">Subtotal</div>
+        <div style="font-size:13px; color:var(--mist);"><%= txt('cart.page.subtotal', 'Subtotal', 'Subtotal wording') %></div>
         <div id="cart-subtotal" style="font-family:'Space Mono',monospace; font-weight:700; font-size:24px; color:var(--flame-dim);">&#8358;0</div>
       </div>
-      <a href="/checkout" class="btn btn-primary" id="cart-checkout-btn">Proceed to Checkout</a>
+      <a href="/checkout" class="btn btn-primary" id="cart-checkout-btn"><%= txt('cart.page.checkoutButton', 'Proceed to Checkout', 'Checkout button') %></a>
     </div>
   </div>
 </section>

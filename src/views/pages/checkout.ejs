@@ -1,44 +1,44 @@
 <header class="page-header">
   <div class="container">
-    <span class="crumb">Home &rsaquo; <a href="/cart">Cart</a> &rsaquo; <span>Checkout</span></span>
-    <span class="eyebrow">Checkout</span>
-    <h1 style="margin-top:18px;">Complete your order.</h1>
+    <span class="crumb"><%= txt('site.nav.home', 'Home', 'Menu — Home') %> &rsaquo; <a href="/cart"><%= txt('cart.page.crumb', 'Cart', 'Breadcrumb') %></a> &rsaquo; <span><%= txt('checkout.page.crumb', 'Checkout', 'Breadcrumb') %></span></span>
+    <span class="eyebrow"><%= txt('checkout.page.eyebrow', 'Checkout', 'Small label at the top') %></span>
+    <h1 style="margin-top:18px;"><%= txt('checkout.page.title', 'Complete your order.', 'Heading') %></h1>
   </div>
 </header>
 
 <section class="section-pad">
   <div class="container two-col" style="align-items:start;">
     <form id="checkout-form" class="reveal">
-      <h3 style="margin-bottom:18px;">Your details</h3>
+      <h3 style="margin-bottom:18px;"><%= txt('checkout.page.detailsTitle', 'Your details', 'Section heading') %></h3>
       <div class="field-row">
-        <div class="field"><label>Full Name</label><input type="text" name="fullName" required placeholder="Your name"></div>
-        <div class="field"><label>Email Address</label><input type="email" name="email" required placeholder="you@email.com"></div>
+        <div class="field"><label><%= txt('site.forms.labelFullName', 'Full Name', 'Form label — Full Name') %></label><input type="text" name="fullName" required placeholder="<%= txt('checkout.placeholders.fullname', 'Your name', 'Placeholder inside the fullName box') %>"></div>
+        <div class="field"><label><%= txt('site.forms.labelEmailAddress', 'Email Address', 'Form label — Email Address') %></label><input type="email" name="email" required placeholder="<%= txt('checkout.placeholders.email', 'you@email.com', 'Placeholder inside the email box') %>"></div>
       </div>
-      <div class="field"><label>Phone Number</label><input type="tel" name="phone" placeholder="+234&hellip;"></div>
+      <div class="field"><label><%= txt('site.forms.labelPhoneNumber', 'Phone Number', 'Form label — Phone Number') %></label><input type="tel" name="phone" placeholder="<%= txt('checkout.placeholders.phone', '+234…', 'Placeholder inside the phone box') %>"></div>
 
       <div id="shipping-fields" style="display:none;">
-        <h3 style="margin:26px 0 18px;">Shipping address</h3>
-        <div class="field"><label>Address Line 1</label><input type="text" name="addressLine1" placeholder="Street address"></div>
-        <div class="field"><label>Address Line 2 (optional)</label><input type="text" name="addressLine2" placeholder="Apartment, suite, etc."></div>
+        <h3 style="margin:26px 0 18px;"><%= txt('checkout.page.shippingTitle', 'Shipping address', 'Section heading') %></h3>
+        <div class="field"><label><%= txt('site.forms.labelAddressLine1', 'Address Line 1', 'Form label — Address Line 1') %></label><input type="text" name="addressLine1" placeholder="<%= txt('checkout.placeholders.addressline1', 'Street address', 'Placeholder inside the addressLine1 box') %>"></div>
+        <div class="field"><label><%= txt('site.forms.labelAddressLine2Optional', 'Address Line 2 (optional)', 'Form label — Address Line 2 (optional)') %></label><input type="text" name="addressLine2" placeholder="<%= txt('checkout.placeholders.addressline2', 'Apartment, suite, etc.', 'Placeholder inside the addressLine2 box') %>"></div>
         <div class="field-row">
-          <div class="field"><label>City</label><input type="text" name="city" placeholder="City"></div>
-          <div class="field"><label>State</label><input type="text" name="state" placeholder="State"></div>
+          <div class="field"><label><%= txt('site.forms.labelCity', 'City', 'Form label — City') %></label><input type="text" name="city" placeholder="<%= txt('checkout.placeholders.city', 'City', 'Placeholder inside the city box') %>"></div>
+          <div class="field"><label><%= txt('site.forms.labelState', 'State', 'Form label — State') %></label><input type="text" name="state" placeholder="<%= txt('checkout.placeholders.state', 'State', 'Placeholder inside the state box') %>"></div>
         </div>
       </div>
 
-      <h3 style="margin:26px 0 18px;">Payment method</h3>
-      <p style="font-size:14px; color:var(--mist);">You'll pay securely by card, bank transfer or USSD through <span class="gateway-badge">Flutterwave</span>.</p>
+      <h3 style="margin:26px 0 18px;"><%= txt('checkout.page.paymentTitle', 'Payment method', 'Section heading') %></h3>
+      <p style="font-size:14px; color:var(--mist);"><%= txt('checkout.page.paymentNote', 'You\'ll pay securely by card, bank transfer or USSD through', 'Payment note (the provider badge follows it)') %> <span class="gateway-badge"><%= txt('give.form.gatewayName', 'Flutterwave', 'Giving form — payment provider badge') %></span>.</p>
       <input type="hidden" name="paymentProvider" value="flutterwave">
 
       <div class="admin-auth-error" id="checkout-error" style="margin-top:18px;"></div>
-      <button class="btn btn-primary btn-block" type="submit" style="margin-top:22px;">Continue to Payment</button>
+      <button class="btn btn-primary btn-block" type="submit" style="margin-top:22px;"><%= txt('checkout.page.button', 'Continue to Payment', 'Payment button') %></button>
     </form>
 
     <div class="panel-dark reveal">
-      <h3 style="margin-bottom:18px;">Order summary</h3>
+      <h3 style="margin-bottom:18px;"><%= txt('checkout.page.summaryTitle', 'Order summary', 'Summary heading') %></h3>
       <div id="checkout-summary" style="display:flex; flex-direction:column; gap:10px; font-size:14px;"></div>
       <div style="border-top:1px solid var(--line); margin-top:16px; padding-top:16px; display:flex; justify-content:space-between; font-weight:700;">
-        <span>Total</span>
+        <span><%= txt('checkout.page.total', 'Total', 'Total wording') %></span>
         <span id="checkout-total" style="font-family:'Space Mono',monospace; color:var(--flame-dim);">&#8358;0</span>
       </div>
     </div>

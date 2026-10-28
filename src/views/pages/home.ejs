@@ -35,10 +35,10 @@
         <span class="eyebrow"><%= txt('home.hero.panelLabel', 'GGA Global Conference 2026', 'Event card — small label') %></span>
         <h3><%= txt('home.hero.panelTitle', 'Experience Grace. Activate Destiny.', 'Event card — title') %></h3>
         <div class="countdown" <% if (featuredEvent) { %>data-event-date="<%= featuredEvent.startDate.toISOString() %>"<% } %>>
-          <div class="c-cell"><div class="c-num" id="cd-days">00</div><div class="c-label">Days</div></div>
-          <div class="c-cell"><div class="c-num" id="cd-hours">00</div><div class="c-label">Hours</div></div>
-          <div class="c-cell"><div class="c-num" id="cd-mins">00</div><div class="c-label">Mins</div></div>
-          <div class="c-cell"><div class="c-num" id="cd-secs">00</div><div class="c-label">Secs</div></div>
+          <div class="c-cell"><div class="c-num" id="cd-days">00</div><div class="c-label"><%= txt('site.countdown.days', 'Days', 'Countdown label — Days') %></div></div>
+          <div class="c-cell"><div class="c-num" id="cd-hours">00</div><div class="c-label"><%= txt('site.countdown.hours', 'Hours', 'Countdown label — Hours') %></div></div>
+          <div class="c-cell"><div class="c-num" id="cd-mins">00</div><div class="c-label"><%= txt('site.countdown.mins', 'Mins', 'Countdown label — Mins') %></div></div>
+          <div class="c-cell"><div class="c-num" id="cd-secs">00</div><div class="c-label"><%= txt('site.countdown.secs', 'Secs', 'Countdown label — Secs') %></div></div>
         </div>
         <ul class="hero-meta">
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg> <%= txt('home.hero.panelDate', 'December 4–5, 2026 · 6PM–5AM', 'Event card — date and time') %></li>
@@ -47,7 +47,7 @@
       </div>
     </div>
   </div>
-  <div class="scroll-cue"><span>SCROLL</span><span class="line"></span></div>
+  <div class="scroll-cue"><span><%= txt('home.hero.scrollCue', 'SCROLL', 'Scroll cue under the hero') %></span><span class="line"></span></div>
 </section>
 
 <section class="quicklinks">
@@ -136,7 +136,7 @@
             <span class="cat"><%= t.category %></span>
             <% if (ytId) { %><div class="play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><% } %>
           </div>
-          <div class="body"><h4><%= t.title %></h4><small>Testimony<% if (t.location) { %> &middot; <%= t.location %><% } %></small></div>
+          <div class="body"><h4><%= t.title %></h4><small><%= txt('site.words.testimony', 'Testimony', 'Small word under each testimony card') %><% if (t.location) { %> &middot; <%= t.location %><% } %></small></div>
         </div>
       <% }) %>
     </div>
@@ -187,9 +187,9 @@
       <span class="eyebrow"><%= txt('home.newsletter.eyebrow', 'Stay connected', 'Small label') %></span>
       <h2 style="color:var(--ink); font-size:1.8rem; margin-top:14px;"><%= txt('home.newsletter.title', 'Get updates on events, messages & more', 'Heading') %></h2>
     </div>
-    <form class="newsletter-form" data-api-form data-endpoint="/api/newsletters/subscribe" data-success="You're subscribed — welcome to the family!">
-      <input type="email" name="email" required placeholder="Enter your email address">
-      <button class="btn btn-primary" type="submit">Subscribe</button>
+    <form class="newsletter-form" data-api-form data-endpoint="/api/newsletters/subscribe" data-success="<%= txt('home.form.successMessage', 'You\'re subscribed — welcome to the family!', 'Newsletter — message after subscribing') %>">
+      <input type="email" name="email" required placeholder="<%= txt('home.placeholders.email', 'Enter your email address', 'Placeholder inside the email box') %>">
+      <button class="btn btn-primary" type="submit"><%= txt('site.newsletter.button', 'Subscribe', 'Newsletter button') %></button>
     </form>
   </div>
 </section>

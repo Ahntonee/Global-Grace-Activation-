@@ -11,6 +11,53 @@
 <link rel="icon" type="image/png" href="<%= cimg('site.logo.image', '/images/logo.png', 'Logo (header, footer and browser tab icon)') %>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="/styles.css">
+<%
+  const clientText = {
+    registerFor: txt('site.messages.registerFor', 'Register for', 'Registration pop-up — wording before the event name'),
+    redirecting: txt('site.messages.redirecting', 'Redirecting to secure checkout…', 'Pop-up message when heading to checkout'),
+    openingMedia: txt('site.messages.openingMedia', 'Opening media…', 'Pop-up message when a gallery photo has no caption'),
+    formSuccessFallback: txt('site.messages.formSuccessFallback', 'Thank you — received!', 'Default message after any form is sent'),
+    formErrorFallback: txt('site.messages.formErrorFallback', 'Something went wrong — please try again.', 'Default message when a form fails'),
+    cartAdded: txt('site.messages.cartAdded', 'Added ✓', 'Shop — button wording right after adding to cart'),
+    cartEmpty: txt('site.messages.cartEmpty', 'Your cart is empty.', 'Cart — empty message'),
+    cartBrowse: txt('site.messages.cartBrowse', 'Browse the shop', 'Cart — link in the empty message'),
+    cartRemove: txt('site.messages.cartRemove', 'Remove', 'Cart — remove button'),
+    shippingLabel: txt('site.messages.shippingLabel', 'Shipping', 'Checkout — shipping line'),
+    giveThanksHeading: txt('site.messages.giveThanksHeading', 'Thank you for giving!', 'Giving result — success heading'),
+    giveThanksBody: txt('site.messages.giveThanksBody', 'Your gift of {amount} toward {fund} has been received. An email receipt is on its way.', 'Giving result — success message ({amount} and {fund} are filled in automatically)'),
+    payFailedHeading: txt('site.messages.payFailedHeading', 'Payment didn\'t go through.', 'Payment failed — heading (giving and shop)'),
+    payFailedBody: txt('site.messages.payFailedBody', 'Your payment was not successful. No charge was made.', 'Payment failed — message (giving and shop)'),
+    tryAgain: txt('site.messages.tryAgain', 'Try again', 'Payment failed — link'),
+    giveCancelledHeading: txt('site.messages.giveCancelledHeading', 'Payment cancelled', 'Giving cancelled — heading'),
+    giveCancelledBody: txt('site.messages.giveCancelledBody', 'You cancelled the payment, so no gift was made.', 'Giving cancelled — message'),
+    giveAgain: txt('site.messages.giveAgain', 'Give again', 'Giving cancelled — link'),
+    giveCancelledEnd: txt('site.messages.giveCancelledEnd', 'whenever you\'re ready.', 'Giving cancelled — wording after the link'),
+    processingHeading: txt('site.messages.processingHeading', 'Still processing…', 'Payment still processing — heading (giving and shop)'),
+    giveProcessingBody: txt('site.messages.giveProcessingBody', 'This is taking longer than expected. We\'ll email you a receipt as soon as it clears.', 'Giving still processing — message'),
+    giveStatusErrorHeading: txt('site.messages.giveStatusErrorHeading', 'Couldn\'t check status', 'Giving status error — heading'),
+    orderConfirmedHeading: txt('site.messages.orderConfirmedHeading', 'Thank you — your order is confirmed!', 'Order result — success heading'),
+    orderDigitalItems: txt('site.messages.orderDigitalItems', 'Your digital items:', 'Order result — digital downloads title'),
+    orderDownload: txt('site.messages.orderDownload', 'Download', 'Order result — download button wording'),
+    orderLinksNote: txt('site.messages.orderLinksNote', 'A copy of these links was also sent to your email.', 'Order result — note under the downloads'),
+    orderNumber: txt('site.messages.orderNumber', 'Order', 'Order result — before the order number'),
+    orderTotal: txt('site.messages.orderTotal', 'Total:', 'Order result — total wording'),
+    orderShippingNote: txt('site.messages.orderShippingNote', 'We\'ll email you shipping updates as your order is processed.', 'Order result — shipping note'),
+    orderProcessingBody: txt('site.messages.orderProcessingBody', 'This is taking longer than expected. We\'ll email you a confirmation as soon as it clears.', 'Order still processing — message'),
+    orderStatusErrorHeading: txt('site.messages.orderStatusErrorHeading', 'Couldn\'t check order status', 'Order status error — heading'),
+  };
+%>
+<script nonce="<%= nonce %>">
+  // Wording used by the page scripts (editable in the admin under Site-wide).
+  // ggaT = plain text, ggaH = escaped HTML with {tokens} filled in.
+  window.__T = <%- jsonScript(clientText) %>;
+  window.ggaT = function (key, fallback) { return (window.__T && window.__T[key]) || fallback; };
+  window.ggaH = function (key, fallback, vars) {
+    var esc = function (v) { return String(v).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
+    var out = esc(window.ggaT(key, fallback));
+    Object.keys(vars || {}).forEach(function (k) { out = out.split("{" + k + "}").join(vars[k]); });
+    return out;
+  };
+</script>
 </head>
 <body>
 <%- include('../partials/nav', { currentPage: typeof currentPage !== 'undefined' ? currentPage : '' }) %>

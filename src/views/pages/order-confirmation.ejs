@@ -1,19 +1,19 @@
 <header class="page-header">
   <div class="container">
-    <span class="crumb">Home &rsaquo; <span>Order Confirmation</span></span>
-    <span class="eyebrow">Order status</span>
-    <h1 style="margin-top:18px;" id="confirmation-heading">Checking your order&hellip;</h1>
-    <p id="confirmation-sub">Reference: <%= reference %></p>
+    <span class="crumb"><%= txt('site.nav.home', 'Home', 'Menu — Home') %> &rsaquo; <span><%= txt('orderconfirm.page.crumb', 'Order Confirmation', 'Breadcrumb') %></span></span>
+    <span class="eyebrow"><%= txt('orderconfirm.page.eyebrow', 'Order status', 'Small label at the top') %></span>
+    <h1 style="margin-top:18px;" id="confirmation-heading"><%= txt('orderconfirm.page.checking', 'Checking your order…', 'Heading while the order is being checked') %></h1>
+    <p id="confirmation-sub"><%= txt('site.words.reference', 'Reference:', '\'Reference\' wording') %> <%= reference %></p>
   </div>
 </header>
 
 <section class="section-pad">
   <div class="container" style="max-width:640px;">
     <div class="panel-dark reveal" id="confirmation-body">
-      <p style="color:var(--mist);">Loading order details&hellip;</p>
+      <p style="color:var(--mist);"><%= txt('orderconfirm.page.loading', 'Loading order details…', 'Wording while the order loads') %></p>
     </div>
     <div style="text-align:center; margin-top:30px;">
-      <a href="/shop" class="btn btn-outline-dark">Continue Shopping</a>
+      <a href="/shop" class="btn btn-outline-dark"><%= txt('orderconfirm.page.button', 'Continue Shopping', 'Button') %></a>
     </div>
   </div>
 </section>

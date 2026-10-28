@@ -1,6 +1,6 @@
 <header class="page-header">
   <div class="container">
-    <span class="crumb">Home &rsaquo; <span>Volunteer</span></span>
+    <span class="crumb"><%= txt('site.nav.home', 'Home', 'Menu — Home') %> &rsaquo; <span><%= txt('site.nav.volunteer', 'Volunteer', 'Menu — Volunteer') %></span></span>
     <span class="eyebrow"><%= txt('volunteer.intro.eyebrow', 'Serve with us', 'Small label at the top') %></span>
     <h1 style="margin-top:18px;"><%= page.heroTitle %></h1>
     <p><%= page.heroSubtitle %></p>
@@ -26,33 +26,33 @@
     <div class="panel-dark reveal">
       <span class="eyebrow"><%= txt('volunteer.form.eyebrow', 'Apply now', 'Application form — small label') %></span>
       <h3 style="margin:14px 0 22px;"><%= txt('volunteer.form.title', 'Volunteer Application', 'Application form — heading') %></h3>
-      <form data-api-form data-endpoint="/api/volunteers/apply" data-success="Application received — welcome to the team!">
+      <form data-api-form data-endpoint="/api/volunteers/apply" data-success="<%= txt('volunteer.form.successMessage', 'Application received — welcome to the team!', 'Message shown after the form is sent') %>">
         <div class="field-row">
-          <div class="field"><label>Full Name</label><input type="text" name="fullName" required placeholder="Your name"></div>
-          <div class="field"><label>Phone Number</label><input type="tel" name="phone" required placeholder="+234&hellip;"></div>
+          <div class="field"><label><%= txt('site.forms.labelFullName', 'Full Name', 'Form label — Full Name') %></label><input type="text" name="fullName" required placeholder="<%= txt('volunteer.placeholders.fullname', 'Your name', 'Placeholder inside the fullName box') %>"></div>
+          <div class="field"><label><%= txt('site.forms.labelPhoneNumber', 'Phone Number', 'Form label — Phone Number') %></label><input type="tel" name="phone" required placeholder="<%= txt('volunteer.placeholders.phone', '+234…', 'Placeholder inside the phone box') %>"></div>
         </div>
-        <div class="field"><label>Email Address</label><input type="email" name="email" required placeholder="you@email.com"></div>
-        <div class="field"><label>Preferred Department</label>
+        <div class="field"><label><%= txt('site.forms.labelEmailAddress', 'Email Address', 'Form label — Email Address') %></label><input type="email" name="email" required placeholder="<%= txt('volunteer.placeholders.email', 'you@email.com', 'Placeholder inside the email box') %>"></div>
+        <div class="field"><label><%= txt('site.forms.labelPreferredDepartment', 'Preferred Department', 'Form label — Preferred Department') %></label>
           <select name="department">
-            <option>Ushering &amp; Guest Care</option>
-            <option>Media &amp; Production</option>
-            <option>Prayer &amp; Altar Ministry</option>
-            <option>Logistics &amp; Security</option>
-            <option>Registration Desk</option>
-            <option>Hospitality</option>
+            <option value="Ushering &amp; Guest Care"><%= txt('volunteer.options.departmentUsheringGuestCare', 'Ushering & Guest Care', 'Dropdown choice (department) — Ushering & Guest Care') %></option>
+            <option value="Media &amp; Production"><%= txt('volunteer.options.departmentMediaProduction', 'Media & Production', 'Dropdown choice (department) — Media & Production') %></option>
+            <option value="Prayer &amp; Altar Ministry"><%= txt('volunteer.options.departmentPrayerAltarMinistry', 'Prayer & Altar Ministry', 'Dropdown choice (department) — Prayer & Altar Ministry') %></option>
+            <option value="Logistics &amp; Security"><%= txt('volunteer.options.departmentLogisticsSecurity', 'Logistics & Security', 'Dropdown choice (department) — Logistics & Security') %></option>
+            <option value="Registration Desk"><%= txt('volunteer.options.departmentRegistrationDesk', 'Registration Desk', 'Dropdown choice (department) — Registration Desk') %></option>
+            <option value="Hospitality"><%= txt('volunteer.options.departmentHospitality', 'Hospitality', 'Dropdown choice (department) — Hospitality') %></option>
           </select>
         </div>
         <div class="field-row">
-          <div class="field"><label>Prior Experience</label><input type="text" name="occupation" placeholder="e.g. 2 years event ushering"></div>
-          <div class="field"><label>Availability</label>
+          <div class="field"><label><%= txt('site.forms.labelPriorExperience', 'Prior Experience', 'Form label — Prior Experience') %></label><input type="text" name="occupation" placeholder="<%= txt('volunteer.placeholders.occupation', 'e.g. 2 years event ushering', 'Placeholder inside the occupation box') %>"></div>
+          <div class="field"><label><%= txt('site.forms.labelAvailability', 'Availability', 'Form label — Availability') %></label>
             <select name="availability">
-              <option>Weekdays</option>
-              <option>Weekends</option>
-              <option>Anytime</option>
+              <option value="Weekdays"><%= txt('volunteer.options.availabilityWeekdays', 'Weekdays', 'Dropdown choice (availability) — Weekdays') %></option>
+              <option value="Weekends"><%= txt('volunteer.options.availabilityWeekends', 'Weekends', 'Dropdown choice (availability) — Weekends') %></option>
+              <option value="Anytime"><%= txt('volunteer.options.availabilityAnytime', 'Anytime', 'Dropdown choice (availability) — Anytime') %></option>
             </select>
           </div>
         </div>
-        <button class="btn btn-primary btn-block" type="submit">Submit Application</button>
+        <button class="btn btn-primary btn-block" type="submit"><%= txt('volunteer.form.button', 'Submit Application', 'Application form — button') %></button>
       </form>
     </div>
   </div>

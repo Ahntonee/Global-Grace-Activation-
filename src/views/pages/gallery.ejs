@@ -1,6 +1,6 @@
 <header class="page-header">
   <div class="container">
-    <span class="crumb">Home &rsaquo; <span>Gallery</span></span>
+    <span class="crumb"><%= txt('site.nav.home', 'Home', 'Menu — Home') %> &rsaquo; <span><%= txt('site.nav.gallery', 'Gallery', 'Menu — Gallery') %></span></span>
     <span class="eyebrow"><%= txt('gallery.intro.eyebrow', 'Media', 'Small label at the top') %></span>
     <h1 style="margin-top:18px;"><%= page.heroTitle %></h1>
     <p><%= page.heroSubtitle %></p>
@@ -10,10 +10,10 @@
 <section class="section-pad">
   <div class="container">
     <div class="tab-bar reveal">
-      <button class="tab-btn active" type="button">All</button>
-      <button class="tab-btn" type="button">Photos</button>
-      <button class="tab-btn" type="button">Videos</button>
-      <button class="tab-btn" type="button">Highlights</button>
+      <button class="tab-btn active" type="button"><%= txt('gallery.tabs.all', 'All', 'Filter tab — All') %></button>
+      <button class="tab-btn" type="button"><%= txt('gallery.tabs.photos', 'Photos', 'Filter tab — Photos') %></button>
+      <button class="tab-btn" type="button"><%= txt('gallery.tabs.videos', 'Videos', 'Filter tab — Videos') %></button>
+      <button class="tab-btn" type="button"><%= txt('gallery.tabs.highlights', 'Highlights', 'Filter tab — Highlights') %></button>
     </div>
     <div class="gallery-grid reveal-stagger">
       <% const cap01 = txt('gallery.photo01.caption', 'GGA 2025 — Opening Night', 'Photo 1 — caption'); %><div class="gallery-item wide" data-caption="<%= cap01 %>"><img src="<%= cimg('gallery.photo01.image', '/images/worship-crowd-1.jpg', 'Photo 1') %>" alt="<%= cap01 %>" loading="lazy"><div class="overlay"><span><%= cap01 %></span></div></div>
@@ -28,7 +28,7 @@
       <% const cap10 = txt('gallery.photo10.caption', 'Kids Activation Corner', 'Photo 10 — caption'); %><div class="gallery-item" data-caption="<%= cap10 %>"><img src="<%= cimg('gallery.photo10.image', '/images/speaker-avatar.jpg', 'Photo 10') %>" alt="<%= cap10 %>" loading="lazy"><div class="overlay"><span><%= cap10 %></span></div></div>
     </div>
     <div style="text-align:center; margin-top:44px;">
-      <button class="btn btn-outline-dark" type="button">Load More</button>
+      <button class="btn btn-outline-dark" type="button"><%= txt('gallery.list.loadMore', 'Load More', 'Load More button') %></button>
     </div>
   </div>
 </section>

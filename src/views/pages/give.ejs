@@ -1,11 +1,47 @@
 <header class="page-header">
   <div class="container">
-    <span class="crumb">Home &rsaquo; <span>Give</span></span>
+    <span class="crumb"><%= txt('site.nav.home', 'Home', 'Menu — Home') %> &rsaquo; <span><%= txt('site.nav.give', 'Give', 'Menu — Give') %></span></span>
     <span class="eyebrow"><%= txt('give.intro.eyebrow', 'Give & partner', 'Small label at the top') %></span>
     <h1 style="margin-top:18px;"><%= page.heroTitle %></h1>
     <p><%= page.heroSubtitle %></p>
   </div>
 </header>
+
+<%
+  const curNames = {
+    NGN: txt('give.currencies.nameNGN', 'Nigerian Naira', 'Currency name — NGN'),
+    USD: txt('give.currencies.nameUSD', 'US Dollar', 'Currency name — USD'),
+    GBP: txt('give.currencies.nameGBP', 'British Pound', 'Currency name — GBP'),
+    EUR: txt('give.currencies.nameEUR', 'Euro', 'Currency name — EUR'),
+    GHS: txt('give.currencies.nameGHS', 'Ghanaian Cedi', 'Currency name — GHS'),
+    KES: txt('give.currencies.nameKES', 'Kenyan Shilling', 'Currency name — KES'),
+    ZAR: txt('give.currencies.nameZAR', 'South African Rand', 'Currency name — ZAR'),
+    CAD: txt('give.currencies.nameCAD', 'Canadian Dollar', 'Currency name — CAD'),
+  };
+  const curPresets = {
+    NGN: txt('give.currencies.presetsNGN', '10000, 20000, 50000, 100000', 'Preset amounts for NGN (numbers separated by commas, up to 6)'),
+    USD: txt('give.currencies.presetsUSD', '10, 25, 50, 100', 'Preset amounts for USD (numbers separated by commas, up to 6)'),
+    GBP: txt('give.currencies.presetsGBP', '10, 25, 50, 100', 'Preset amounts for GBP (numbers separated by commas, up to 6)'),
+    EUR: txt('give.currencies.presetsEUR', '10, 25, 50, 100', 'Preset amounts for EUR (numbers separated by commas, up to 6)'),
+    GHS: txt('give.currencies.presetsGHS', '100, 250, 500, 1000', 'Preset amounts for GHS (numbers separated by commas, up to 6)'),
+    KES: txt('give.currencies.presetsKES', '1000, 2500, 5000, 10000', 'Preset amounts for KES (numbers separated by commas, up to 6)'),
+    ZAR: txt('give.currencies.presetsZAR', '200, 500, 1000, 2000', 'Preset amounts for ZAR (numbers separated by commas, up to 6)'),
+    CAD: txt('give.currencies.presetsCAD', '10, 25, 50, 100', 'Preset amounts for CAD (numbers separated by commas, up to 6)'),
+  };
+  const parsePresets = function(text, fallback) {
+    const nums = String(text).split(/[\s,;]+/).map(Number).filter(function(n) { return isFinite(n) && n > 0 && n <= 1000000000; }).slice(0, 6);
+    return nums.length ? nums : fallback;
+  };
+  const giveCurrencies = currencies.map(function(c) {
+    return Object.assign({}, c, { label: curNames[c.code] || c.label, presets: parsePresets(curPresets[c.code], c.presets) });
+  });
+  const giveText = {
+    custom: txt('give.form.customButton', 'Custom', 'Amount buttons — \'Custom\' wording'),
+    amountPlaceholder: txt('give.form.customPlaceholder', 'Amount', 'Custom amount box — hint (the currency symbol is added before it)'),
+    invalidAmount: txt('give.form.invalidAmount', 'Please choose or enter a valid amount.', 'Error shown when no valid amount is chosen')
+  };
+  const ngn = giveCurrencies.find(function(c) { return c.code === 'NGN'; }) || giveCurrencies[0];
+%>
 
 <section class="section-pad">
   <div class="container two-col" style="align-items:start;">
@@ -25,46 +61,43 @@
       <span class="eyebrow"><%= txt('give.form.eyebrow', 'Give now', 'Giving form — small label') %></span>
       <h3 style="margin:14px 0 20px;"><%= txt('give.form.title', 'Choose an amount', 'Giving form — heading') %></h3>
       <div class="give-toggle" id="give-frequency-toggle">
-        <button class="active" type="button" data-frequency="One-Time">One-Time</button>
-        <button type="button" data-frequency="Monthly">Monthly</button>
+        <button class="active" type="button" data-frequency="One-Time"><%= txt('give.form.oneTime', 'One-Time', 'Frequency button — one-time') %></button>
+        <button type="button" data-frequency="Monthly"><%= txt('give.form.monthly', 'Monthly', 'Frequency button — monthly') %></button>
       </div>
       <div class="field">
-        <label for="give-currency">Currency</label>
+        <label for="give-currency"><%= txt('give.form.currencyLabel', 'Currency', 'Currency box — label') %></label>
         <select name="currency" id="give-currency">
-          <% currencies.forEach(function(c) { %>
+          <% giveCurrencies.forEach(function(c) { %>
             <option value="<%= c.code %>"<%= c.code === 'NGN' ? ' selected' : '' %>><%= c.code %> &mdash; <%= c.label %> (<%= c.symbol %>)</option>
           <% }) %>
         </select>
       </div>
       <div class="give-amounts" id="give-amounts">
-        <button class="amt-btn active" type="button" data-amt="10000">&#8358;10,000</button>
-        <button class="amt-btn" type="button" data-amt="20000">&#8358;20,000</button>
-        <button class="amt-btn" type="button" data-amt="50000">&#8358;50,000</button>
-        <button class="amt-btn" type="button" data-amt="100000">&#8358;100,000</button>
-        <button class="amt-btn" type="button" data-amt="custom">Custom</button>
-        <input type="text" class="custom-amount amt-btn" id="give-custom-amount" placeholder="&#8358; Amount" inputmode="decimal" style="text-align:center;">
+        <% ngn.presets.forEach(function(amt, i) { %><button class="amt-btn<%= i === 0 ? ' active' : '' %>" type="button" data-amt="<%= amt %>"><%= ngn.symbol %><%= amt.toLocaleString('en-US') %></button>
+        <% }) %><button class="amt-btn" type="button" data-amt="custom"><%= giveText.custom %></button>
+        <input type="text" class="custom-amount amt-btn" id="give-custom-amount" placeholder="<%= ngn.symbol %> <%= giveText.amountPlaceholder %>" inputmode="decimal" style="text-align:center;">
       </div>
       <div class="field-row">
-        <div class="field"><label>Full Name</label><input type="text" name="fullName" required placeholder="Your name"></div>
-        <div class="field"><label>Email Address</label><input type="email" name="email" required placeholder="you@email.com"></div>
+        <div class="field"><label><%= txt('site.forms.labelFullName', 'Full Name', 'Form label — Full Name') %></label><input type="text" name="fullName" required placeholder="<%= txt('give.placeholders.fullname', 'Your name', 'Placeholder inside the fullName box') %>"></div>
+        <div class="field"><label><%= txt('site.forms.labelEmailAddress', 'Email Address', 'Form label — Email Address') %></label><input type="email" name="email" required placeholder="<%= txt('give.placeholders.email', 'you@email.com', 'Placeholder inside the email box') %>"></div>
       </div>
       <div class="field">
-        <label>Giving toward</label>
+        <label><%= txt('site.forms.labelGivingToward', 'Giving toward', 'Form label — Giving toward') %></label>
         <select name="fund">
-          <option>Offering</option>
-          <option>Partnership</option>
-          <option>Project Seed</option>
-          <option>Missions</option>
-          <option>Conference Support</option>
+          <option value="Offering"><%= txt('give.options.fundOffering', 'Offering', 'Dropdown choice (fund) — Offering') %></option>
+          <option value="Partnership"><%= txt('give.options.fundPartnership', 'Partnership', 'Dropdown choice (fund) — Partnership') %></option>
+          <option value="Project Seed"><%= txt('give.options.fundProjectSeed', 'Project Seed', 'Dropdown choice (fund) — Project Seed') %></option>
+          <option value="Missions"><%= txt('give.options.fundMissions', 'Missions', 'Dropdown choice (fund) — Missions') %></option>
+          <option value="Conference Support"><%= txt('give.options.fundConferenceSupport', 'Conference Support', 'Dropdown choice (fund) — Conference Support') %></option>
         </select>
       </div>
-      <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text); margin-bottom:16px;"><input type="checkbox" name="isAnonymous" style="width:auto;"> Give anonymously</label>
+      <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text); margin-bottom:16px;"><input type="checkbox" name="isAnonymous" style="width:auto;"> <%= txt('give.form.anonymousLabel', 'Give anonymously', 'Checkbox wording (anonymous)') %></label>
       <input type="hidden" name="paymentProvider" value="flutterwave">
       <div class="admin-auth-error" id="give-error" style="margin-top:14px;"></div>
-      <button class="btn btn-primary btn-block" type="submit" style="margin-top:16px;">Give Securely Now</button>
+      <button class="btn btn-primary btn-block" type="submit" style="margin-top:16px;"><%= txt('give.form.button', 'Give Securely Now', 'Giving form — button') %></button>
       <div class="gateways">
-        <span style="font-size:12.5px; color:var(--mist);">We accept</span>
-        <span class="gateway-badge">Flutterwave</span>
+        <span style="font-size:12.5px; color:var(--mist);"><%= txt('give.form.weAccept', 'We accept', 'Giving form — \'We accept\' wording') %></span>
+        <span class="gateway-badge"><%= txt('give.form.gatewayName', 'Flutterwave', 'Giving form — payment provider badge') %></span>
       </div>
       <p style="font-size:12px; color:var(--mist); margin-top:16px;"><%= txt('give.form.secure', 'All transactions are encrypted and processed securely. You\'ll receive an email receipt instantly.', 'Giving form — reassurance note') %></p>
     </form>
@@ -72,7 +105,8 @@
 </section>
 
 <script nonce="<%= nonce %>">
-  window.__GIVE_CURRENCIES__ = <%- jsonScript(currencies) %>;
+  window.__GIVE_CURRENCIES__ = <%- jsonScript(giveCurrencies) %>;
+  window.__GIVE_TEXT__ = <%- jsonScript(giveText) %>;
 </script>
 <script src="/give.js"></script>
 

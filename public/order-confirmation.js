@@ -17,30 +17,30 @@
       const order = data.order;
 
       if (order.paymentStatus === "Paid") {
-        heading.textContent = "Thank you — your order is confirmed!";
+        heading.textContent = window.ggaT("orderConfirmedHeading", "Thank you — your order is confirmed!");
 
         const downloadableLinks = (order.digitalDeliveryLinks || []).filter((l) => l.url);
         const linksHtml = downloadableLinks.length
           ? `<div style="margin-top:18px;">
-              <p style="color:var(--text); font-weight:700; margin-bottom:8px;">Your digital items:</p>
+              <p style="color:var(--text); font-weight:700; margin-bottom:8px;">${ggaH('orderDigitalItems', 'Your digital items:')}</p>
               ${downloadableLinks
                 .map((l) => {
                   const item = (order.items || []).find((i) => i.product === l.product || i.product === String(l.product));
-                  const name = item ? item.name : "Download";
+                  const name = item ? item.name : window.ggaT("orderDownload", "Download");
                   return `<a href="${l.url}" target="_blank" rel="noopener" class="btn btn-sm btn-primary" style="margin:4px 8px 4px 0;">${name} &darr;</a>`;
                 })
                 .join("")}
-              <p style="color:var(--mist); font-size:13px; margin-top:8px;">A copy of these links was also sent to your email.</p>
+              <p style="color:var(--mist); font-size:13px; margin-top:8px;">${ggaH('orderLinksNote', 'A copy of these links was also sent to your email.')}</p>
             </div>`
           : "";
 
         body.innerHTML = `
-          <p style="font-family:'Space Mono',monospace; font-size:13px; color:var(--mist); margin-bottom:14px;">Order ${order.orderNumber}</p>
-          <p style="color:var(--text);">Total: <strong>₦${order.total.toLocaleString()}</strong></p>
+          <p style="font-family:'Space Mono',monospace; font-size:13px; color:var(--mist); margin-bottom:14px;">${ggaH('orderNumber', 'Order')} ${order.orderNumber}</p>
+          <p style="color:var(--text);">${ggaH('orderTotal', 'Total:')} <strong>₦${order.total.toLocaleString()}</strong></p>
           ${linksHtml}
           ${
             order.requiresShipping
-              ? `<p style="margin-top:14px; color:var(--text);">We'll email you shipping updates as your order is processed.</p>`
+              ? `<p style="margin-top:14px; color:var(--text);">${ggaH('orderShippingNote', 'We\'ll email you shipping updates as your order is processed.')}</p>`
               : ""
           }
         `;
@@ -48,19 +48,19 @@
       }
 
       if (order.paymentStatus === "Failed") {
-        heading.textContent = "Payment didn't go through.";
-        body.innerHTML = `<p style="color:var(--mist);">Your payment was not successful. No charge was made. <a href="/checkout">Try again</a>.</p>`;
+        heading.textContent = window.ggaT("payFailedHeading", "Payment didn't go through.");
+        body.innerHTML = `<p style="color:var(--mist);">${ggaH('payFailedBody', 'Your payment was not successful. No charge was made.')} <a href="/checkout">${ggaH('tryAgain', 'Try again')}</a>.</p>`;
         return;
       }
 
       if (attempts < MAX_ATTEMPTS) {
         setTimeout(poll, 2000);
       } else {
-        heading.textContent = "Still processing…";
-        body.innerHTML = `<p style="color:var(--mist);">This is taking longer than expected. We'll email you a confirmation as soon as it clears.</p>`;
+        heading.textContent = window.ggaT("processingHeading", "Still processing…");
+        body.innerHTML = `<p style="color:var(--mist);">${ggaH('orderProcessingBody', 'This is taking longer than expected. We\'ll email you a confirmation as soon as it clears.')}</p>`;
       }
     } catch (err) {
-      heading.textContent = "Couldn't check order status";
+      heading.textContent = window.ggaT("orderStatusErrorHeading", "Couldn't check order status");
       body.innerHTML = `<p style="color:var(--mist);">${err.message}</p>`;
     }
   }

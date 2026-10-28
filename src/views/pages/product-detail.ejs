@@ -1,6 +1,6 @@
 <header class="page-header">
   <div class="container">
-    <span class="crumb">Home &rsaquo; <a href="/shop">Shop</a> &rsaquo; <span><%= product.name %></span></span>
+    <span class="crumb"><%= txt('site.nav.home', 'Home', 'Menu — Home') %> &rsaquo; <a href="/shop"><%= txt('site.nav.shop', 'Shop', 'Menu — Shop') %></a> &rsaquo; <span><%= product.name %></span></span>
     <span class="eyebrow"><%= product.type === 'digital' ? 'Digital Download' : (product.type === 'event-addon' ? 'Event Add-on' : 'Merchandise') %></span>
     <h1 style="margin-top:18px; max-width:820px;"><%= product.name %></h1>
   </div>
@@ -21,16 +21,16 @@
       </div>
 
       <% if (product.type === 'event-addon' && product.relatedEvent) { %>
-        <div class="pill" style="margin-bottom:20px;">Add-on for <%= product.relatedEvent.title %></div>
+        <div class="pill" style="margin-bottom:20px;"><%= txt('product.page.addonFor', 'Add-on for', 'Tag on add-on products (the event name follows)') %> <%= product.relatedEvent.title %></div>
       <% } %>
 
       <% if (product.externalUrl) { %>
         <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
-          <a href="<%= product.externalUrl %>" class="btn btn-primary" target="_blank" rel="noopener noreferrer sponsored">Buy Now</a>
+          <a href="<%= product.externalUrl %>" class="btn btn-primary" target="_blank" rel="noopener noreferrer sponsored"><%= txt('product.page.buyNow', 'Buy Now', 'Button for products sold on another website') %></a>
         </div>
-        <p style="font-size:13px; color:var(--mist); margin-top:14px;">You'll complete this purchase on the seller's website.</p>
+        <p style="font-size:13px; color:var(--mist); margin-top:14px;"><%= txt('product.page.externalNote', 'You\'ll complete this purchase on the seller\'s website.', 'Note under the Buy Now button') %></p>
       <% } else if (product.type === 'physical' && product.stock === 0) { %>
-        <p style="color:var(--mist); font-weight:700;">Currently out of stock.</p>
+        <p style="color:var(--mist); font-weight:700;"><%= txt('product.page.outOfStock', 'Currently out of stock.', 'Out-of-stock message') %></p>
       <% } else { %>
         <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
           <button
@@ -42,13 +42,13 @@
             data-price="<%= product.price %>"
             data-type="<%= product.type %>"
             data-image="<%= product.images && product.images[0] && product.images[0].url ? product.images[0].url : '' %>"
-          >Add to Cart</button>
-          <a href="/cart" class="btn btn-outline-dark">View Cart</a>
+          ><%= txt('product.page.addToCart', 'Add to Cart', 'Add to cart button') %></button>
+          <a href="/cart" class="btn btn-outline-dark"><%= txt('product.page.viewCart', 'View Cart', 'View cart button') %></a>
         </div>
       <% } %>
 
       <% if (product.type === 'physical' && !product.externalUrl) { %>
-        <p style="font-size:13px; color:var(--mist); margin-top:18px;">Ships within Nigeria only.</p>
+        <p style="font-size:13px; color:var(--mist); margin-top:18px;"><%= txt('product.page.shipping', 'Ships within Nigeria only.', 'Shipping note') %></p>
       <% } %>
     </div>
   </div>

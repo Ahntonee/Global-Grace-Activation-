@@ -1,19 +1,19 @@
 <header class="page-header">
   <div class="container">
-    <span class="crumb">Home &rsaquo; <span>Thank You</span></span>
-    <span class="eyebrow">Giving status</span>
-    <h1 style="margin-top:18px;" id="confirmation-heading">Checking your gift&hellip;</h1>
-    <p id="confirmation-sub">Reference: <%= reference %></p>
+    <span class="crumb"><%= txt('site.nav.home', 'Home', 'Menu — Home') %> &rsaquo; <span><%= txt('giveconfirm.page.crumb', 'Thank You', 'Breadcrumb') %></span></span>
+    <span class="eyebrow"><%= txt('giveconfirm.page.eyebrow', 'Giving status', 'Small label at the top') %></span>
+    <h1 style="margin-top:18px;" id="confirmation-heading"><%= txt('giveconfirm.page.checking', 'Checking your gift…', 'Heading while the payment is being checked') %></h1>
+    <p id="confirmation-sub"><%= txt('site.words.reference', 'Reference:', '\'Reference\' wording') %> <%= reference %></p>
   </div>
 </header>
 
 <section class="section-pad">
   <div class="container" style="max-width:640px;">
     <div class="panel-dark reveal" id="confirmation-body">
-      <p style="color:var(--mist);">Loading&hellip;</p>
+      <p style="color:var(--mist);"><%= txt('site.words.loading', 'Loading…', '\'Loading\' wording') %></p>
     </div>
     <div style="text-align:center; margin-top:30px;">
-      <a href="/" class="btn btn-outline-dark">Back to Home</a>
+      <a href="/" class="btn btn-outline-dark"><%= txt('notfound.page.button', 'Back to Home', 'Button') %></a>
     </div>
   </div>
 </section>

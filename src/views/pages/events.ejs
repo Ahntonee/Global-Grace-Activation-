@@ -1,6 +1,6 @@
 <header class="page-header">
   <div class="container">
-    <span class="crumb">Home &rsaquo; <span>Events</span></span>
+    <span class="crumb"><%= txt('site.nav.home', 'Home', 'Menu — Home') %> &rsaquo; <span><%= txt('site.nav.events', 'Events', 'Menu — Events') %></span></span>
     <span class="eyebrow"><%= txt('events.intro.eyebrow', 'Gatherings', 'Small label at the top') %></span>
     <h1 style="margin-top:18px;"><%= page.heroTitle %></h1>
     <p><%= page.heroSubtitle %></p>
@@ -21,17 +21,17 @@
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.3 3-6 7-6s7 2.7 7 6"/><circle cx="18" cy="9" r="2.4"/><path d="M16 14.2c2.6.5 4.5 2.4 4.5 5.3"/></svg> <%= txt('events.flagship.perk', 'Open to all · free registration', 'Featured event — note under the date') %></li>
         </ul>
         <div style="display:flex; gap:14px; flex-wrap:wrap;">
-          <a href="#register" class="btn btn-primary js-register-btn" data-event="<%= featuredEvent.title %>" data-event-id="<%= featuredEvent._id %>">Register Now</a>
+          <a href="#register" class="btn btn-primary js-register-btn" data-event="<%= featuredEvent.title %>" data-event-id="<%= featuredEvent._id %>"><%= txt('site.nav.registerButton', 'Register Now', 'Header button — Register Now') %></a>
         </div>
       </div>
       <div class="hero-panel" style="border-radius:var(--radius-lg);">
         <span class="eyebrow"><%= txt('events.countdown.eyebrow', 'Countdown', 'Countdown card — small label') %></span>
         <h3 style="margin:14px 0 20px;"><%= txt('events.countdown.title', 'Time until we gather', 'Countdown card — heading') %></h3>
         <div class="countdown" data-event-date="<%= featuredEvent.startDate.toISOString() %>">
-          <div class="c-cell"><div class="c-num" id="cd-days">00</div><div class="c-label">Days</div></div>
-          <div class="c-cell"><div class="c-num" id="cd-hours">00</div><div class="c-label">Hours</div></div>
-          <div class="c-cell"><div class="c-num" id="cd-mins">00</div><div class="c-label">Mins</div></div>
-          <div class="c-cell"><div class="c-num" id="cd-secs">00</div><div class="c-label">Secs</div></div>
+          <div class="c-cell"><div class="c-num" id="cd-days">00</div><div class="c-label"><%= txt('site.countdown.days', 'Days', 'Countdown label — Days') %></div></div>
+          <div class="c-cell"><div class="c-num" id="cd-hours">00</div><div class="c-label"><%= txt('site.countdown.hours', 'Hours', 'Countdown label — Hours') %></div></div>
+          <div class="c-cell"><div class="c-num" id="cd-mins">00</div><div class="c-label"><%= txt('site.countdown.mins', 'Mins', 'Countdown label — Mins') %></div></div>
+          <div class="c-cell"><div class="c-num" id="cd-secs">00</div><div class="c-label"><%= txt('site.countdown.secs', 'Secs', 'Countdown label — Secs') %></div></div>
         </div>
         <div class="map-frame" style="height:180px; background:linear-gradient(155deg,#ecfdf5,#f0fdf4); position:relative; overflow:hidden;">
           <img src="<%= cimg('events.venue.image', '/images/venue-aerial.jpg', 'Venue photo (under the countdown)') %>" alt="Aerial view of Solution Arena venue" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
@@ -67,14 +67,14 @@
     <div class="center-head reveal">
       <span class="eyebrow"><%= txt('events.addons.eyebrow', 'Upgrade your seat', 'Add-ons section — small label') %></span>
       <h2><%= txt('events.addons.title', 'Event add-ons', 'Add-ons section — heading') %></h2>
-      <p>Optional extras for <%= featuredEvent.title %>.</p>
+      <p><%= txt('events.addons.lead', 'Optional extras for', 'Add-ons section — wording before the event name') %> <%= featuredEvent.title %>.</p>
     </div>
     <div class="grid-3 reveal-stagger">
       <% addons.forEach(function(p) { %>
         <a href="/shop/<%= p.slug %>" class="card blog-card">
           <div class="thumb"><img src="<%= p.images && p.images[0] && p.images[0].url ? p.images[0].url : '/images/conference-arena.jpg' %>" alt="<%= p.name %>" loading="lazy"></div>
           <div class="body">
-            <span class="tag">Add-on</span>
+            <span class="tag"><%= txt('events.addons.tag', 'Add-on', 'Tag on each add-on card') %></span>
             <h4><%= p.name %></h4>
             <p><%= p.shortDescription || p.description %></p>
             <div class="meta"><span style="font-weight:700; color:var(--flame-dim); font-family:'Space Mono',monospace;">&#8358;<%= p.price.toLocaleString() %></span></div>
@@ -113,15 +113,15 @@
               </div>
             <% } %>
             <% if (ev.isVirtual && ev.meetingLink) { %>
-              <a href="<%= ev.meetingLink %>" class="btn btn-sm btn-outline-dark">Watch Live</a>
+              <a href="<%= ev.meetingLink %>" class="btn btn-sm btn-outline-dark"><%= txt('site.nav.watchLiveButton', 'Watch Live', 'Header button — Watch Live') %></a>
             <% } else { %>
-              <a href="#" class="btn btn-sm btn-primary js-register-btn" data-event="<%= ev.title %>" data-event-id="<%= ev._id %>">Register</a>
+              <a href="#" class="btn btn-sm btn-primary js-register-btn" data-event="<%= ev.title %>" data-event-id="<%= ev._id %>"><%= txt('events.list.registerButton', 'Register', 'Button on each upcoming event') %></a>
             <% } %>
           </div>
         </div>
       <% }) %>
       <% if (!upcoming.length) { %>
-        <p style="color:var(--mist); text-align:center;">No upcoming events scheduled right now — check back soon.</p>
+        <p style="color:var(--mist); text-align:center;"><%= txt('events.list.empty', 'No upcoming events scheduled right now — check back soon.', 'Message when there are no upcoming events') %></p>
       <% } %>
     </div>
   </div>

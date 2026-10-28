@@ -195,7 +195,7 @@
   document.querySelectorAll('form[data-fake-submit]').forEach(form=>{
     form.addEventListener('submit', (e)=>{
       e.preventDefault();
-      const msg = form.getAttribute('data-success') || 'Thank you — received!';
+      const msg = form.getAttribute('data-success') || (window.ggaT ? window.ggaT('formSuccessFallback', 'Thank you — received!') : 'Thank you — received!');
       window.gcToast(msg);
       form.reset();
       const modal = form.closest('.modal-overlay');
@@ -220,7 +220,7 @@
 
     function openRegisterModal(eventName, eventId){
       const title = eventName || 'GGA Global Conference 2026';
-      if(titleEl) titleEl.textContent = 'Register for ' + title;
+      if(titleEl) titleEl.textContent = (window.ggaT ? window.ggaT('registerFor', 'Register for') : 'Register for') + ' ' + title;
       if(eventTitleInput) eventTitleInput.value = title;
       if(eventIdInput) eventIdInput.value = eventId || '';
       registerModal.classList.add('open');
@@ -305,7 +305,7 @@
   document.querySelectorAll('[data-give-cta]').forEach(btn=>{
     btn.addEventListener('click', (e)=>{
       e.preventDefault();
-      window.gcToast('Redirecting to secure checkout…');
+      window.gcToast(window.ggaT ? window.ggaT('redirecting', 'Redirecting to secure checkout…') : 'Redirecting to secure checkout…');
     });
   });
 
@@ -335,7 +335,7 @@
   /* ---------- Gallery lightbox (simple caption toast) ---------- */
   document.querySelectorAll('.gallery-item').forEach(item=>{
     item.addEventListener('click', ()=>{
-      window.gcToast(item.dataset.caption || 'Opening media…');
+      window.gcToast(item.dataset.caption || (window.ggaT ? window.ggaT('openingMedia', 'Opening media…') : 'Opening media…'));
     });
   });
 

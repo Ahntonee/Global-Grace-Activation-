@@ -14,27 +14,27 @@
         </div><% } %>
       </div>
       <div>
-        <h5>Quick Links</h5>
+        <h5><%= txt('site.footer.quickLinksHeading', 'Quick Links', 'Footer — first column heading') %></h5>
         <ul>
-          <li><a href="/about">About GGA</a></li>
-          <li><a href="/events">Events</a></li>
-          <li><a href="/speakers">Speakers</a></li>
-          <li><a href="/watch-live">Watch Live</a></li>
-          <li><a href="/volunteer">Volunteer</a></li>
+          <li><a href="/about"><%= txt('site.footer.linkAbout', 'About GGA', 'Footer link — About GGA') %></a></li>
+          <li><a href="/events"><%= txt('site.footer.linkEvents', 'Events', 'Footer link — Events') %></a></li>
+          <li><a href="/speakers"><%= txt('site.footer.linkSpeakers', 'Speakers', 'Footer link — Speakers') %></a></li>
+          <li><a href="/watch-live"><%= txt('site.footer.linkWatchLive', 'Watch Live', 'Footer link — Watch Live') %></a></li>
+          <li><a href="/volunteer"><%= txt('site.footer.linkVolunteer', 'Volunteer', 'Footer link — Volunteer') %></a></li>
         </ul>
       </div>
       <div>
-        <h5>Resources</h5>
+        <h5><%= txt('site.footer.resourcesHeading', 'Resources', 'Footer — second column heading') %></h5>
         <ul>
-          <li><a href="/blog">Blog</a></li>
-          <li><a href="/gallery">Gallery</a></li>
-          <li><a href="/testimonies">Testimonies</a></li>
-          <li><a href="/prayer">Prayer Request</a></li>
-          <li><a href="/faqs">FAQs</a></li>
+          <li><a href="/blog"><%= txt('site.footer.linkBlog', 'Blog', 'Footer link — Blog') %></a></li>
+          <li><a href="/gallery"><%= txt('site.footer.linkGallery', 'Gallery', 'Footer link — Gallery') %></a></li>
+          <li><a href="/testimonies"><%= txt('site.footer.linkTestimonies', 'Testimonies', 'Footer link — Testimonies') %></a></li>
+          <li><a href="/prayer"><%= txt('site.footer.linkPrayer', 'Prayer Request', 'Footer link — Prayer Request') %></a></li>
+          <li><a href="/faqs"><%= txt('site.footer.linkFaqs', 'FAQs', 'Footer link — FAQs') %></a></li>
         </ul>
       </div>
       <div>
-        <h5>Contact</h5>
+        <h5><%= txt('site.footer.contactHeading', 'Contact', 'Footer — third column heading') %></h5>
         <ul>
           <li><a href="mailto:<%= txt('site.footer.email', 'hello@globalgraceactivation.com', 'Footer — contact email') %>"><%= txt('site.footer.email', 'hello@globalgraceactivation.com', 'Footer — contact email') %></a></li>
           <% if (site.phone) { %><li><a href="tel:<%= site.phoneTel %>"><%= site.phone %></a></li><% } %>
@@ -43,7 +43,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>&copy; <%= new Date().getFullYear() %> Global Grace Activation. All rights reserved.</span>
+      <span>&copy; <%= new Date().getFullYear() %> <%= txt('site.footer.copyright', 'Global Grace Activation. All rights reserved.', 'Footer — copyright line (the year is added automatically)') %></span>
       
     </div>
   </div>

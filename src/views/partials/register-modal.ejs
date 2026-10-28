@@ -1,23 +1,23 @@
 <div class="modal-overlay" id="register-modal" aria-hidden="true">
   <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="register-modal-title">
     <button class="modal-close" id="register-modal-close" type="button" aria-label="Close">&times;</button>
-    <span class="eyebrow">Secure your seat</span>
-    <h3 id="register-modal-title">Register for GGA Global Conference 2026</h3>
-    <form data-api-form data-endpoint="/api/event-registrations" data-success="You&#8217;re registered &mdash; check your email for confirmation!">
+    <span class="eyebrow"><%= txt('site.register.eyebrow', 'Secure your seat', 'Registration pop-up — small label') %></span>
+    <h3 id="register-modal-title"><%= txt('site.register.title', 'Register for GGA Global Conference 2026', 'Registration pop-up — heading') %></h3>
+    <form data-api-form data-endpoint="/api/event-registrations" data-success="<%= txt('site.register.form.successMessage', 'You’re registered — check your email for confirmation!', 'Registration pop-up — message after registering') %>">
       <input type="hidden" name="eventId" value="">
       <input type="hidden" name="eventTitle" value="GGA Global Conference 2026">
       <div class="field-row">
-        <div class="field"><label>Full Name</label><input type="text" name="fullName" required placeholder="Your name"></div>
-        <div class="field"><label>Phone Number</label><input type="tel" name="phone" required placeholder="+234&hellip;"></div>
+        <div class="field"><label><%= txt('site.forms.labelFullName', 'Full Name', 'Form label — Full Name') %></label><input type="text" name="fullName" required placeholder="<%= txt('site.register.placeholders.fullname', 'Your name', 'Placeholder inside the fullName box') %>"></div>
+        <div class="field"><label><%= txt('site.forms.labelPhoneNumber', 'Phone Number', 'Form label — Phone Number') %></label><input type="tel" name="phone" required placeholder="<%= txt('site.register.placeholders.phone', '+234…', 'Placeholder inside the phone box') %>"></div>
       </div>
-      <div class="field"><label>Email Address</label><input type="email" name="email" required placeholder="you@email.com"></div>
+      <div class="field"><label><%= txt('site.forms.labelEmailAddress', 'Email Address', 'Form label — Email Address') %></label><input type="email" name="email" required placeholder="<%= txt('site.register.placeholders.email', 'you@email.com', 'Placeholder inside the email box') %>"></div>
       <div class="field-row">
-        <div class="field"><label>Country</label><input type="text" name="country" required placeholder="e.g. Nigeria"></div>
-        <div class="field"><label>Guests Attending</label>
-          <select name="guests"><option>Just me</option><option>2 people</option><option>3 people</option><option>4+ people</option></select>
+        <div class="field"><label><%= txt('site.forms.labelCountry', 'Country', 'Form label — Country') %></label><input type="text" name="country" required placeholder="<%= txt('site.register.placeholders.country', 'e.g. Nigeria', 'Placeholder inside the country box') %>"></div>
+        <div class="field"><label><%= txt('site.forms.labelGuestsAttending', 'Guests Attending', 'Form label — Guests Attending') %></label>
+          <select name="guests"><option value="Just me"><%= txt('site.register.options.guestsJustMe', 'Just me', 'Dropdown choice (guests) — Just me') %></option><option value="2 people"><%= txt('site.register.options.guests2People', '2 people', 'Dropdown choice (guests) — 2 people') %></option><option value="3 people"><%= txt('site.register.options.guests3People', '3 people', 'Dropdown choice (guests) — 3 people') %></option><option value="4+ people"><%= txt('site.register.options.guests4People', '4+ people', 'Dropdown choice (guests) — 4+ people') %></option></select>
         </div>
       </div>
-      <button class="btn btn-primary btn-block" type="submit">Complete Registration</button>
+      <button class="btn btn-primary btn-block" type="submit"><%= txt('site.register.button', 'Complete Registration', 'Registration pop-up — button') %></button>
     </form>
   </div>
 </div>
