@@ -9,29 +9,61 @@
 
 <section class="section-pad">
   <div class="container">
-    <div class="tab-bar reveal">
-      <button class="tab-btn active" type="button"><%= txt('gallery.tabs.all', 'All', 'Filter tab — All') %></button>
-      <button class="tab-btn" type="button"><%= txt('gallery.tabs.photos', 'Photos', 'Filter tab — Photos') %></button>
-      <button class="tab-btn" type="button"><%= txt('gallery.tabs.videos', 'Videos', 'Filter tab — Videos') %></button>
-      <button class="tab-btn" type="button"><%= txt('gallery.tabs.highlights', 'Highlights', 'Filter tab — Highlights') %></button>
+    <div class="tab-bar reveal" id="gallery-tabs">
+      <button class="tab-btn active" type="button" data-filter="all"><%= txt('gallery.tabs.all', 'All', 'Filter tab — All') %></button>
+      <button class="tab-btn" type="button" data-filter="photo"><%= txt('gallery.tabs.photos', 'Photos', 'Filter tab — Photos') %></button>
+      <button class="tab-btn" type="button" data-filter="video"><%= txt('gallery.tabs.videos', 'Videos', 'Filter tab — Videos') %></button>
+      <button class="tab-btn" type="button" data-filter="highlight"><%= txt('gallery.tabs.highlights', 'Highlights', 'Filter tab — Highlights') %></button>
     </div>
-    <div class="gallery-grid reveal-stagger">
-      <% const cap01 = txt('gallery.photo01.caption', 'GGA 2025 — Opening Night', 'Photo 1 — caption'); %><div class="gallery-item wide" data-caption="<%= cap01 %>"><img src="<%= cimg('gallery.photo01.image', '/images/worship-crowd-1.jpg', 'Photo 1') %>" alt="<%= cap01 %>" loading="lazy"><div class="overlay"><span><%= cap01 %></span></div></div>
-      <% const cap02 = txt('gallery.photo02.caption', 'Worship Under the Lights', 'Photo 2 — caption'); %><div class="gallery-item" data-caption="<%= cap02 %>"><img src="<%= cimg('gallery.photo02.image', '/images/worship-stage.jpg', 'Photo 2') %>" alt="<%= cap02 %>" loading="lazy"><div class="overlay"><span><%= cap02 %></span></div></div>
-      <% const cap03 = txt('gallery.photo03.caption', 'Altar Call, Night Two', 'Photo 3 — caption'); %><div class="gallery-item" data-caption="<%= cap03 %>"><img src="<%= cimg('gallery.photo03.image', '/images/conference-arena.jpg', 'Photo 3') %>" alt="<%= cap03 %>" loading="lazy"><div class="overlay"><span><%= cap03 %></span></div></div>
-      <% const cap04 = txt('gallery.photo04.caption', 'Nations Flag Procession', 'Photo 4 — caption'); %><div class="gallery-item" data-caption="<%= cap04 %>"><img src="<%= cimg('gallery.photo04.image', '/images/worship-team.jpg', 'Photo 4') %>" alt="<%= cap04 %>" loading="lazy"><div class="overlay"><span><%= cap04 %></span></div></div>
-      <% const cap05 = txt('gallery.photo05.caption', 'Prayer Room Moments', 'Photo 5 — caption'); %><div class="gallery-item" data-caption="<%= cap05 %>"><img src="<%= cimg('gallery.photo05.image', '/images/prayer-hands.jpg', 'Photo 5') %>" alt="<%= cap05 %>" loading="lazy"><div class="overlay"><span><%= cap05 %></span></div></div>
-      <% const cap06 = txt('gallery.photo06.caption', 'Crowd at Solution Arena', 'Photo 6 — caption'); %><div class="gallery-item wide" data-caption="<%= cap06 %>"><img src="<%= cimg('gallery.photo06.image', '/images/worship-crowd-2.jpg', 'Photo 6') %>" alt="<%= cap06 %>" loading="lazy"><div class="overlay"><span><%= cap06 %></span></div></div>
-      <% const cap07 = txt('gallery.photo07.caption', 'Backstage with the Team', 'Photo 7 — caption'); %><div class="gallery-item" data-caption="<%= cap07 %>"><img src="<%= cimg('gallery.photo07.image', '/images/prayer-gathering.jpg', 'Photo 7') %>" alt="<%= cap07 %>" loading="lazy"><div class="overlay"><span><%= cap07 %></span></div></div>
-      <% const cap08 = txt('gallery.photo08.caption', 'Volunteer Squad 2025', 'Photo 8 — caption'); %><div class="gallery-item" data-caption="<%= cap08 %>"><img src="<%= cimg('gallery.photo08.image', '/images/hero-bg.jpg', 'Photo 8') %>" alt="<%= cap08 %>" loading="lazy"><div class="overlay"><span><%= cap08 %></span></div></div>
-      <% const cap09 = txt('gallery.photo09.caption', 'Highlight Reel — Night One', 'Photo 9 — caption'); %><div class="gallery-item" data-caption="<%= cap09 %>"><img src="<%= cimg('gallery.photo09.image', '/images/pastor-podium.jpg', 'Photo 9') %>" alt="<%= cap09 %>" loading="lazy"><div class="overlay"><span><%= cap09 %></span></div></div>
-      <% const cap10 = txt('gallery.photo10.caption', 'Kids Activation Corner', 'Photo 10 — caption'); %><div class="gallery-item" data-caption="<%= cap10 %>"><img src="<%= cimg('gallery.photo10.image', '/images/speaker-avatar.jpg', 'Photo 10') %>" alt="<%= cap10 %>" loading="lazy"><div class="overlay"><span><%= cap10 %></span></div></div>
+    <div class="gallery-grid reveal-stagger" id="gallery-grid">
+      <% tiles.forEach(function(t) { %>
+        <% if (t.videoUrl) { %>
+          <a class="gallery-item<%= t.wide ? ' wide' : '' %>" data-cat="<%= t.category %>" data-caption="<%= t.caption %>" href="<%= t.videoUrl %>" target="_blank" rel="noopener noreferrer"><img src="<%= t.src %>" alt="<%= t.caption %>" loading="lazy"><div class="play" style="position:absolute;inset:0;margin:auto;width:56px;height:56px;border-radius:50%;background:rgba(6,78,59,.78);display:flex;align-items:center;justify-content:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff" style="width:22px;color:#fff;"><path d="M8 5v14l11-7z"/></svg></div><% if (t.caption) { %><div class="overlay"><span><%= t.caption %></span></div><% } %></a>
+        <% } else { %>
+          <div class="gallery-item<%= t.wide ? ' wide' : '' %>" data-cat="<%= t.category %>" data-caption="<%= t.caption %>"><img src="<%= t.src %>" alt="<%= t.caption %>" loading="lazy"><% if (t.caption) { %><div class="overlay"><span><%= t.caption %></span></div><% } %></div>
+        <% } %>
+      <% }) %>
     </div>
+    <% if (!tiles.length) { %>
+      <p style="color:var(--mist); text-align:center;"><%= txt('gallery.list.empty', 'No photos have been added yet — check back soon.', 'Message when the gallery is empty') %></p>
+    <% } %>
     <div style="text-align:center; margin-top:44px;">
-      <button class="btn btn-outline-dark" type="button"><%= txt('gallery.list.loadMore', 'Load More', 'Load More button') %></button>
+      <button class="btn btn-outline-dark" type="button" id="gallery-more" style="display:none;"><%= txt('gallery.list.loadMore', 'Load More', 'Load More button') %></button>
     </div>
   </div>
 </section>
+
+<script nonce="<%= nonce %>">
+  // Tabs filter the grid; "Load More" reveals the next batch of tiles.
+  (function () {
+    var PAGE = 12;
+    var grid = document.getElementById('gallery-grid');
+    var more = document.getElementById('gallery-more');
+    var tabs = document.querySelectorAll('#gallery-tabs .tab-btn');
+    if (!grid) return;
+    var tiles = Array.prototype.slice.call(grid.children);
+    var cat = 'all';
+    var shown = PAGE;
+
+    function render() {
+      var matching = tiles.filter(function (t) { return cat === 'all' || t.getAttribute('data-cat') === cat; });
+      tiles.forEach(function (t) { t.style.display = 'none'; });
+      matching.forEach(function (t, i) { t.style.display = i < shown ? '' : 'none'; });
+      if (more) more.style.display = matching.length <= shown ? 'none' : '';
+    }
+    tabs.forEach(function (b) {
+      b.addEventListener('click', function () {
+        tabs.forEach(function (x) { x.classList.remove('active'); });
+        b.classList.add('active');
+        cat = b.getAttribute('data-filter');
+        shown = PAGE;
+        render();
+      });
+    });
+    if (more) more.addEventListener('click', function () { shown += PAGE; render(); });
+    render();
+  })();
+</script>
 
 <section class="section-pad-sm" style="background:var(--paper-2);">
   <div class="container">

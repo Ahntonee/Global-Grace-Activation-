@@ -20,6 +20,12 @@ const SPEAKER_TYPES = [
   { value: "leadership", label: "Leadership" },
 ];
 
+const GALLERY_TYPES = [
+  { value: "photo", label: "Photos" },
+  { value: "video", label: "Videos" },
+  { value: "highlight", label: "Highlights" },
+];
+
 module.exports = {
   products: {
     label: "Products",
@@ -162,6 +168,31 @@ module.exports = {
       { name: "socialLinks.instagram", label: "Instagram URL", type: "text" },
       { name: "socialLinks.youtube", label: "YouTube URL", type: "text" },
       { name: "socialLinks.spotify", label: "Spotify URL", type: "text" },
+      { name: "isPublished", label: "Published", type: "checkbox", default: true },
+    ],
+  },
+
+  gallery: {
+    label: "Gallery",
+    singular: "Gallery item",
+    apiBase: "/api/gallery?all=true",
+    apiBaseWrite: "/api/gallery",
+    dataKey: "items",
+    idField: "_id",
+    populateFields: ["images"],
+    columns: [
+      { key: "caption", label: "Caption" },
+      { key: "category", label: "Type", labels: { photo: "Photos", video: "Video", highlight: "Highlights" } },
+      { key: "order", label: "Order" },
+      { key: "isPublished", label: "Published", type: "boolean" },
+    ],
+    fields: [
+      { name: "caption", label: "Caption", type: "text", hint: "Shown over the picture on the Gallery page. When you upload several photos at once, they all share this caption." },
+      { name: "images", label: "Photos (up to 20)", type: "image-upload", max: 20, array: true, hint: "Select as many as you like in one go — each photo becomes its own tile on the Gallery page. For a video, the first photo is its cover picture." },
+      { name: "category", label: "Which tab does it appear under?", type: "select", options: GALLERY_TYPES, default: "photo", hint: "The Gallery page has tabs for Photos, Videos and Highlights; everything also shows under All." },
+      { name: "videoUrl", label: "Video link (optional)", type: "url", placeholder: "https://www.youtube.com/watch?v=...", hint: "Paste a YouTube link and the tile will open the video. Leave empty for ordinary photos." },
+      { name: "wide", label: "Show the first photo as a large tile", type: "checkbox" },
+      { name: "order", label: "Display order", type: "number", default: 0, hint: "Smaller numbers appear first. Items with the same number are shown oldest first." },
       { name: "isPublished", label: "Published", type: "checkbox", default: true },
     ],
   },

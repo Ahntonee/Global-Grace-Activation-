@@ -2,6 +2,7 @@ const Page = require("../models/Page");
 const Blog = require("../models/Blog");
 const Event = require("../models/Event");
 const Speaker = require("../models/Speaker");
+const GalleryItem = require("../models/GalleryItem");
 const Testimony = require("../models/Testimony");
 const Faq = require("../models/Faq");
 const Product = require("../models/Product");
@@ -135,12 +136,30 @@ exports.give = asyncHandler(async (req, res) => {
 
 exports.gallery = asyncHandler(async (req, res) => {
   const page = await getPage("gallery", "Gallery | Global Grace Activation");
+  const items = await GalleryItem.find({ isPublished: true }).populate("images").sort({ order: 1, createdAt: 1 });
+
+  // Every photo becomes its own tile; a video link uses its cover photo
+  // (or the YouTube thumbnail) and opens the video when clicked.
+  const tiles = [];
+  items.forEach((item) => {
+    const urls = (item.images || []).filter((m) => m && m.url).map((m) => m.url);
+    if (!urls.length && item.imageUrl) urls.push(item.imageUrl);
+    // only ordinary web links may become a clickable video tile
+    const videoUrl = /^https?:\/\//i.test(item.videoUrl || "") ? item.videoUrl : "";
+    const ytId = videoUrl ? req.app.locals.youtubeId(videoUrl) : null;
+    if (!urls.length && ytId) urls.push("https://i.ytimg.com/vi/" + ytId + "/hqdefault.jpg");
+    if (videoUrl && urls.length) urls.length = 1; // one tile per video
+    urls.forEach((src, i) => {
+      tiles.push({ src, caption: item.caption || "", category: item.category, videoUrl, wide: !!item.wide && i === 0 });
+    });
+  });
 
   res.render("pages/gallery", {
     title: page.seoTitle || page.title,
     description: page.seoDescription,
     currentPage: "gallery",
     page,
+    tiles,
   });
 });
 

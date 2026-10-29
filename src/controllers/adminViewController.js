@@ -5,6 +5,7 @@ const Page = require("../models/Page");
 const Blog = require("../models/Blog");
 const Event = require("../models/Event");
 const Speaker = require("../models/Speaker");
+const GalleryItem = require("../models/GalleryItem");
 const Testimony = require("../models/Testimony");
 const Faq = require("../models/Faq");
 const Contact = require("../models/Contact");
@@ -22,6 +23,7 @@ const modelsByKey = {
   blogs: Blog,
   events: Event,
   speakers: Speaker,
+  gallery: GalleryItem,
   testimonies: Testimony,
   faqs: Faq,
   contacts: Contact,
@@ -38,7 +40,7 @@ exports.loginPage = (req, res) => {
 
 exports.dashboard = asyncHandler(async (req, res) => {
   const [
-    pages, blogs, blogsLive, events, eventsLive, speakers, ministers, leaders, testimonies, testimoniesPending, faqs,
+    pages, blogs, blogsLive, events, eventsLive, speakers, ministers, leaders, galleryCount, galleryLive, testimonies, testimoniesPending, faqs,
     products, orders, ordersToFulfill, donations, donationsOk,
     registrations, contacts, contactsNew, prayers, prayersPending, volunteers, volunteersPending, subscribers,
   ] = await Promise.all([
@@ -50,6 +52,8 @@ exports.dashboard = asyncHandler(async (req, res) => {
     Speaker.countDocuments(),
     Speaker.countDocuments({ type: "conference-speaker" }),
     Speaker.countDocuments({ type: "leadership" }),
+    GalleryItem.countDocuments(),
+    GalleryItem.countDocuments({ isPublished: true }),
     Testimony.countDocuments(),
     Testimony.countDocuments({ isPublished: false }),
     Faq.countDocuments(),
@@ -75,6 +79,7 @@ exports.dashboard = asyncHandler(async (req, res) => {
     { label: "Blog Posts", total: blogs, sub: `${blogsLive} published`, href: "/admin/blogs" },
     { label: "Events", total: events, sub: `${eventsLive} published`, href: "/admin/events" },
     { label: "Speakers & Leaders", total: speakers, sub: `${ministers} ministers · ${leaders} leadership`, href: "/admin/speakers" },
+    { label: "Gallery", total: galleryCount, sub: `${galleryLive} published`, href: "/admin/gallery" },
     { label: "Testimonies", total: testimonies, sub: `${testimoniesPending} awaiting review`, href: "/admin/testimonies" },
     { label: "FAQs", total: faqs, href: "/admin/faqs" },
     { label: "Products", total: products, href: "/admin/products" },
@@ -91,6 +96,7 @@ exports.dashboard = asyncHandler(async (req, res) => {
     { label: "+ New blog post", note: "Write a post with up to 3 images", href: "/admin/blogs/new" },
     { label: "+ New event", note: "Add an event with up to 3 flyers", href: "/admin/events/new" },
     { label: "+ New minister / leader", note: "Upload a photo and set their category", href: "/admin/speakers/new" },
+    { label: "+ Add gallery photos", note: "Upload one photo or a whole batch at once", href: "/admin/gallery/new" },
     { label: "+ New testimony", note: "Add an image and YouTube video", href: "/admin/testimonies/new" },
     { label: "+ New product", note: "Image, PDF or an external Buy Now link", href: "/admin/products/new" },
     { label: "Event registrations", note: "View, filter and download to Excel", href: "/admin/eventRegistrations" },

@@ -334,6 +334,7 @@
 
   /* ---------- Gallery lightbox (simple caption toast) ---------- */
   document.querySelectorAll('.gallery-item').forEach(item=>{
+    if(item.tagName === 'A') return; // video tiles are real links and open the video
     item.addEventListener('click', ()=>{
       window.gcToast(item.dataset.caption || (window.ggaT ? window.ggaT('openingMedia', 'Opening media…') : 'Opening media…'));
     });

@@ -10,7 +10,8 @@
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "seed:admin": "node src/scripts/seedAdmin.js",
-    "seed:content": "node src/scripts/seedContent.js"
+    "seed:content": "node src/scripts/seedContent.js",
+    "seed:gallery": "node src/scripts/seedGallery.js"
   },
   "keywords": [],
   "author": "",
