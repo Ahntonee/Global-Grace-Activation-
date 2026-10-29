@@ -113,7 +113,7 @@
               </div>
             <% } %>
             <% if (ev.isVirtual && ev.meetingLink) { %>
-              <a href="<%= ev.meetingLink %>" class="btn btn-sm btn-outline-dark"><%= txt('site.nav.watchLiveButton', 'Watch Live', 'Header button — Watch Live') %></a>
+              <a href="<%= ev.meetingLink %>" class="btn btn-sm btn-outline-dark"><%= txt('events.list.watchButton', 'Watch Live', 'Button on online events') %></a>
             <% } else { %>
               <a href="#" class="btn btn-sm btn-primary js-register-btn" data-event="<%= ev.title %>" data-event-id="<%= ev._id %>"><%= txt('events.list.registerButton', 'Register', 'Button on each upcoming event') %></a>
             <% } %>
